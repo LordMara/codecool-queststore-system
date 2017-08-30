@@ -6,7 +6,7 @@ public abstract class Account{
     protected String email;
     protected String phone;
     protected String password;
-    protected Integer ID;
+    protected String ID;
 
     public String getName(){
         return this.name;
