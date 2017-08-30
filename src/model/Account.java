@@ -44,5 +44,5 @@ public abstract class Account{
         return this.ID;
     }
 
-    public abstract Integer generateId();
+    protected abstract Integer generateId();
 }
