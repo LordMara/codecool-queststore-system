@@ -5,7 +5,7 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
     String path;
     ArrayList objectsList;
 
-    public ArrayList loadObject() {
+    public void loadObject() {
         try (Scanner readFile = new Scanner(new File(this.path))) {
             this.objectsList.add(readFile.nextLine());
         } catch (NoSuchFileException e) {
