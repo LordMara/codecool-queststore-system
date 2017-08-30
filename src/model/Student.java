@@ -44,10 +44,10 @@ public class Student extends Account{
     // }
 
     protected String generateId(){
-        String ID = generateId();
+        String ID = generateRandom();
 
         while(checkIsUnique(ID)){
-            ID = generateId();
+            ID = generateRandom();
         }
         return ID;
     }
@@ -61,7 +61,7 @@ public class Student extends Account{
         return true;
     }
 
-    private String generateRandomNum(){
+    private String generateRandom(){
         Random rand = new Random();
         Integer number = rand.nextInt(9999);
         return String.format("S%d",number);
