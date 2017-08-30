@@ -3,6 +3,7 @@ package src.model;
 public abstract class Account{
 
     protected String name;
+    protected String surname;
     protected String email;
     protected String phone;
     protected String password;
@@ -14,6 +15,14 @@ public abstract class Account{
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public String getSurname(){
+        return this.surname;
+    }
+
+    public void setSurname(String surname){
+        this.surname = surname;
     }
 
     public String getEmail(){
