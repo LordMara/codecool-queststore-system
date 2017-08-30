@@ -1,4 +1,4 @@
 public interface DAOInterface<T> {
-    public ArrayList loadObject();
+    public void loadObject();
     public void saveObject(T object);
 }
