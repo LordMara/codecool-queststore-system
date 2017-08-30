@@ -17,11 +17,14 @@ public abstract class Account{
         this.name = name;
     }
 
-    public String getName(){
+
+
+    public String getSurname(){
         return this.surname;
     }
 
-    public void setName(String surname){
+    public void setSurname(String surname){
+
         this.surname = surname;
     }
 
