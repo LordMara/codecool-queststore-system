@@ -3,7 +3,12 @@ import java.nio.file.NoSuchFileException;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
     String path;
-    ArrayList objectsList;
+    ArrayList<String> objectsList;
+
+    public AbstractDAO(String path) {
+        this.path = path;
+        this. objectsList = new ArrayList<>();
+    }
 
     public void loadObject() {
         try (Scanner readFile = new Scanner(new File(this.path))) {
