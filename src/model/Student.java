@@ -19,19 +19,19 @@ public class Student extends Account{
         this.email = email;
         this.password = password;
         this.class = class;
-        this.ID = generateId();
+        this.ID = generateId("S");
         this.wallet = new Wallet();
         // this.level = new Level(); TODO
 
     }
 
-    public Class getClass(){
-        return this.class;
-    }
-
-    public void setClass(Class class){
-        this.class = class;
-    }
+    // public Class getClass(){
+    //     return this.class;
+    // }
+    //
+    // public void setClass(Class class){
+    //     this.class = class;
+    // }
 
     // public void setTeam(Team team){
     //     this.team = team; TODO
@@ -45,27 +45,4 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-    protected String generateId(){
-        String ID = generateRandom();
-
-        while(checkIsUnique(ID)){
-            ID = generateRandom();
-        }
-        return ID;
-    }
-
-    private boolean checkIsUnique(String ID){
-        for (Student student : Student.students){
-            if student.getId().equals(ID){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private String generateRandom(){
-        Random rand = new Random();
-        Integer number = rand.nextInt(9999);
-        return String.format("S%d",number);
-    }
 }
