@@ -6,6 +6,8 @@ import java.nio.file.NoSuchFileException;
 import src.dao.DAOInterface;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
+    private ArrayList<T> objectList;
+
     public abstract void load();
 
     public ArrayList<T> getAllObjects() {
