@@ -16,7 +16,7 @@ public class Mentor{
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.ID = generateId("M");
+        this.ID = generateId();
     }
 
     // public setCodecoolClass(CodecoolClass codecoolClass){
