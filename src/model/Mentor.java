@@ -18,6 +18,7 @@ public class Mentor{
         this.login = login;
         this.password = password;
         generateId();
+
     }
 
     // public setCodecoolClass(CodecoolClass codecoolClass){
