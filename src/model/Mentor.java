@@ -37,4 +37,8 @@ public class Mentor extends Account{
         this.ID = Mentor.lastID;
         Mentor.lastID ++;
     }
+
+    public String toString(){
+        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
+    }
 }
