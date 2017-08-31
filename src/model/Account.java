@@ -6,6 +6,7 @@ public abstract class Account{
     protected String surname;
     protected String email;
     protected String phone;
+    protected String login;
     protected String password;
     protected String ID;
 
@@ -35,6 +36,14 @@ public abstract class Account{
         this.email = email;
     }
 
+    public String getLogin(){
+        return this.login;
+    }
+
+    public void setLogin(String login){
+        this.login = login;
+    }
+
     public String getPhone(){
         return this.phone;
     }
@@ -55,31 +64,6 @@ public abstract class Account{
         return this.ID;
     }
 
-
-    protected String generateId(String uniqeSign){
-        String ID = generateRandom(uniqeSign);
-
-        while(checkIsUnique(ID)){
-            ID = generateRandom(uniqeSign);
-        }
-        return ID;
-    }
-
-    private boolean checkIsUnique<T>(String ID){
-        ActualClass = this.getClass()
-
-        for (T member : ActualClass.members){
-            if member.getId().equals(ID){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private String generateRandom(String uniqeSign){
-        Random rand = new Random();
-        Integer number = rand.nextInt(9999);
-        return String.format("%s%d", uniqeSign, number);
-    }
+    protected abstract String generateId()
 
 }
