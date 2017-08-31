@@ -20,4 +20,30 @@ public class StudentDAO extends AbstractDAO {
         load();
     }
 
+    public void load(String path) {
+
+    }
+
+        
+    
+
+    public ArrayList<Student> getAllObjects() {
+        return this.objectList;
+    }
+
+    public void addObject(Student object) {
+        this.objectList.add(object);
+    }
+
+    public boolean removeObject(Student object) {
+        this.objectList.remove(object);
+        return true;
+    }
+
+    public void save() {
+
+    }
+        
+
+    
 }
