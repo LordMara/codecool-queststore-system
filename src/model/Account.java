@@ -9,6 +9,7 @@ public abstract class Account{
     protected String password;
     protected String ID;
 
+
     public String getName(){
         return this.name;
     }
@@ -22,6 +23,7 @@ public abstract class Account{
     }
 
     public void setSurname(String surname){
+
         this.surname = surname;
     }
 
@@ -53,6 +55,7 @@ public abstract class Account{
         return this.ID;
     }
 
+
     protected String generateId(String uniqeSign){
         String ID = generateRandom(uniqeSign);
 
@@ -78,4 +81,5 @@ public abstract class Account{
         Integer number = rand.nextInt(9999);
         return String.format("%s%d", uniqeSign, number);
     }
+
 }
