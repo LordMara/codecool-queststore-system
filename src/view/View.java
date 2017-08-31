@@ -16,4 +16,14 @@ public class View<T> {
         return fieldValue;
     }
 
+    public String getIntInput(String message) {
+        String fieldValue;
+
+        try (Scanner userInput = new Scanner(System.in)) {
+            System.out.println(message);
+            fieldValue = userInput.nextInt();
+        }
+        return fieldValue;
+    }
+
 }
