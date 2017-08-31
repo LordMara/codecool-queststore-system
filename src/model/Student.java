@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Student extends Account{
-    private Class class;
+
+    private CodecoolClass codecoolClass;
     // private Team team;  TODO
     private Wallet wallet;
     // private Level level; TODO
@@ -12,24 +13,27 @@ public class Student extends Account{
     private static ArrayList<Student> students = new ArrayList<>();
     private static  Integer lastID = 0;
 
-    public Student(String name, String surname, String login, String password, Class class){
+    public Student(){
+    }
+
+    public Student(String name, String surname, String login, String password, CodecoolClass codecoolClass){
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.class = class;
+        this.codecoolClass = codecoolClass;
         generateId();
         this.wallet = new Wallet();
         // this.level = new Level(); TODO
         Student.students.add(this);
     }
 
-    // public Class getClass(){
-    //     return this.class;
+    // public CodecoolClass getCodecoolClass(){
+    //     return this.codecoolClass;
     // }
     //
-    // public void setClass(Class class){
-    //     this.class = class;
+    // public void setCodecoolClass(Cprivate CodecoolClass codecoolClass){
+    //     this.codecoolClass = codecoolClass;
     // }
 
     // public void setTeam(Team team){
@@ -44,10 +48,8 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-    protected Integer generateId(){
+    protected void generateId(){
         this.ID = Student.lastID;
         Student.lastID ++;
     }
-
-
 }

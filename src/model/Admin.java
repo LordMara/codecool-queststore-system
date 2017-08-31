@@ -3,13 +3,20 @@ package src.model;
 public class Admin{
 
     private static ArrayList<Admin> admins = new ArrayList<>();
+    private static  Integer lastID = 0;
 
-    public Admin(String name, String surname, String email, String password){
+    public Admin(String name, String surname, String login, String password){
         this.name = name;
         this.surname = surname;
-        this.email = email;
+        this.login = login;
         this.password = password;
-        this.ID = generateId("A");
+        generateId();
     }
+
+    protected void generateId(){
+        this.ID = Admin.lastID;
+        Admin.lastID ++;
+    }
+
 
 }

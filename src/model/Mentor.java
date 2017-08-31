@@ -6,25 +6,31 @@ import java.util.Random;
 
 public class Mentor{
 
-    private Class class;
+    private CodecoolClass codecoolClass;
 
     private static ArrayList<Mentor> mentors = new ArrayList<>();
+    private static  Integer lastID = 0;
 
 
-    public Mentor(String name, String surname, String email, String password){
+    public Mentor(String name, String surname, String login, String password){
         this.name = name;
         this.surname = surname;
-        this.email = email;
+        this.login = login;
         this.password = password;
-        this.ID = generateId("M");
+        generateId();
+
     }
 
-    // public setClass(Class class){
-    //     this.class = class;
+    // public setCodecoolClass(CodecoolClass codecoolClass){
+    //     this.codecoolClass = codecoolClass;
     // }
 
-    // public Class getClass(){
-    //     return this.class
+    // public Class getCodecoolClass(){
+    //     return this.codecoolClass
     // }
 
+    protected void generateId(){
+        this.ID = Mentor.lastID;
+        Mentor.lastID ++;
+    }
 }
