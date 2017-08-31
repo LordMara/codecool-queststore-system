@@ -5,6 +5,7 @@ import java.util.Random;
 
 
 public class Mentor{
+
     private CodecoolClass codecoolClass;
 
     private static ArrayList<Mentor> mentors = new ArrayList<>();
@@ -16,7 +17,7 @@ public class Mentor{
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.ID = generateId("M");
+        generateId();
     }
 
     // public setCodecoolClass(CodecoolClass codecoolClass){
@@ -27,7 +28,7 @@ public class Mentor{
     //     return this.codecoolClass
     // }
 
-    protected Integer generateId(){
+    protected void generateId(){
         this.ID = Mentor.lastID;
         Mentor.lastID ++;
     }
