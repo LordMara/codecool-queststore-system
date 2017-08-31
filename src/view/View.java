@@ -35,4 +35,20 @@ public class View<T> {
             System.out.println(object);
         }
     }
+
+    public void showMenu(String[] menu){
+
+        int count = 1;
+
+        for(String option : menu){
+            String row = String.format("%d %s", count, option);
+            System.out.println(row);
+            count ++;
+        }
+        System.out.println("0 Exit");
+    }
+
+    public void printMessage(String message){
+        System.out.println("^^^***" + message + "^^^***");
+    }
 }

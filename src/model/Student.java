@@ -1,5 +1,6 @@
 package src.model;
 
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -59,6 +60,15 @@ public class Student extends Account{
 
     public static ArrayList<Student> getStudents(){
         return Student.students;
+    }
+
+    public static Student getByLogin(String login) throws NullPointerException{
+        for (Student student : Student.students){
+            if (student.login.equals(login)){
+                return student;
+            }
+        }
+        throw new NullPointerException();
     }
 
 }
