@@ -9,6 +9,7 @@ public abstract class Account{
     protected String password;
     protected String ID;
 
+
     public String getName(){
         return this.name;
     }
@@ -16,8 +17,6 @@ public abstract class Account{
     public void setName(String name){
         this.name = name;
     }
-
-
 
     public String getSurname(){
         return this.surname;
@@ -56,5 +55,6 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract Integer generateId();
+    protected abstract String generateId();
+
 }
