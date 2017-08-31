@@ -2,24 +2,20 @@ import java.util.Scanner;
 import java.nio.file.NoSuchFileException;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
-    String path;
-    ArrayList<String> objectsList;
+    public abstract void load();
 
-    public AbstractDAO(String path) {
-        this.path = path;
-        this. objectsList = new ArrayList<>();
+    public ArrayList<T> getAllObjects() {
+        return this.objectList;
     }
 
-    public void loadObject() {
-        try (Scanner readFile = new Scanner(new File(this.path))) {
-            this.objectsList.add(readFile.nextLine());
-        } catch (NoSuchFileException e) {
-            System.out.println("This file not exist in choosen directory");
-            e.printStackTrace();
-        }
+    public void addObject(T object) {
+        this.objectList.add(object);
     }
 
-    public void saveObject(T object) {
-
+    public boolean removeObject(T object) {
+        this.objectList.remove(object);
+        return true;
     }
+
+    public abstract void save();
 }
