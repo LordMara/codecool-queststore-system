@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import src.model.School;
 import src.model.Account;
+// import src.model.Student;
 public class SchoolView {
 
     School school;
