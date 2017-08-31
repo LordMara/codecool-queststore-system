@@ -1,6 +1,6 @@
-package src.controller;
+package controller;
 
 
 public class StudentController{
-    
+
 }

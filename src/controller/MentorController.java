@@ -1,7 +1,7 @@
-package src.controller;
+package controller;
 
-import src.model.*;
-import src.view.*;
+import model.*;
+import view.*;
 
 
 public class MentorController{
