@@ -8,18 +8,30 @@ public class SchoolView {
     public void logIn() {
         
         Scanner in = new Scanner(System.in);
-        Integer id;
-        System.out.println("Provide ID: ");
-        id = (Integer) in.next();
+        String login = new String();
+        Boolean toLog = true;
+
+        while (toLog){
+        System.out.println("Provide login: ");
+        login = in.next();
+        if (!isSuchlogin(login, school)) {
+            System.out.println("Such login doesn't exist \npress Y if you want to continue logging");
+            String answer = in.next().toUpperCase();
+            if (!answer.equals("Y")) {
+                toLog = false;
+            }
+
+        }
+        }
 
     }
 
-    private Boolean isSuchID(Integer id, School school) {
+    private Boolean isSuchlogin(String login, School school) {
 
         Iterator iter = school.getAccounts().iterator();
 
         while(iter.hasNext()) {
-            if (iter.next().getId().equals(id)) {
+            if (iter.next().getLogin().equals(login)) {
                 return true;
             }
         }
