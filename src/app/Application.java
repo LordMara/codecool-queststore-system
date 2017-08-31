@@ -1,6 +1,6 @@
-import model.*;
-import view.*;
-import controller.*;
+import src.model.*;
+import src.view.*;
+import src.controller.*;
 
 class Application{
 
