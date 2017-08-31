@@ -8,7 +8,7 @@ public abstract class Account{
     protected String phone;
     protected String login;
     protected String password;
-    protected String ID;
+    protected Integer ID;
 
 
     public String getName(){
@@ -64,6 +64,6 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract Integer generateId()
+    protected abstract Integer generateId();
 
 }
