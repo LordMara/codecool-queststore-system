@@ -1,11 +1,12 @@
 package src.dao;
 
-import java.util.Scanner;
-import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 
 import src.dao.DAOInterface;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
+    private ArrayList<T> objectList;
+
     public abstract void load();
 
     public ArrayList<T> getAllObjects() {
