@@ -12,6 +12,10 @@ public class Mentor{
     private static  Integer lastID = 0;
 
 
+    public Mentor(){
+
+    }
+
     public Mentor(String name, String surname, String login, String password){
         this.name = name;
         this.surname = surname;
