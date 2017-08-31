@@ -13,6 +13,9 @@ public class Student extends Account{
     private static ArrayList<Student> students = new ArrayList<>();
     private static  Integer lastID = 0;
 
+    public Student(){
+    }
+
     public Student(String name, String surname, String login, String password, CodecoolClass codecoolClass){
         this.name = name;
         this.surname = surname;
@@ -49,6 +52,4 @@ public class Student extends Account{
         this.ID = Student.lastID;
         Student.lastID ++;
     }
-
-
 }
