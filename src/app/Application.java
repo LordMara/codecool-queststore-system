@@ -1,3 +1,5 @@
+package src.app;
+
 import src.model.*;
 import src.view.*;
 import src.controller.*;
@@ -5,10 +7,9 @@ import src.controller.*;
 class Application{
 
     public static void main(String[] args){
-        MentorController ctrl = new MentorController();
 
-        ctrl.createStudent();
-        ctrl.createStudent();
-        ctrl.showAllStudents();
+        MentorController mentor = new MentorController();
+        mentor.startController();
     }
+
 }

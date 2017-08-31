@@ -1,4 +1,4 @@
-package src.models;
+package src.model;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,14 +6,13 @@ import java.util.Random;
 
 public class Mentor extends Account{
 
-    private CodecoolClass codecoolClass;
+    // private CodecoolClass codecoolClass;
 
     private static ArrayList<Mentor> mentors = new ArrayList<>();
     private static  Integer lastID = 0;
 
 
     public Mentor(){
-
     }
 
     public Mentor(String name, String surname, String login, String password){
@@ -22,6 +21,7 @@ public class Mentor extends Account{
         this.login = login;
         this.password = password;
         generateId();
+        Mentor.mentors.add(this);
 
     }
 
@@ -40,5 +40,9 @@ public class Mentor extends Account{
 
     public String toString(){
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
+    }
+
+    public static ArrayList<Mentor> getMentors(){
+        return Mentor.mentors;
     }
 }

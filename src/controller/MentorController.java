@@ -7,9 +7,46 @@ import src.view.*;
 public class MentorController{
     View <Student> view;
 
+    private final String CREATE_STUDENT = "1";
+    private final String EDIT_STUDENT = "2";
+    private final String SHOW_STUDENTS = "3";
+    private final String EXIT = "0";
+
+
     public MentorController(){
         this.view = new View<>();
     }
+
+    public void startController(){
+
+        String choose = "";
+        String[] menu = {"Create student", "Edit student", "Show students"};
+
+        while (! choose.equals("0")){
+
+            view.showMenu(menu);
+            choose = view.getStringInput("");
+
+            switch (choose){
+
+                case CREATE_STUDENT :
+                    createStudent();
+                    break;
+
+                case EDIT_STUDENT :
+                    editStudent(getStudentByLogin());
+                    break;
+
+                case SHOW_STUDENTS :
+                    showAllStudents();
+                    break;
+
+                case EXIT :
+                    break;
+            }
+        }
+    }
+
 
     public void createStudent(){
         String name = view.getStringInput("Enter student's name: ");
@@ -29,6 +66,26 @@ public class MentorController{
     }
 
     public void showAllStudents(){
-        view.showAll(Student.students);
+        view.showAll(Student.getStudents());
+    }
+
+    private Student getStudentByLogin(){
+
+        boolean found = false;
+        Student student = null;
+
+        while (! found){
+
+            try {
+                String login = view.getStringInput("Enter student's login :");
+                student = Student.getByLogin(login);
+                found = true;
+            }
+            catch (NullPointerException e){
+                view.printMessage("NOT FOUND ! ");
+                found = false;
+            }
+        }
+        return student;
     }
 }
