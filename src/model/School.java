@@ -1,23 +1,27 @@
 package src.model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
+
 
 public class School {
 
-    ArrayList<User> persons;
+    ArrayList<Account> accounts;
     ArrayList<Class> classes;
 
-    public School() {
+    public School(ArrayList<Account> newAccounts, ArrayList<Class> newClasses) {
+        
+        accounts = newAccounts;
+        classes = newClasses;
 
     }
 
-    private ArrayList<User> loadUsers(String filePath) {
-
-
+    public ArrayList<Account> getAccounts() {
+        return accounts;
     }
 
-    private User createUser(String userLine) {
-
-
+    public ArrayList<Class> getClasses() {
+        return classes;
     }
 }
