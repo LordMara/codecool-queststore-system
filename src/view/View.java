@@ -5,4 +5,15 @@ import java.util.Scanner;
 
 public class View<T> {
     public View() {}
+
+    public String getStringInput(String message) {
+        String fieldValue;
+
+        try (Scanner userInput = new Scanner(System.in)) {
+            System.out.println(message);
+            fieldValue = userInput.nextLine();
+        }
+        return fieldValue;
+    }
+
 }
