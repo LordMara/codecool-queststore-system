@@ -16,7 +16,7 @@ public class Mentor{
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.ID = generateId();
+        this.ID = generateId("M");
     }
 
     // public setClass(Class class){
@@ -27,29 +27,4 @@ public class Mentor{
     //     return this.class
     // }
 
-
-    protected String generateId(){
-
-        String ID = generateRandom();
-
-        while(checkIsUnique(ID)){
-            ID = generateRandom();
-        }
-        return ID;
-    }
-
-    private boolean checkIsUnique(String ID){
-        for (Student mentor : Mentor.mentors){
-            if mentor.getId().equals(ID){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private String generateRandom(){
-        Random rand = new Random();
-        Integer number = rand.nextInt(9999);
-        return String.format("M%d",number);
-    }
 }
