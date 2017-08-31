@@ -26,4 +26,9 @@ public class View<T> {
         return fieldValue;
     }
 
+    public void showAll(ArrayList<T> objectList) {
+        for(T object: objectList) {
+            System.out.println(object);
+        }
+    }
 }
