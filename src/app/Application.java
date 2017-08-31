@@ -8,8 +8,10 @@ class Application{
 
     public static void main(String[] args){
 
-        MentorController mentor = new MentorController();
-        mentor.startController();
+        // MentorController mentor = new MentorController();
+        // mentor.startController();
+        AdministratorController admin = new AdministratorController();
+        admin.startController();
     }
 
 }

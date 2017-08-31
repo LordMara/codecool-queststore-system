@@ -5,14 +5,47 @@ import java.util.ArrayList;
 import src.model.*;
 import src.view.*;
 
-
-
 public class AdministratorController{
 
     View <Mentor> view;
 
+    private final String CREATE_MENTOR = "1";
+    private final String EDIT_MENTOR = "2";
+    private final String SHOW_MENTORS = "3";
+    private final String EXIT = "0";
+
     public AdministratorController(){
         this.view = new View();
+    }
+
+    public void startController(){
+
+        String choose = "";
+        String[] menu = {"Create mentor", "Edit mentor", "Show mentor"};
+
+        while (! choose.equals("0")){
+
+            view.showMenu(menu);
+            choose = view.getStringInput("");
+
+            switch (choose){
+
+                case CREATE_MENTOR :
+                    createMentor();
+                    break;
+
+                case EDIT_MENTOR :
+                    editMentor(getMentorByLogin());
+                    break;
+
+                case SHOW_MENTORS :
+                    showAllMentors();
+                    break;
+
+                case EXIT :
+                    break;
+            }
+        }
     }
 
     public void createMentor(){
@@ -35,5 +68,23 @@ public class AdministratorController{
         view.showAll(Mentor.getMentors());
     }
 
+    private Mentor getMentorByLogin(){
 
+        boolean found = false;
+        Mentor mentor = null;
+
+        while (! found){
+
+            try {
+                String login = view.getStringInput("Enter mentor's login :");
+                mentor = Mentor.getByLogin(login);
+                found = true;
+            }
+            catch (NullPointerException e){
+                view.printMessage("NOT FOUND ! ");
+                found = false;
+            }
+        }
+        return mentor;
+    }
 }
