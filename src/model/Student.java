@@ -1,5 +1,7 @@
 package src.model;
 
+
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,8 +10,8 @@ public class Student extends Account{
     // private Team team;  TODO
     private Wallet wallet;
     // private Level level; TODO
-    private static ArrayList<Student> students = new ArrayList<>();
 
+    private static ArrayList<Student> students = new ArrayList<>();
 
     public Student(String name, String surname, String email, String password, Class class){
         this.name = name;

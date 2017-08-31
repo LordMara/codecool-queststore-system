@@ -27,7 +27,8 @@ public class Mentor{
     //     return this.class
     // }
 
-    private generateId(){
+
+    protected String generateId(){
 
         String ID = generateRandom();
 
