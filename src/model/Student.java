@@ -52,4 +52,6 @@ public class Student extends Account{
         this.ID = Student.lastID;
         Student.lastID ++;
     }
+
+    public 
 }
