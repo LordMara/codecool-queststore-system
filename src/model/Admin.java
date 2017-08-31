@@ -18,5 +18,7 @@ public class Admin extends Account{
         Admin.lastID ++;
     }
 
-
+    public String toString(){
+        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
+    }
 }
