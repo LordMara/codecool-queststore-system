@@ -45,4 +45,13 @@ public class Mentor extends Account{
     public static ArrayList<Mentor> getMentors(){
         return Mentor.mentors;
     }
+
+    public static Mentor getByLogin(String login) throws NullPointerException{
+        for (Mentor mentor : Mentor.mentors){
+            if (mentor.login.equals(login)){
+                return mentor;
+            }
+        }
+        throw new NullPointerException();
+    }
 }
