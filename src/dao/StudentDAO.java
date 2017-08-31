@@ -21,11 +21,25 @@ public class StudentDAO extends AbstractDAO {
     }
 
     public void load(String path) {
+        String line;
+        try (Scanner readFile = new Scanner(new File(this.path))) {
+            while (readFile.hasNext()) {
+                line = readFile.nextLine();
+                String[] temp = line.split(",");
 
+                Student student = new Student();
+
+                student.setName(temp[0]);
+                student.setSurname(temp[1]);
+                student.setLogin(temp[2]);
+                student.setPassword(temp[3]);
+                // student.setCodecoolClass(temp[4]);
+
+                addObject(student);
+            }
+
+        }
     }
-
-        
-    
 
     public ArrayList<Student> getAllObjects() {
         return this.objectList;
@@ -41,9 +55,16 @@ public class StudentDAO extends AbstractDAO {
     }
 
     public void save() {
+        try (PrintWriter writer = new PrintWriter(this.path, "UTF-8")) {
+            for (Student student : this.objectList) {
+                String name = student.getName();
+                String surname = student.getSurname();
+                String login = student.getLogin();
+                String password = student.getPassword();
+                // String codecoolClass = student.getCodecoolClass();
+                writer.println(String.format("%s, %s, %s, %s", name, surname, login, password));
+            }
+        }
 
     }
-        
-
-    
 }
