@@ -6,6 +6,7 @@ public abstract class Account{
     protected String surname;
     protected String email;
     protected String phone;
+    protected String login;
     protected String password;
     protected String ID;
 
@@ -33,6 +34,14 @@ public abstract class Account{
 
     public void setEmail(String email){
         this.email = email;
+    }
+
+    public String getLogin(){
+        return this.login;
+    }
+
+    public void setLogin(String login){
+        this.login = login;
     }
 
     public String getPhone(){
