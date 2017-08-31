@@ -23,7 +23,7 @@ public class Student extends Account{
         this.password = password;
         this.codecoolClass = codecoolClass;
         generateId();
-        this.wallet = new Wallet();
+        this.wallet = null;
         // this.level = new Level(); TODO
         Student.students.add(this);
     }
