@@ -7,7 +7,8 @@ public abstract class Account{
     protected String email;
     protected String phone;
     protected String password;
-    protected Integer ID;
+    protected String ID;
+
 
     public String getName(){
         return this.name;
@@ -18,11 +19,12 @@ public abstract class Account{
     }
 
     public String getSurname(){
-        return this.name;
+        return this.surname;
     }
 
-    public void setSurname(String name){
-        this.name = name;
+    public void setSurname(String surname){
+
+        this.surname = surname;
     }
 
     public String getEmail(){
@@ -53,5 +55,6 @@ public abstract class Account{
         return this.ID;
     }
 
-    public abstract Integer generateId();
+    protected abstract String generateId();
+
 }
