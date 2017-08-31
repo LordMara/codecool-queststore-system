@@ -5,7 +5,7 @@ public class MentorController{
 
 
 
-    MentorController(Mentor mentor){
+    MentorController(){
 
     }
 
