@@ -64,6 +64,6 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract String generateId()
+    protected abstract Integer generateId()
 
 }
