@@ -1,7 +1,5 @@
 package src.model;
 
-
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,17 +10,18 @@ public class Student extends Account{
     // private Level level; TODO
 
     private static ArrayList<Student> students = new ArrayList<>();
+    private static  Integer lastID = 0;
 
-    public Student(String name, String surname, String email, String password, Class class){
+    public Student(String name, String surname, String login, String password, Class class){
         this.name = name;
         this.surname = surname;
-        this.email = email;
+        this.login = login;
         this.password = password;
         this.class = class;
-        this.ID = generateId("S");
+        generateId();
         this.wallet = new Wallet();
         // this.level = new Level(); TODO
-
+        Student.students.add(this);
     }
 
     // public Class getClass(){
@@ -44,5 +43,11 @@ public class Student extends Account{
     // public Level getLevel(){
     //     return this.level;TODO
     // }
+
+    protected Integer generateId(){
+        this.ID = Student.lastID;
+        Student.lastID ++;
+    }
+
 
 }
