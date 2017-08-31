@@ -1,3 +1,5 @@
+package src.dao;
+
 public interface DAOInterface<T> {
     public void loadObject();
     public ArrayList<T> getAllObjects();

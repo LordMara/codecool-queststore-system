@@ -1,5 +1,9 @@
+package src.dao;
+
 import java.util.Scanner;
 import java.nio.file.NoSuchFileException;
+
+import src.dao.DAOInterface;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
     public abstract void load();
