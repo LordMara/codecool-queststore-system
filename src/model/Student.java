@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Student extends Account{
+
     private CodecoolClass codecoolClass;
     // private Team team;  TODO
     private Wallet wallet;
@@ -44,7 +45,7 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-    protected Integer generateId(){
+    protected void generateId(){
         this.ID = Student.lastID;
         Student.lastID ++;
     }
