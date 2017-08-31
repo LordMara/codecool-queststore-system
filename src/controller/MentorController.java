@@ -7,14 +7,14 @@ import src.view.*;
 public class MentorController{
 
     MentorController(){
-
+        View<Student>  view = new View();
     }
 
     public void createStudent(){
-        String name = Viev.getStringInput("Enter student's name: ");
-        String surname = Viev.getStringInput("Enter student's surname: ");
-        String login = Viev.getStringInput("Enter student's login: ");
-        String password = Viev.getStringInput("Enter student's password: ");
+        String name = viev.getStringInput("Enter student's name: ");
+        String surname = viev.getStringInput("Enter student's surname: ");
+        String login = viev.getStringInput("Enter student's login: ");
+        String password = viev.getStringInput("Enter student's password: ");
 
         Student student = new Student(name, surname, login, password);
     }
@@ -28,6 +28,6 @@ public class MentorController{
     }
 
     public void showAllStudents(){
-        Viev.showAll(Student.students);
+        viev.showAll(Student.students);
     }
 }
