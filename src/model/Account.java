@@ -55,6 +55,31 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract String generateId();
+
+    protected String generateId(String uniqeSign){
+        String ID = generateRandom(uniqeSign);
+
+        while(checkIsUnique(ID)){
+            ID = generateRandom(uniqeSign);
+        }
+        return ID;
+    }
+
+    private boolean checkIsUnique<T>(String ID){
+        ActualClass = this.getClass()
+
+        for (T member : ActualClass.members){
+            if member.getId().equals(ID){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String generateRandom(String uniqeSign){
+        Random rand = new Random();
+        Integer number = rand.nextInt(9999);
+        return String.format("%s%d", uniqeSign, number);
+    }
 
 }
