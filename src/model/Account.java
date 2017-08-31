@@ -64,6 +64,6 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract void generateId()
+    protected abstract void generateId();
 
 }
