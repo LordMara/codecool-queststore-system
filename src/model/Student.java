@@ -53,5 +53,7 @@ public class Student extends Account{
         Student.lastID ++;
     }
 
-    public 
+    public String toString(){
+        return String.format("Name : %s  | Surname : %s ", this.name, this.surname )
+    }
 }
