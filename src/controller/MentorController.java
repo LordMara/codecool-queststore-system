@@ -5,29 +5,30 @@ import src.view.*;
 
 
 public class MentorController{
+    View <Student> view;
 
-    MentorController(){
-        View<Student>  view = new View();
+    public MentorController(){
+        this.view = new View<>();
     }
 
     public void createStudent(){
-        String name = viev.getStringInput("Enter student's name: ");
-        String surname = viev.getStringInput("Enter student's surname: ");
-        String login = viev.getStringInput("Enter student's login: ");
-        String password = viev.getStringInput("Enter student's password: ");
+        String name = view.getStringInput("Enter student's name: ");
+        String surname = view.getStringInput("Enter student's surname: ");
+        String login = view.getStringInput("Enter student's login: ");
+        String password = view.getStringInput("Enter student's password: ");
 
         Student student = new Student(name, surname, login, password);
     }
 
     public void editStudent(Student student){
-        student.name = Viev.getStringInput("Enter new student's name: ");
-        student.surname = Viev.getStringInput("Enter new student's surname: ");
-        student.login = Viev.getStringInput("Enter new student's login: ");
-        student.password = Viev.getStringInput("Enter new student's password: ");
+        student.setName(view.getStringInput("Enter new student's name: "));
+        student.setSurname(view.getStringInput("Enter new student's surname: "));
+        student.setLogin(view.getStringInput("Enter new student's login: "));
+        student.setPassword(view.getStringInput("Enter new student's password: "));
 
     }
 
     public void showAllStudents(){
-        viev.showAll(Student.students);
+        view.showAll(Student.students);
     }
 }
