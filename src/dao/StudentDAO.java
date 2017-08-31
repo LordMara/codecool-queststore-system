@@ -61,7 +61,6 @@ public class StudentDAO extends AbstractDAO {
                 String surname = student.getSurname();
                 String login = student.getLogin();
                 String password = student.getPassword();
-                // String codecoolClass = student.getCodecoolClass();
                 writer.println(String.format("%s, %s, %s, %s", name, surname, login, password));
             }
         }
