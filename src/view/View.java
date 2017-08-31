@@ -4,25 +4,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class View<T> {
-    public View() {}
+
+    Scanner scan;
+
+    public View(){
+        this.scan = new Scanner(System.in);
+    }
+
 
     public String getStringInput(String message) {
         String fieldValue;
 
-        try (Scanner userInput = new Scanner(System.in)) {
-            System.out.println(message);
-            fieldValue = userInput.nextLine();
-        }
+        System.out.println(message);
+        fieldValue = scan.nextLine();
+
         return fieldValue;
     }
 
-    public String getIntInput(String message) {
-        String fieldValue;
+    public Integer getIntInput(String message) {
+        Integer fieldValue;
 
-        try (Scanner userInput = new Scanner(System.in)) {
-            System.out.println(message);
-            fieldValue = userInput.nextInt();
-        }
+        System.out.println(message);
+        fieldValue = scan.nextInt();
+
         return fieldValue;
     }
 

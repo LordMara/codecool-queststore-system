@@ -23,7 +23,7 @@ public class Student extends Account{
         this.password = password;
         // this.codecoolClass = codecoolClass;
         generateId();
-        this.wallet = null;
+        // this.wallet = null;
         // this.level = new Level(); TODO
         Student.students.add(this);
     }
@@ -56,4 +56,9 @@ public class Student extends Account{
     public String toString(){
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
     }
+
+    public static ArrayList<Student> getStudents(){
+        return Student.students;
+    }
+
 }

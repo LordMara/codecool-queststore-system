@@ -1,3 +1,5 @@
+package src.app;
+
 import src.model.*;
 import src.view.*;
 import src.controller.*;

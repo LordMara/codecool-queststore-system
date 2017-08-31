@@ -29,6 +29,6 @@ public class MentorController{
     }
 
     public void showAllStudents(){
-        view.showAll(Student.students);
+        view.showAll(Student.getStudents());
     }
 }
