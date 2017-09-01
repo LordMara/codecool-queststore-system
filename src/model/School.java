@@ -36,7 +36,11 @@ public class School {
         classes = newClasses;
     }
 
-    public void addStudent(Student student) {
-        accounts.add(student);
+    public void addAccount(Account newMember) {
+        accounts.add(newMember);
+    }
+
+    public void addClass(Class newClass) {
+        classes.add(newClass);
     }
 }

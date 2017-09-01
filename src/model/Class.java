@@ -6,11 +6,13 @@ public class Class {
 
     Mentor mentor;
     ArrayList<Student> students;
+    ArrayList<Team> teams;
     String name;
-    public Class(Mentor newMentor, ArrayList<Student> newStudents, String newName) {
+    public Class(Mentor newMentor, ArrayList<Student> newStudents, ArrayList<Team> newTeams, String newName) {
 
         mentor = newMentor;
         students = newStudents;
+        teams = newTeams;
         name = newName;
     }
 
@@ -30,6 +32,18 @@ public class Class {
 
     public void setStudents(ArrayList<Student> newStudents) {
         students = newStudents;
+    }
+
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(ArrayList<Team> newTeams) {
+        teams = newTeams;
+    }
+
+    public void addTeam(Team newTeam) {
+        teams.add(newTeam);
     }
 
     public void addStudent(Student student) {

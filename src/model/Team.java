@@ -36,5 +36,9 @@ public class Team {
     public void setMentor(Mentor newMentor) {
         mentor = newMentor;
     }
+
+    public void addStudent(Student student) {
+        members.add(student);
+    }
     
 }
