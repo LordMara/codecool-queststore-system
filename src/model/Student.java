@@ -12,7 +12,6 @@ public class Student extends Account{
     // private Level level; TODO
 
     private static ArrayList<Student> students = new ArrayList<>();
-    private static  Integer lastID = 0;
 
     public Student(){
     }
@@ -49,10 +48,6 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-    protected void generateId(){
-        this.ID = Student.lastID;
-        Student.lastID ++;
-    }
 
     public String toString(){
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);

@@ -2,6 +2,7 @@ package src.model;
 
 public abstract class Account{
 
+    private static Integer lastID = 0;
     protected String name;
     protected String surname;
     protected String email;
@@ -9,7 +10,6 @@ public abstract class Account{
     protected String login;
     protected String password;
     protected Integer ID;
-
 
     public String getName(){
         return this.name;
@@ -64,6 +64,11 @@ public abstract class Account{
         return this.ID;
     }
 
-    protected abstract void generateId();
+    protected void generateId(){
+
+        this.ID = Account.lastID;
+        Account.lastID ++;
+
+    }
 
 }
