@@ -8,7 +8,7 @@ import src.model.Account;
 import src.model.Student;
 import src.model.Mentor;
 import src.model.Admin;
-import src.model.Class;
+
 
 public class SchoolView {
 
@@ -26,63 +26,48 @@ public class SchoolView {
 
         while (toLog){
 
-            System.out.println("Provide login: ");
-            login = in.next();
+            login = getStringInput("Provide login: ");
 
             if (isSuchlogin(login)) {
 
-                System.out.println("Provide password: ");
-                password = in.next();
+                password = getStringInput("Provide password: ");
 
-                if (isPasswordProper(login, password)) {
+                if (doesPasswordMatch(login, password)) {
 
-                    if (returnUser(login, password) instanceof Student) {
-
-                        Student activeUser = (Student) returnUser(login, password);
-                        return activeUser;
-                    }
-                    else {
-
-                        if (returnUser(login, password) instanceof Mentor) {
-
-                            Mentor activeUser = (Mentor) returnUser(login, password);
-                            return activeUser;
-                        }
-                        else {
-
-                            Admin activeUser = (Admin) returnUser(login, password);
-                            return activeUser;
-                        }
-                    }
-                    
-
+                    Account user = returnUser(login);
+                    return user;
                 }
                 else {
-
-                    System.out.println("Password doesn't match the login \npress Y if you want to continue logging");
-                    String answer = in.next().toUpperCase();
-                    
-                    if (!answer.equals("Y")) {
-                        toLog = false;
-                    }
+                    toLog = toKeepLoging("Password doesn't match the login \npress Y if you want to continue logging");
                 }
             }
             else {
-                
-                System.out.println("Such login doesn't exist \npress Y if you want to continue logging");
-                String answer = in.next().toUpperCase();
-
-                if (!answer.equals("Y")) {
-                    toLog = false;
-                }
+                toLog = toKeepLoging("Such login doesn't exist \npress Y if you want to continue logging");
             }
         }
         System.out.println("Login failed");
-        return createDefaultAccount();
+        return createDefaultUser();
 
     }
 
+    private String getStringInput(String question) {
 
+        Scanner in = new Scanner(System.in);
+        System.out.println(question);
+        String answer = in.next();
+        return answer;
+    }
+    private Boolean toKeepLoging(String warning) {
+
+        Scanner in = new Scanner(System.in);
+        System.out.println(warning);
+        String answer = in.next().toUpperCase();
+
+        if (!answer.equals("Y")) {
+            return false;
+        }
+        return true;
+    }
     private Boolean isSuchlogin(String login) {
 
         Iterator iter = school.getAccounts().iterator();
@@ -96,7 +81,7 @@ public class SchoolView {
         return false;
     }
 
-    private Boolean isPasswordProper(String login, String password) {
+    private Boolean doesPasswordMatch(String login, String password) {
 
         Iterator iter = school.getAccounts().iterator();
         
@@ -108,34 +93,31 @@ public class SchoolView {
                 }
             }
         }
-
         return false;
     }
 
-    private Account returnUser(String login, String password) {
+    private Account createDefaultUser() {
+        Student def = new Student();
+        return def;
+    }
+
+    private Account returnUser(String login) {
 
         Iterator iter = school.getAccounts().iterator();
         
         while(iter.hasNext()) {
             Account account = (Account) iter.next();
-            if (account.getLogin().equals(login) & account.getPassword().equals(password)) {
+            if (account.getLogin().equals(login)) {
                     return account;
                 }
             }
-            return createDefaultAccount();
+            return createDefaultUser();
         }
-
-    private Student createDefaultAccount() {
-        Student defaultStudent = new Student();
-        return defaultStudent;
-    }
-
-
 
     public static void main(String[] args) {
 
         ArrayList<Account> ac = new ArrayList<>();
-        ArrayList<Class> cl = new ArrayList<>();
+        ArrayList<src.model.Class> cl = new ArrayList<>();
 
         School codecool = new School(ac, cl, (String) "codecool");
         SchoolView zo = new SchoolView(codecool);
@@ -143,8 +125,8 @@ public class SchoolView {
         Student kasia = new Student("kasia", "K", "kata", "mata");
         Student basia = new Student("basia", "B", "bata", "cata");
 
-        codecool.addStudent(kasia);
-        codecool.addStudent(basia);
+        codecool.addAccount(kasia);
+        codecool.addAccount(basia);
 
         Account active = zo.logIn();
 
