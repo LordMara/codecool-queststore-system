@@ -24,7 +24,7 @@ public class Class {
         students.add(student);
     }
 
-    public void replaceMentor(Mentor newMentor) {
+    public void setMentor(Mentor newMentor) {
         mentor = newMentor;
     }
 

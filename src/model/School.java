@@ -2,6 +2,7 @@ package src.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import src.model.Student;
 
 
 
@@ -23,5 +24,9 @@ public class School {
 
     public ArrayList<Class> getClasses() {
         return classes;
+    }
+
+    public void addStudent(Student student) {
+        accounts.add(student);
     }
 }

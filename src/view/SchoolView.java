@@ -8,6 +8,8 @@ import src.model.Account;
 import src.model.Student;
 import src.model.Mentor;
 import src.model.Admin;
+import src.model.Class;
+
 public class SchoolView {
 
     School school;
@@ -36,20 +38,23 @@ public class SchoolView {
 
                     if (returnUser(login, password) instanceof Student) {
 
-                        Student activeUser = returnUser(login, password);
+                        Student activeUser = (Student) returnUser(login, password);
+                        return activeUser;
                     }
                     else {
 
                         if (returnUser(login, password) instanceof Mentor) {
 
-                            Mentor activeUser = returnUser(login, password);
+                            Mentor activeUser = (Mentor) returnUser(login, password);
+                            return activeUser;
                         }
                         else {
 
-                            Admin activeUser = returnUser(login, password);
+                            Admin activeUser = (Admin) returnUser(login, password);
+                            return activeUser;
                         }
                     }
-                    return activeUser;
+                    
 
                 }
                 else {
@@ -72,6 +77,8 @@ public class SchoolView {
                 }
             }
         }
+        System.out.println("Login failed");
+        return createDefaultAccount();
 
     }
 
@@ -115,11 +122,32 @@ public class SchoolView {
                     return account;
                 }
             }
+            return createDefaultAccount();
         }
+
+    private Student createDefaultAccount() {
+        Student defaultStudent = new Student();
+        return defaultStudent;
+    }
 
 
 
     public static void main(String[] args) {
+
+        ArrayList<Account> ac = new ArrayList<>();
+        ArrayList<Class> cl = new ArrayList<>();
+
+        School codecool = new School(ac, cl);
+        SchoolView zo = new SchoolView(codecool);
         
+        Student kasia = new Student("kasia", "K", "kata", "mata");
+        Student basia = new Student("basia", "B", "bata", "cata");
+
+        codecool.addStudent(kasia);
+        codecool.addStudent(basia);
+
+        Account active = zo.logIn();
+
+        System.out.println("The active user is: " + active.toString());
     }
 }
