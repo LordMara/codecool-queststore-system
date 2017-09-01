@@ -137,7 +137,7 @@ public class SchoolView {
         ArrayList<Account> ac = new ArrayList<>();
         ArrayList<Class> cl = new ArrayList<>();
 
-        School codecool = new School(ac, cl);
+        School codecool = new School(ac, cl, (String) "codecool");
         SchoolView zo = new SchoolView(codecool);
         
         Student kasia = new Student("kasia", "K", "kata", "mata");
