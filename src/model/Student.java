@@ -1,13 +1,14 @@
 package src.model;
 
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Student extends Account{
 
-    private CodecoolClass codecoolClass;
+    // private CodecoolClass codecoolClass;
     // private Team team;  TODO
-    private Wallet wallet;
+    // private Wallet wallet;
     // private Level level; TODO
 
     private static ArrayList<Student> students = new ArrayList<>();
@@ -16,14 +17,14 @@ public class Student extends Account{
     public Student(){
     }
 
-    public Student(String name, String surname, String login, String password, CodecoolClass codecoolClass){
+    public Student(String name, String surname, String login, String password){
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.codecoolClass = codecoolClass;
+        // this.codecoolClass = codecoolClass;
         generateId();
-        this.wallet = new Wallet();
+        // this.wallet = null;
         // this.level = new Level(); TODO
         Student.students.add(this);
     }
@@ -52,4 +53,22 @@ public class Student extends Account{
         this.ID = Student.lastID;
         Student.lastID ++;
     }
+
+    public String toString(){
+        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
+    }
+
+    public static ArrayList<Student> getStudents(){
+        return Student.students;
+    }
+
+    public static Student getByLogin(String login) throws NullPointerException{
+        for (Student student : Student.students){
+            if (student.login.equals(login)){
+                return student;
+            }
+        }
+        throw new NullPointerException();
+    }
+
 }

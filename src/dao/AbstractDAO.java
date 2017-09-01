@@ -1,12 +1,12 @@
 package src.dao;
 
-import java.util.Scanner;
-import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import src.dao.DAOInterface;
 
 public abstract class AbstractDAO<T> implements DAOInterface<T> {
-    public abstract void load();
+    protected ArrayList<T> objectList;
 
     public ArrayList<T> getAllObjects() {
         return this.objectList;
@@ -16,10 +16,12 @@ public abstract class AbstractDAO<T> implements DAOInterface<T> {
         this.objectList.add(object);
     }
 
-    public boolean removeObject(T object) {
-        this.objectList.remove(object);
+    public boolean removeObject(Integer id) {
+        Iterator iter = this.objectList.iterator();
+        while(iter.hasNext()) {
+            if(iter.next().getId.equals(id));
+        }
         return true;
     }
 
-    public abstract void save();
 }

@@ -1,6 +1,6 @@
 package src.model;
 
-public class Admin{
+public class Admin extends Account{
 
     private static ArrayList<Admin> admins = new ArrayList<>();
     private static  Integer lastID = 0;
@@ -18,5 +18,7 @@ public class Admin{
         Admin.lastID ++;
     }
 
-
+    public String toString(){
+        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
+    }
 }
