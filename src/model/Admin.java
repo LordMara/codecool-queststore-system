@@ -1,5 +1,7 @@
 package src.model;
 
+import java.util.ArrayList;
+
 public class Admin extends Account{
 
     private static ArrayList<Admin> admins = new ArrayList<>();
