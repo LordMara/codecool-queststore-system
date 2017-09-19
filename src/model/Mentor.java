@@ -9,7 +9,6 @@ public class Mentor extends Account{
     // private CodecoolClass codecoolClass;
 
     private static ArrayList<Mentor> mentors = new ArrayList<>();
-    private static  Integer lastID = 0;
 
 
     public Mentor(){
@@ -32,11 +31,6 @@ public class Mentor extends Account{
     // public Class getCodecoolClass(){
     //     return this.codecoolClass
     // }
-
-    protected void generateId(){
-        this.ID = Mentor.lastID;
-        Mentor.lastID ++;
-    }
 
     public String toString(){
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
