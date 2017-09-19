@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Admin extends Account{
 
     private static ArrayList<Admin> admins = new ArrayList<>();
-    private static  Integer lastID = 0;
 
     public Admin(String name, String surname, String login, String password){
         this.name = name;
@@ -13,11 +12,6 @@ public class Admin extends Account{
         this.login = login;
         this.password = password;
         generateId();
-    }
-
-    protected void generateId(){
-        this.ID = Admin.lastID;
-        Admin.lastID ++;
     }
 
     public String toString(){
