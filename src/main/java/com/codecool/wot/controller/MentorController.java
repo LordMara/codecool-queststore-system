@@ -52,7 +52,7 @@ public class MentorController{
                     createClass(classDao);
 
                 case EDIT_CLASS :
-                    editClass();
+                    editClass(classDao);
 
                 case EXIT :
                     break;
@@ -121,8 +121,8 @@ public class MentorController{
         new SchoolClass(name, classDao);
     }
 
-    private void editClass(){
-       getClassByName().setName(view.getStringInput());
+    private void editClass(ClassDAO classDAO){
+       getClassByName(classDAO).setName(view.getStringInput("Enter new class name: "));
     }
 
     private SchoolClass getClassByName(ClassDAO classDAO){
