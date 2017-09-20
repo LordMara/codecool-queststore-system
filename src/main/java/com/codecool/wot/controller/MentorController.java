@@ -1,5 +1,7 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.dao.StudentDAO;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
@@ -78,7 +80,7 @@ public class MentorController{
 
             try {
                 String login = view.getStringInput("Enter student's login :");
-                student = Student.getByLogin(login);
+                student = StudentDAO.getByLogin(login);
                 found = true;
             }
             catch (NullPointerException e){
@@ -88,4 +90,12 @@ public class MentorController{
         }
         return student;
     }
+
+    private void createClass(ClassDAO dao){
+
+        String name = view.getStringInput("Enter class name :");
+        new SchoolClass(name, dao);
+    }
+
+
 }
