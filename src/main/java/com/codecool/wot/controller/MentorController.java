@@ -23,6 +23,7 @@ public class MentorController{
         final String CREATE_STUDENT = "1";
         final String EDIT_STUDENT = "2";
         final String SHOW_STUDENTS = "3";
+        final String CREATE_CLASS = "4";
 
         String choose = "";
         String[] menu = {"Create student", "Edit student", "Show students"};
@@ -46,6 +47,9 @@ public class MentorController{
                     showAllStudents();
                     break;
 
+                case CREATE_CLASS :
+                    createClass(classDao);
+
                 case EXIT :
                     break;
             }
@@ -53,7 +57,7 @@ public class MentorController{
     }
 
 
-    private void createStudent(ClassDAO classDAO){
+    private void createStudent(ClassDAO classDAO, StudentDAO studentDAO){
 
         if (classDAO.getObjectList().size() > 0) {
             String name = view.getStringInput("Enter student's name: ");
@@ -63,7 +67,7 @@ public class MentorController{
             String password = view.getStringInput("Enter student's password: ");
             SchoolClass schoolClass = getClassByName(classDAO);
 
-            new Student(name, surname,email, login, password, schoolClass);
+            new Student(name, surname,email, login, password, studentDAO, schoolClass);
         }
         else{
             view.printMessage("Create class first ! ");
@@ -117,7 +121,7 @@ public class MentorController{
         boolean found = false;
         SchoolClass schoolClass = null;
 
-        while (! found){
+        while (! found){1
 
             try {
                 String name = view.getStringInput("Enter class name :");
