@@ -1,13 +1,36 @@
-package src.dao;
+package com.codecool.wot.dao;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.codecool.wot.interfaces.*;
+import java.util.LinkedList;
 
-import src.dao.DAOInterface;
+public abstract class AbstractDAO<T> implements DAO<T> {
 
-public abstract class AbstractDAO<T> implements DAOInterface<T> {
-    protected ArrayList<T> objectList;
+    protected LinkedList<T> objectsList = new LinkedList<T>();
 
-    public ArrayList<T> getAllObjects() {
-        return this.objectList;
+    public void addObject(T object) {
+        objectsList.add(object);
     }
+
+    public void removeObject(T object) {
+        objectsList.remove(object);
+    }
+
+    public void setObjectList(LinkedList<T> newObjectsList) {
+        objectsList = newObjectsList;
+    }
+
+    public LinkedList<T> getObjectList() {
+        return objectsList;
+    }
+
+    public String toString() {
+
+        String toStringList = "";
+        int count = 1;
+        for(T object: this.objectsList) {
+            toStringList += count + ". | " + object.toString() + "\n";
+            count++;
+        }
+        return toStringList.trim();
+    }
+}
