@@ -11,9 +11,10 @@ public abstract class Account{
     protected String password;
     protected Integer ID;
 
-    public Account(String name, String surname, String login, String password) {
+    public Account(String name, String surname, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.login = login;
         this.password = password;
     }
