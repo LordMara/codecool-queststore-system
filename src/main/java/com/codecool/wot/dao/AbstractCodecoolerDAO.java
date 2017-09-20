@@ -1,15 +1,29 @@
 package com.codecool.wot.dao;
+import com.codecool.wot.model.Account;
 
 import java.util.LinkedList;
 
-public abstract class AbstractCodecoolerDAO <T> extends AbstractDAO <T> {
+public abstract class AbstractCodecoolerDAO <T extends Account> extends AbstractDAO <T> {
 
     public static LinkedList<T> getByClass(String className){
-        return null;
+
+        LinkedList temp = new LinkedList();
+
+        for (T elem : LinkedList<T>){
+            if (elem.getSchoolClass().equals(className)){
+                temp.add(elem);
+            }
+        }
     }
 
-    public static LinkedList<T> getByLogin(String login){
-        return null;
+
+    public static T getByLogin(String login) throws NullPointerException{
+        for (T elem : LinkedList<T>){
+            if (elem.getLogin().equals(login)){
+                return elem;
+            }
+        }
+        throw new NullPointerException();
     }
 
 }

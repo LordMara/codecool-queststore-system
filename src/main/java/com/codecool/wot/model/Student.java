@@ -52,13 +52,4 @@ public class Student extends Account{
         return Student.students;
     }
 
-    public static Student getByLogin(String login) throws NullPointerException{
-        for (Student student : Student.students){
-            if (student.login.equals(login)){
-                return student;
-            }
-        }
-        throw new NullPointerException();
-    }
-
 }
