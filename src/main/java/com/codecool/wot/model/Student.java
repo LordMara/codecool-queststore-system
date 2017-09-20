@@ -6,15 +6,35 @@ import java.util.Random;
 
 public class Student extends Account{
 
-    // private CodecoolClass codecoolClass;
-    // private Team team;  TODO
+     private SchoolClass codecoolClass;
+     private Team team;
     // private Wallet wallet;
     // private Level level; TODO
 
-    private static ArrayList<Student> students = new ArrayList<>();
-
     public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
+
+        addToClass();
+    }
+
+    private void addToClass(SchoolClass codecoolClass) {
+        if (this.ID.equals()) {
+            this.codecoolClass = codecoolClass;
+        }
+    }
+
+    private void addToTeam(Team team) {
+        if (this.ID.equals()) {
+            this.team = team;
+        }
+    }
+
+    public SchoolClass getCodecoolClass() {
+        return codecoolClass;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     // public CodecoolClass getCodecoolClass(){
