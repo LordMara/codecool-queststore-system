@@ -1,6 +1,6 @@
 package com.codecool.wot.view;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class View<T> {
@@ -30,7 +30,7 @@ public class View<T> {
         return fieldValue;
     }
 
-    public void showAll(ArrayList<T> objectList) {
+    public void showAll(List <T> objectList) {
         for(T object: objectList) {
             System.out.println(object);
         }
