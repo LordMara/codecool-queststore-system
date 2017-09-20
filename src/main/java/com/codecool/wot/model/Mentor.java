@@ -2,13 +2,12 @@ package com.codecool.wot.model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import com.codecool.wot.dao.MentorDao;
 
 
 public class Mentor extends Account{
 
-    // private CodecoolClass codecoolClass;
-
-    private static ArrayList<Mentor> mentors = new ArrayList<>();
+    private SchoolClass schoolClass;
 
 
     public Mentor(){
@@ -20,16 +19,16 @@ public class Mentor extends Account{
         this.login = login;
         this.password = password;
         generateId();
-        Mentor.mentors.add(this);
+        MentorDao.add(this);
     }
 
-    // public setCodecoolClass(CodecoolClass codecoolClass){
-    //     this.codecoolClass = codecoolClass;
-    // }
+     public void setSchoolClass(SchoolClass schoolClass){
+         this.schoolClass = schoolClass;
+     }
 
-    // public Class getCodecoolClass(){
-    //     return this.codecoolClass
-    // }
+     public SchoolClass getSchoolClass(){
+         return this.schoolClass;
+     }
 
     public String toString(){
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
