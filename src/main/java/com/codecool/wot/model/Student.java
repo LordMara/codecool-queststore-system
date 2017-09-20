@@ -16,17 +16,11 @@ public class Student extends Account{
     public Student(){
     }
 
-    public Student(String name, String surname, String login, String password){
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        // this.codecoolClass = codecoolClass;
-        generateId();
-        // this.wallet = null;
-        // this.level = new Level(); TODO
-        Student.students.add(this);
+    public Student(String name, String surname, String login, String password) {
+        super(name, surname, login, password);
     }
+
+}
 
     // public CodecoolClass getCodecoolClass(){
     //     return this.codecoolClass;
