@@ -1,4 +1,4 @@
-package src.controller;
+package com.codecool.wot.controller;
 
 
 import java.util.ArrayList;

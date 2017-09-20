@@ -1,4 +1,4 @@
-package src.dao;
+package com.codecool.wot.dao;
 
 import java.util.ArrayList;
 

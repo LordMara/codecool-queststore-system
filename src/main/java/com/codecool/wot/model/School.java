@@ -1,4 +1,4 @@
-package src.model;
+package com.codecool.wot.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
