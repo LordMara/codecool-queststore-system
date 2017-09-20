@@ -72,7 +72,6 @@ public abstract class Account{
         return this.ID;
     }
 
-
     protected void generateId(){
 
         this.ID = Account.lastID;

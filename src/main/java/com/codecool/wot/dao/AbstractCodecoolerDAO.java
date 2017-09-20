@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public abstract class AbstractCodecoolerDAO <T extends Account> extends AbstractDAO <T> {
 
-    public static LinkedList<T> getByClass(String className){
+    public LinkedList<T> getByClass(String className){
 
         LinkedList temp = new LinkedList();
 
@@ -17,7 +17,7 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
     }
 
 
-    public static T getByLogin(String login) throws NullPointerException{
+    public T getByLogin(String login) throws NullPointerException{
         for (T elem : LinkedList<T>){
             if (elem.getLogin().equals(login)){
                 return elem;
