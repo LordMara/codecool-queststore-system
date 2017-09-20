@@ -24,6 +24,7 @@ public class MentorController{
         final String EDIT_STUDENT = "2";
         final String SHOW_STUDENTS = "3";
         final String CREATE_CLASS = "4";
+        final String EDIT_CLASS = "5";
 
         String choose = "";
         String[] menu = {"Create student", "Edit student", "Show students"};
@@ -50,6 +51,9 @@ public class MentorController{
                 case CREATE_CLASS :
                     createClass(classDao);
 
+                case EDIT_CLASS :
+                    editClass();
+
                 case EXIT :
                     break;
             }
@@ -75,12 +79,17 @@ public class MentorController{
     }
 
     private void editStudent(Student student){
+        updateWholeStudent(student);
+
+    }
+
+    private void updateWholeStudent(Student student) {
         student.setName(view.getStringInput("Enter new student's name: "));
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
         student.setPassword(view.getStringInput("Enter new student's password: "));
-
     }
+
     private void showAllStudents(StudentDAO studentDAO){
 
         view.showAll(studentDAO.getObjectList());
@@ -112,8 +121,8 @@ public class MentorController{
         new SchoolClass(name, classDao);
     }
 
-    private void editClass(SchoolClass schoolClass){
-
+    private void editClass(){
+       getClassByName().setName(view.getStringInput());
     }
 
     private SchoolClass getClassByName(ClassDAO classDAO){
