@@ -9,9 +9,10 @@ public class Mentor extends Account{
 
     private SchoolClass schoolClass;
 
-    public Mentor(String name, String surname, String email, String login, String password, ) {
+    public Mentor(String name, String surname, String email, String login, String password, MentorDAO dao) {
         super(name, surname, email, login, password);
         this.schoolClass = null;
+        dao.add(this);
     }
 
     public void setSchoolClass(SchoolClass schoolClass){
@@ -21,6 +22,4 @@ public class Mentor extends Account{
     public SchoolClass getSchoolClass(){
          return this.schoolClass;
      }
-
-
 }
