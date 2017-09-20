@@ -7,7 +7,7 @@ import java.util.Random;
 public class Student extends Account{
 
      private SchoolClass codecoolClass;
-    // private Team team;  TODO
+     private Team team;
     // private Wallet wallet;
     // private Level level; TODO
 
@@ -21,6 +21,20 @@ public class Student extends Account{
         if (this.ID.equals()) {
             this.codecoolClass = codecoolClass;
         }
+    }
+
+    private void addToTeam(Team team) {
+        if (this.ID.equals()) {
+            this.team = team;
+        }
+    }
+
+    public SchoolClass getCodecoolClass() {
+        return codecoolClass;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     // public CodecoolClass getCodecoolClass(){
