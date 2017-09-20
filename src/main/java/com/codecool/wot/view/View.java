@@ -1,4 +1,4 @@
-package src.view;
+package com.codecool.wot.view;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package src.model;
+package com.codecool.wot.model;
 
 public abstract class Account{
 

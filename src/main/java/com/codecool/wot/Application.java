@@ -1,8 +1,8 @@
-package src.app;
+package com.codecool.wot;
 
-import src.model.*;
-import src.view.*;
-import src.controller.*;
+import com.codecool.wot.model.*;
+import com.codecool.wot.view.*;
+import com.codecool.wot.controller.*;
 
 class Application{
 

@@ -1,4 +1,4 @@
-package src.model;
+package com.codecool.wot.model;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,7 +21,6 @@ public class Mentor extends Account{
         this.password = password;
         generateId();
         Mentor.mentors.add(this);
-
     }
 
     // public setCodecoolClass(CodecoolClass codecoolClass){
