@@ -1,6 +1,6 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.model.ClassModel;
+import com.codecool.wot.model.SchoolClass;
 
-public class ClassDAO extends AbstractDAO<ClassModel> {
+public class ClassDAO extends AbstractDAO<SchoolClass> {
 }

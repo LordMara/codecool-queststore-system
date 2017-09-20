@@ -1,6 +1,6 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.model.ArtifactModel;
+import com.codecool.wot.model.Artifact;
 
-public class ArtifactDAO extends AbstractDAO<ArtifactModel> {
+public class ArtifactDAO extends AbstractDAO<Artifact> {
 }

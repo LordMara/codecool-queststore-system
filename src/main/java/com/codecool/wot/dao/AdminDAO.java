@@ -1,6 +1,6 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.model.AdminModel;
+import com.codecool.wot.model.Admin;
 
-public class AdminDAO extends AbstractDAO<AdminModel> {
+public class AdminDAO extends AbstractDAO<Admin> {
 }
