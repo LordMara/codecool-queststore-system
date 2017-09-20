@@ -17,6 +17,7 @@ public class MentorController{
     public void startController(){
 
         ClassDAO classDao = new ClassDAO();
+        StudentDAO studentDAO = new StudentDAO();
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
@@ -73,7 +74,7 @@ public class MentorController{
         view.showAll(Student.getStudents());
     }
 
-    private Student getStudentByLogin(){
+    private Student getStudentByLogin(StudentDAO studentDAO){
 
         boolean found = false;
         Student student = null;
@@ -82,7 +83,7 @@ public class MentorController{
 
             try {
                 String login = view.getStringInput("Enter student's login :");
-                student = StudentDAO.getByLogin(login);
+                student = studentDAO.getByLogin(login);
                 found = true;
             }
             catch (NullPointerException e){
