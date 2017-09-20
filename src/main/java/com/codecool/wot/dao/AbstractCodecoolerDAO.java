@@ -7,13 +7,14 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
 
     public LinkedList<T> getByClass(String className){
 
-        LinkedList temp = new LinkedList();
+        LinkedList<T> temp = new LinkedList<>();
 
         for (T elem : objectsList){
-            if (elem.getSchoolClass().equals(className)){
+            if (elem.getSchoolClass().getName().equals(className)){
                 temp.add(elem);
             }
         }
+        return temp;
     }
 
 
