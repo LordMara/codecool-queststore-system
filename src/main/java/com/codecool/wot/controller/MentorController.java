@@ -1,6 +1,7 @@
 package com.codecool.wot.controller;
 
 import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.dao.QuestDAO;
 import com.codecool.wot.dao.StudentDAO;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
@@ -18,6 +19,7 @@ public class MentorController{
 
         ClassDAO classDao = new ClassDAO();
         StudentDAO studentDAO = new StudentDAO();
+        QuestDAO questDAO = new QuestDAO();
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
@@ -25,6 +27,8 @@ public class MentorController{
         final String SHOW_STUDENTS = "3";
         final String CREATE_CLASS = "4";
         final String EDIT_CLASS = "5";
+        final String CREATE_QUEST = "6";
+
 
         String choose = "";
         String[] menu = {"Create student", "Edit student", "Show students"};
@@ -37,15 +41,15 @@ public class MentorController{
             switch (choose){
 
                 case CREATE_STUDENT :
-                    createStudent();
+                    createStudent(classDao, studentDAO);
                     break;
 
                 case EDIT_STUDENT :
-                    editStudent(getStudentByLogin());
+                    editStudent(getStudentByLogin(studentDAO));
                     break;
 
                 case SHOW_STUDENTS :
-                    showAllStudents();
+                    showAllStudents(studentDAO);
                     break;
 
                 case CREATE_CLASS :
@@ -53,6 +57,9 @@ public class MentorController{
 
                 case EDIT_CLASS :
                     editClass(classDao);
+
+                case CREATE_QUEST:
+                    createQuest(questDAO);
 
                 case EXIT :
                     break;
@@ -143,6 +150,13 @@ public class MentorController{
             }
         }
         return schoolClass;
+    }
+
+    private void createQuest(QuestDAO questDAO) {
+
+        String name = view.getStringInput("Enter quest name :");
+        String description = view.getStringInput("Enter quest short destcription :");
+        new Quest(name, description, questDAO);
     }
 
 }
