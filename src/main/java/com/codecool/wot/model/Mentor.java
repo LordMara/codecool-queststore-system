@@ -9,20 +9,12 @@ public class Mentor extends Account{
 
     private SchoolClass schoolClass;
 
-
-    public Mentor(){
+    public Mentor(String name, String surname, String login, String password) {
+        super(name, surname, login, password);
     }
 
-    public Mentor(String name, String surname, String login, String password){
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        generateId();
-        MentorDAO.add(this);login
-    }
 
-     public void setSchoolClass(SchoolClass schoolClass){
+    public void setSchoolClass(SchoolClass schoolClass){
          this.schoolClass = schoolClass;
      }
 
