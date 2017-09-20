@@ -6,21 +6,14 @@ import java.util.Random;
 
 public class Student extends Account{
 
-     private SchoolClass codecoolClass;
+     private SchoolClass schoolClass;
      private Team team;
     // private Wallet wallet;
     // private Level level; TODO
 
-    public Student(String name, String surname, String email, String login, String password) {
+    public Student(String name, String surname, String email, String login, String password, SchoolClass schoolClass) {
         super(name, surname, email, login, password);
-
-        addToClass();
-    }
-
-    private void addToClass(SchoolClass codecoolClass) {
-        if (this.ID.equals()) {
-            this.codecoolClass = codecoolClass;
-        }
+        this.schoolClass = schoolClass;
     }
 
     private void addToTeam(Team team) {
@@ -29,20 +22,20 @@ public class Student extends Account{
         }
     }
 
-    public SchoolClass getCodecoolClass() {
-        return codecoolClass;
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
     public Team getTeam() {
         return team;
     }
 
-    // public CodecoolClass getCodecoolClass(){
-    //     return this.codecoolClass;
+    // public CodecoolClass getSchoolClass(){
+    //     return this.schoolClass;
     // }
     //
-    // public void setCodecoolClass(Cprivate CodecoolClass codecoolClass){
-    //     this.codecoolClass = codecoolClass;
+    // public void setSchoolClass( SchoolClass schoolClass){
+    //     this.schoolClass = schoolClass;
     // }
 
     // public void setTeam(Team team){
@@ -57,13 +50,5 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-
-    public String toString(){
-        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
-    }
-
-    public static ArrayList<Student> getStudents(){
-        return Student.students;
-    }
 
 }
