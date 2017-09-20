@@ -7,19 +7,21 @@ import com.codecool.wot.view.*;
 
 
 public class MentorController{
-    View <Student> view;
 
-    private final String CREATE_STUDENT = "1";
-    private final String EDIT_STUDENT = "2";
-    private final String SHOW_STUDENTS = "3";
-    private final String EXIT = "0";
-
+    private View <Student> view;
 
     public MentorController(){
         this.view = new View<>();
     }
 
     public void startController(){
+
+        ClassDAO classDao = new ClassDAO();
+
+        final String EXIT = "0";
+        final String CREATE_STUDENT = "1";
+        final String EDIT_STUDENT = "2";
+        final String SHOW_STUDENTS = "3";
 
         String choose = "";
         String[] menu = {"Create student", "Edit student", "Show students"};
@@ -50,7 +52,7 @@ public class MentorController{
     }
 
 
-    public void createStudent(){
+    private void createStudent(){
         String name = view.getStringInput("Enter student's name: ");
         String surname = view.getStringInput("Enter student's surname: ");
         String login = view.getStringInput("Enter student's login: ");
@@ -59,7 +61,7 @@ public class MentorController{
         Student student = new Student(name, surname, login, password);
     }
 
-    public void editStudent(Student student){
+    private void editStudent(Student student){
         student.setName(view.getStringInput("Enter new student's name: "));
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
@@ -67,7 +69,7 @@ public class MentorController{
 
     }
 
-    public void showAllStudents(){
+    private void showAllStudents(){
         view.showAll(Student.getStudents());
     }
 
@@ -91,10 +93,14 @@ public class MentorController{
         return student;
     }
 
-    private void createClass(ClassDAO dao){
+    private void createClass(ClassDAO classDao){
 
         String name = view.getStringInput("Enter class name :");
-        new SchoolClass(name, dao);
+        new SchoolClass(name, classDao);
+    }
+
+    private void editClass(SchoolClass schoolClass){
+
     }
 
 
