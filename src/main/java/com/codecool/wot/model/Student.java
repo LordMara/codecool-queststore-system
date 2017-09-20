@@ -1,5 +1,7 @@
 package com.codecool.wot.model;
 
+import com.codecool.wot.dao.StudentDAO;
+
 import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,9 +13,10 @@ public class Student extends Account{
     // private Wallet wallet;
     // private Level level; TODO
 
-    public Student(String name, String surname, String email, String login, String password, SchoolClass schoolClass) {
+    public Student(String name, String surname, String email, String login, String password, StudentDAO studentDAO, SchoolClass schoolClass) {
         super(name, surname, email, login, password);
         this.schoolClass = schoolClass;
+        studentDAO.add(this);
     }
 
     private void addToTeam(Team team) {
