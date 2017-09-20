@@ -2,7 +2,7 @@ package com.codecool.wot.dao;
 
 import java.util.LinkedList;
 
-public class AbstractCodecoolerDAO <T> extends AbstractDAO <T> {
+public abstract class AbstractCodecoolerDAO <T> extends AbstractDAO <T> {
 
     public static LinkedList<T> getByClass(String className){
         return null;
