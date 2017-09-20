@@ -9,7 +9,7 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
 
         LinkedList temp = new LinkedList();
 
-        for (T elem : LinkedList<T>){
+        for (T elem : objectsList){
             if (elem.getSchoolClass().equals(className)){
                 temp.add(elem);
             }
@@ -18,7 +18,7 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
 
 
     public T getByLogin(String login) throws NullPointerException{
-        for (T elem : LinkedList<T>){
+        for (T elem : objectsList){
             if (elem.getLogin().equals(login)){
                 return elem;
             }
