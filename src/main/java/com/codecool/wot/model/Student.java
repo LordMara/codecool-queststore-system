@@ -1,4 +1,4 @@
-package com.codecool.wot..model;
+package com.codecool.wot.model;
 
 import java.lang.NullPointerException;
 import java.util.ArrayList;

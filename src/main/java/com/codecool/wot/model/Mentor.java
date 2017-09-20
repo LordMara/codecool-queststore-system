@@ -2,7 +2,7 @@ package com.codecool.wot.model;
 
 import java.util.ArrayList;
 import java.util.Random;
-import com.codecool.wot.dao.MentorDao;
+import com.codecool.wot.dao.MentorDAO;
 
 
 public class Mentor extends Account{
@@ -19,7 +19,7 @@ public class Mentor extends Account{
         this.login = login;
         this.password = password;
         generateId();
-        MentorDao.add(this);
+        MentorDAO.add(this);login
     }
 
      public void setSchoolClass(SchoolClass schoolClass){

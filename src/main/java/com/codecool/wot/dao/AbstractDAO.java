@@ -7,11 +7,11 @@ public abstract class AbstractDAO<T> implements DAO<T> {
 
     protected LinkedList<T> objectsList = new LinkedList<T>();
 
-    public void addObject(T object) {
+    public void add(T object) {
         objectsList.add(object);
     }
 
-    public void removeObject(T object) {
+    public void remove(T object) {
         objectsList.remove(object);
     }
 
