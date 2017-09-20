@@ -13,11 +13,9 @@ public class Student extends Account{
 
     private static ArrayList<Student> students = new ArrayList<>();
 
-    public Student(String name, String surname, String login, String password) {
-        super(name, surname, login, password);
+    public Student(String name, String surname, String email, String login, String password) {
+        super(name, surname, email, login, password);
     }
-
-
 
     // public CodecoolClass getCodecoolClass(){
     //     return this.codecoolClass;
