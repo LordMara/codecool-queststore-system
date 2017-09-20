@@ -121,7 +121,7 @@ public class MentorController{
         boolean found = false;
         SchoolClass schoolClass = null;
 
-        while (! found){1
+        while (! found){
 
             try {
                 String name = view.getStringInput("Enter class name :");
