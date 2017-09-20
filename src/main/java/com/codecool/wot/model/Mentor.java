@@ -13,12 +13,11 @@ public class Mentor extends Account{
         super(name, surname, login, password);
     }
 
-
     public void setSchoolClass(SchoolClass schoolClass){
          this.schoolClass = schoolClass;
      }
 
-     public SchoolClass getSchoolClass(){
+    public SchoolClass getSchoolClass(){
          return this.schoolClass;
      }
 
@@ -26,16 +25,4 @@ public class Mentor extends Account{
         return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
     }
 
-    public static ArrayList<Mentor> getMentors(){
-        return Mentor.mentors;
-    }
-
-    public static Mentor getByLogin(String login) throws NullPointerException{
-        for (Mentor mentor : Mentor.mentors){
-            if (mentor.login.equals(login)){
-                return mentor;
-            }
-        }
-        throw new NullPointerException();
-    }
 }
