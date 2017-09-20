@@ -1,20 +1,20 @@
 package com.codecool.wot.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import com.codecool.wot.dao.*;
 
 public class SchoolClass {
+
     private String name;
     private LinkedList<Student> students;
-    private ArrayList<Mentor> mentors;
+    private LinkedList<Mentor> mentors;
 
-    public SchoolClass(String name) {
-        this.students = StudentDAO.getByClass();
-        this.mentors = MentorDAO.getByClass();
+    public SchoolClass(String name, ClassDAO dao) {
+        this.students = LinkedList<Student>();
+        this.mentors = new LinkedList<Mentor>();
         this.name = name;
+        dao.add(this);
     }
-
 
     public String getName() {
         return name;
@@ -24,11 +24,11 @@ public class SchoolClass {
         this.name = name;
     }
 
-    public ArrayList<Student> getStudents() {
+    public LinkedList<Student> getStudents() {
         return students;
     }
 
-    public ArrayList<Mentor> getMentors() {
+    public LinkedList<Mentor> getMentors() {
         return mentors;
     }
 
