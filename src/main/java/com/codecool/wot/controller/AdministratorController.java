@@ -1,9 +1,8 @@
 package com.codecool.wot.controller;
 
-
 import java.util.ArrayList;
-import src.model.*;
-import src.view.*;
+import com.codecool.wot.model.*;
+import com.codecool.wot.view.*;
 
 public class AdministratorController{
 

@@ -1,8 +1,10 @@
 package com.codecool.wot.controller;
 
+
 import com.codecool.wot.dao.ClassDAO;
 import com.codecool.wot.dao.QuestDAO;
 import com.codecool.wot.dao.StudentDAO;
+
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
@@ -155,7 +157,7 @@ public class MentorController{
     private void createQuest(QuestDAO questDAO) {
 
         String name = view.getStringInput("Enter quest name : ");
-        String description = view.getStringInput("Enter quest short destcription :");
+        String description = view.getStringInput("Enter quest short description :");
         Float price = view.getFloatInput("Enter quest price :");
         new Quest(name, description, price, questDAO);
     }
