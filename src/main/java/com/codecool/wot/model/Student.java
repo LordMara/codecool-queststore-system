@@ -1,39 +1,44 @@
 package com.codecool.wot.model;
 
+import com.codecool.wot.dao.StudentDAO;
+
 import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Student extends Account{
 
-    // private CodecoolClass codecoolClass;
-    // private Team team;  TODO
+     private SchoolClass schoolClass;
+     private Team team;
     // private Wallet wallet;
     // private Level level; TODO
 
-    private static ArrayList<Student> students = new ArrayList<>();
-
-    public Student(){
+    public Student(String name, String surname, String email, String login, String password, StudentDAO studentDAO, SchoolClass schoolClass) {
+        super(name, surname, email, login, password);
+        this.schoolClass = schoolClass;
+        studentDAO.add(this);
     }
 
-    public Student(String name, String surname, String login, String password){
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        // this.codecoolClass = codecoolClass;
-        generateId();
-        // this.wallet = null;
-        // this.level = new Level(); TODO
-        Student.students.add(this);
+    private void addToTeam(Team team) {
+        if (this.ID.equals()) {
+            this.team = team;
+        }
     }
 
-    // public CodecoolClass getCodecoolClass(){
-    //     return this.codecoolClass;
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    // public CodecoolClass getSchoolClass(){
+    //     return this.schoolClass;
     // }
     //
-    // public void setCodecoolClass(Cprivate CodecoolClass codecoolClass){
-    //     this.codecoolClass = codecoolClass;
+    // public void setSchoolClass( SchoolClass schoolClass){
+    //     this.schoolClass = schoolClass;
     // }
 
     // public void setTeam(Team team){
@@ -48,22 +53,5 @@ public class Student extends Account{
     //     return this.level;TODO
     // }
 
-
-    public String toString(){
-        return String.format("Name : %s  | Surname : %s ", this.name, this.surname);
-    }
-
-    public static ArrayList<Student> getStudents(){
-        return Student.students;
-    }
-
-    public static Student getByLogin(String login) throws NullPointerException{
-        for (Student student : Student.students){
-            if (student.login.equals(login)){
-                return student;
-            }
-        }
-        throw new NullPointerException();
-    }
 
 }

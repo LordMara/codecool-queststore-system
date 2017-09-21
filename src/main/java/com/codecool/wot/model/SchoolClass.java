@@ -8,6 +8,7 @@ public class SchoolClass {
     ArrayList<Student> students;
     ArrayList<Team> teams;
     String name;
+
     public Class(Mentor newMentor, ArrayList<Student> newStudents, ArrayList<Team> newTeams, String newName) {
 
         mentor = newMentor;

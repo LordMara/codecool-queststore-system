@@ -1,4 +1,7 @@
 package com.codecool.wot.dao;
+import com.codecool.wot.model.Student;
+import java.util.LinkedList;
+
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,9 +9,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-import com.codecool.wot.dao.DAOInterface;
-
-public class StudentDAO<T> extends AbstractDAO<T> {
 
 
+public class StudentDAO extends AbstractCodecoolerDAO<Student>{
 }

@@ -11,6 +11,14 @@ public abstract class Account{
     protected String password;
     protected Integer ID;
 
+    public Account(String name, String surname, String email, String login, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
     public String getName(){
         return this.name;
     }
@@ -64,6 +72,9 @@ public abstract class Account{
         return this.ID;
     }
 
+    public SchoolClass getSchoolClass(){
+        return null;
+    }
 
     protected void generateId(){
 
