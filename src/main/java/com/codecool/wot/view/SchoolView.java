@@ -3,11 +3,8 @@ package com.codecool.wot.view;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Iterator;
-import src.model.School;
-import src.model.Account;
-import src.model.Student;
-import src.model.Mentor;
-import src.model.Admin;
+
+import com.codecool.wot.model.*;
 
 
 public class SchoolView {
@@ -114,22 +111,4 @@ public class SchoolView {
             return createDefaultUser();
         }
 
-    public static void main(String[] args) {
-
-        ArrayList<Account> ac = new ArrayList<>();
-        ArrayList<src.model.Class> cl = new ArrayList<>();
-
-        School codecool = new School(ac, cl, (String) "codecool");
-        SchoolView zo = new SchoolView(codecool);
-        
-        Student kasia = new Student("kasia", "K", "kata", "mata");
-        Student basia = new Student("basia", "B", "bata", "cata");
-
-        codecool.addAccount(kasia);
-        codecool.addAccount(basia);
-
-        Account active = zo.logIn();
-
-        System.out.println("The active user is: " + active.toString());
-    }
 }
