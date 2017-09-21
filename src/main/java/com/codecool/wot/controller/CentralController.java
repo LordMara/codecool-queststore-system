@@ -19,7 +19,7 @@ public class CentralController {
 
         ArtifactDAO arDAO = new ArtifactDAO();
         QuestDAO qDAO = new QuestDAO();
-        ClassDAO cDAO = new ClassDAO();
+        ClassDAO cDAO = new ClassDAO(connection);
 
         AdminDAO aDAO = new AdminDAO(connection);
         MentorDAO mDAO = new MentorDAO(connection);
@@ -39,7 +39,7 @@ public class CentralController {
 //
 //        for (Mentor mentor : mDAO.getPersonList()) {
 //            if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
-//                MentorController mentorController = new MentorController();
+//                MentorController mentorController = new MentorController(cDAO,sDAO,mDAO,qDAO);
 //                mentorController.startController();
 //            }
 //        }
