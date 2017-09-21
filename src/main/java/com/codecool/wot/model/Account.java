@@ -6,7 +6,7 @@ public abstract class Account{
     protected String name;
     protected String surname;
     protected String email;
-    protected String phone;
+    protected String phone = null;
     protected String login;
     protected String password;
     protected Integer ID;
