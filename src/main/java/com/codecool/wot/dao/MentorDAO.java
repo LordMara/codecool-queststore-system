@@ -7,7 +7,6 @@ import java.sql.*;
 
 public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
-
     public MentorDAO(Connection connection) {
         loadMentors(connection);
     }
@@ -18,20 +17,21 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
             connection.setAutoCommit(false);
             Statement stmt = connection.createStatement();
 
-            String query = "SELECT * FROM queststore WHERE role ='mentor'";
+            String query = "SELECT * FROM persons JOIN persons_classes ON personId WHERE role ='mentor'";
 
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
 
-                int Id = rs.getInt("personId");
+                Integer Id = rs.getInt("personId");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
                 String email = rs.getString("email");
                 String login = rs.getString("login");
                 String password = rs.getString("password");
+                Integer classId = rs.getInt("classId");
 
-                objectsList.add(new Mentor(name, surname, email, login, password, Id));
+                objectsList.add(new Mentor(name, surname, email, login, password, Id, classId));
             }
 
             rs.close();
