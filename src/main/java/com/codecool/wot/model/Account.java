@@ -86,4 +86,9 @@ public abstract class Account{
         return null;
     }
 
+    public String toString() {
+        return String.format("ID=%d, name=%s, surname=%s, email=%s, login=%s, password=%s",
+                ID, name, surname, email, login, password);
+    }
+
 }
