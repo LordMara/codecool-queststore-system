@@ -2,7 +2,7 @@ package com.codecool.wot.dao;
 
 import com.codecool.wot.model.SchoolClass;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class ClassDAO extends AbstractDAO<SchoolClass> {
 

@@ -1,13 +1,13 @@
 package com.codecool.wot.dao;
 import com.codecool.wot.model.Account;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public abstract class AbstractCodecoolerDAO <T extends Account> extends AbstractDAO <T> {
 
-    public LinkedList<T> getByClass(String className){
+    public ArrayList<T> getByClass(String className) {
 
-        LinkedList<T> temp = new LinkedList<>();
+        ArrayList<T> temp = new ArrayList<>();
 
         for (T elem : objectsList){
             if (elem.getSchoolClass().getName().equals(className)){
