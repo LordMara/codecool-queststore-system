@@ -40,6 +40,24 @@ public class View<T> {
         return fieldValue;
     }
 
+    public Float getFloatInput(String message) {
+        Float fieldValue = null;
+        boolean operationSuccesful = false;
+
+        System.out.println(message);
+
+        do {
+            try {
+                fieldValue = scan.nextFloat();
+                operationSuccesful = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Input correct value");
+            }
+        } while (!operationSuccesful);
+
+        return fieldValue;
+    }
+
     public void showAll(List <T> objectList) {
         for(T object: objectList) {
             System.out.println(object);
