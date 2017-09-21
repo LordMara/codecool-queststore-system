@@ -26,7 +26,7 @@ class Application{
 
         while (! choose.equals("0")){
 
-            view.showMenu(menu);
+            view.showMenu("Menu",menu, "Bye bye");
             choose = view.getStringInput("");
 
             switch (choose){

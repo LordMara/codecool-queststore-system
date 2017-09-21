@@ -78,7 +78,7 @@ public class MentorController{
             String password = view.getStringInput("Enter student's password: ");
             Integer classId = getClassByName(classDAO).getId();
 
-            new Student(name, surname, email, login, password, studentDAO, classId);
+            new Student(name, surname, email, login, password, studentDAO);
         }
         else{
             view.printMessage("Create class first ! ");
