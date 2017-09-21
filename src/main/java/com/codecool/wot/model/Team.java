@@ -2,7 +2,6 @@ package com.codecool.wot.model;
 
 import java.util.ArrayList;
 
-import com.codecool.wot.model.*;
 
 public class Team {
 
