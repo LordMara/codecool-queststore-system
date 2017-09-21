@@ -42,7 +42,29 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    private void saveToDataBase(Connection connection, Student student) {
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            String values = String.format("(%d, %s, %s, %s, %s, %s, %s, student)", student.getId(), student.getName(), student.getSurname()
+                    , student.getEmail(), student.getPhone(), student.getLogin(), student.getPassword());
+
+            String values2 = String.format("(%d, %d", student.getId(), student.getClassId());
+
+            String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
+
+            String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
+
+            stmt.executeUpdate(query1);
+            stmt.executeQuery(query2);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }
