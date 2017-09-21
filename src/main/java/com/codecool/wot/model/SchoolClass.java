@@ -32,4 +32,12 @@ public class SchoolClass {
         return mentors;
     }
 
+    public void assignStudent(Student student) {
+        this.students.add(student);
+    }
+
+    public void assignMentor(Mentor mentor) {
+        this.mentors.add(mentor);
+    }
+
 }
