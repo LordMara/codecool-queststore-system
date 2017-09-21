@@ -7,7 +7,7 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
 
     public ArrayList<T> getByClass(String className) {
 
-        ArrayList<T> temp = new ArrayList<>();
+        ArrayList<T> temp = new ArrayList<T>();
 
         for (T elem : objectsList){
             if (elem.getSchoolClass().getName().equals(className)){

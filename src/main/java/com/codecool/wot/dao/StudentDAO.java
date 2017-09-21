@@ -12,7 +12,6 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
     public StudentDAO(Connection connection) {
         loadStudents(connection);
     }
-}
 
     private void loadStudents(Connection connection) {
 
@@ -20,20 +19,22 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             connection.setAutoCommit(false);
             Statement stmt = connection.createStatement();
 
-            String query = "SELECT * FROM queststore WHERE role ='student'";
+            String query = "SELECT * FROM persons JOIN persons_classes ON personId WHERE role ='student'";
 
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
 
-                int Id = rs.getInt("personId");
+                Integer Id = rs.getInt("personId");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
                 String email = rs.getString("email");
                 String login = rs.getString("login");
                 String password = rs.getString("password");
+                Integer classId = rs.getInt("classId");
 
-                objectsList.add(new Student(name, surname, email, login, password, Id));
+
+                objectsList.add(new Student(name, surname, email, login, password, Id, classId));
             }
 
             rs.close();
@@ -41,4 +42,6 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 }
+

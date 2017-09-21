@@ -4,6 +4,7 @@ import  com.codecool.wot.dao.StudentDAO;
 
 public class Student extends Account{
 
+
      private Integer classId;
 //     private Integer teamId;
 
@@ -13,14 +14,12 @@ public class Student extends Account{
         studentDAO.add(this);
     }
 
-    public Student(Integer ID, String name, String surname, String email, String login, String password,
-                   StudentDAO studentDAO, Integer classId) {
+    public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
 
         super(name, surname, email, login, password, ID);
         this.classId = classId;
 //        this.teamId = teamId;
 
-        studentDAO.add(this);
     }
 
     public Integer getClassId() {
@@ -39,4 +38,5 @@ public class Student extends Account{
 //    public void setTeamId(Integer teamId) {
 //        this.teamId = teamId;
 //    }
+
 }
