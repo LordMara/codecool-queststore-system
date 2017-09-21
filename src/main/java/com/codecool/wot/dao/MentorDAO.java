@@ -58,10 +58,12 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
             Statement stmt = connection.createStatement();
 
-            String values = String.format("(%d, %s, %s, %s, %s, %s, %s, mentor)", mentor.getId(), mentor.getName(), mentor.getSurname()
-                    , mentor.getEmail(), mentor.getPhone(), mentor.getLogin(), mentor.getPassword());
+            String values = String.format(" ('%d', '%s', '%s', '%s', '%s', '%s', '%s', 'mentor');", mentor.getId(), mentor.getName(), mentor.getSurname()
+                    , mentor.getEmail(), "0000", mentor.getLogin(), mentor.getPassword());
 
-            String values2 = String.format("(%d, %d", mentor.getId(), mentor.getClassId());
+            System.out.println(mentor.getId());
+
+            String values2 = String.format("('%d', '%d');", mentor.getId(), mentor.getClassId());
 
             String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
 
