@@ -1,11 +1,12 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.interfaces.*;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
 
 public abstract class AbstractDAO<T> implements DAO<T> {
 
-    protected LinkedList<T> objectsList = new LinkedList<T>();
+    protected ArrayList<T> objectsList = new ArrayList<T>();
 
     public void add(T object) {
         objectsList.add(object);
@@ -15,11 +16,11 @@ public abstract class AbstractDAO<T> implements DAO<T> {
         objectsList.remove(object);
     }
 
-    public void setObjectList(LinkedList<T> newObjectsList) {
+    public void setObjectList(ArrayList<T> newObjectsList) {
         objectsList = newObjectsList;
     }
 
-    public LinkedList<T> getObjectList() {
+    public ArrayList<T> getObjectList() {
         return objectsList;
     }
 
