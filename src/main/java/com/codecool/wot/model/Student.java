@@ -19,6 +19,10 @@ public class Student extends Account{
         studentDAO.add(this);
     }
 
+    public Student(String name, String surname, String email, String login, String password, Integer ID) {
+        super(name, surname, email, login, password, ID);
+    }
+
     private void addToTeam(Team team) {
         if (this.ID.equals()) {
             this.team = team;
