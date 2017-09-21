@@ -12,11 +12,9 @@ public class SchoolClass {
     private ArrayList<Student> students;
     private ArrayList<Mentor> mentors;
 
-    public SchoolClass(Integer Id, String name, ArrayList<Student> students, ArrayList<Mentor> mentors) {
+    public SchoolClass(Integer Id, String name) {
         this.Id = Id;
         this.name = name;
-        this.students = students;
-        this.mentors = mentors;
     }
 
     public SchoolClass(String name, ClassDAO dao) {
