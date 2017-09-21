@@ -1,7 +1,8 @@
 package com.codecool.wot.view;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class View<T> {
 
@@ -22,15 +23,24 @@ public class View<T> {
     }
 
     public Integer getIntInput(String message) {
-        Integer fieldValue;
+        Integer fieldValue = null;
+        boolean operationSuccesful = false;
 
         System.out.println(message);
-        fieldValue = scan.nextInt();
+
+        do {
+            try {
+                fieldValue = scan.nextInt();
+                operationSuccesful = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Input correct value");
+            }
+        } while (!operationSuccesful);
 
         return fieldValue;
     }
 
-    public void showAll(ArrayList<T> objectList) {
+    public void showAll(List <T> objectList) {
         for(T object: objectList) {
             System.out.println(object);
         }
