@@ -24,7 +24,7 @@ public class MentorController{
         this.mentorDAO = mentorDAO;
         this.questDAO = questDAO;
 
-        this.view = new View<Student>();
+        this.view = new View<>();
     }
 
     public void startController(){
