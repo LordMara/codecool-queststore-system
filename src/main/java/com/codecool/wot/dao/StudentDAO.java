@@ -1,6 +1,7 @@
 package com.codecool.wot.dao;
 import com.codecool.wot.model.Student;
-import java.util.LinkedList;
+
+import java.util.ArrayList;
 
 
 import java.util.ArrayList;
