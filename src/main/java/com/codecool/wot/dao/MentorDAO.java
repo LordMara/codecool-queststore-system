@@ -60,6 +60,7 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
             stmt.executeUpdate(query1);
             stmt.executeQuery(query2);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
