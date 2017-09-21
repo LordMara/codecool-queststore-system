@@ -33,30 +33,36 @@ public class CentralController {
         try {
             Admin admin = aDAO.getByLogin(login);
             if (password.equals(admin.getPassword())) {
-                MentorController mentorController = new MentorController(connection);
-                mentorController.startController();
+                AdministratorController adminController = new AdministratorController(mDAO);
+                adminController.startController();
             }
-        } catch (NullPointerException e1) {}
+        } catch (NullPointerException e1) {
 
-        try {
-            Mentor mentor = mDAO.getByLogin(login);
-            if (password.equals(mentor.getPassword())) {
-                MentorController mentorController = new MentorController(connection);
-                mentorController.startController();
+            try {
+                Mentor mentor = mDAO.getByLogin(login);
+                if (password.equals(mentor.getPassword())) {
+                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+                    mentorController.startController();
+                }
+            } catch (NullPointerException e2) {
+
+                try {
+                    Student student = sDAO.getByLogin(login);
+                    if (password.equals(student.getPassword())) {
+
+                        // add connection
+                        StudentController studentController = new StudentController();
+                        studentController.startController();
+                    }
+                } catch (NullPointerException e3) {
+                    view.printMessage("No such user");
+                }
             }
-        } catch (NullPointerException e1) {}
-
-        try {
-            Student student = sDAO.getByLogin(login);
-            if (password.equals(student.getPassword())) {
-
-            // add connection
-            StudentController studentController = new StudentController();
-            studentController.startController();
-            }
-        } catch (NullPointerException e2) {
-            view.printMessage("No such user");
         }
+
+
+
+
 
 
 //        for (Student student : sDAO.getPersonList()) {
