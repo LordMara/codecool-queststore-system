@@ -1,16 +1,44 @@
 package com.codecool.wot.dao;
 import com.codecool.wot.model.Student;
 
-import java.util.ArrayList;
-
-
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.File;
-import java.io.PrintWriter;
-import java.util.Arrays;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class StudentDAO extends AbstractCodecoolerDAO<Student>{
+
+    public StudentDAO(Connection connection) {
+        loadStudents(connection);
+    }
+}
+
+    private void loadStudents(Connection connection) {
+
+        try {
+            connection.setAutoCommit(false);
+            Statement stmt = connection.createStatement();
+
+            String query = "SELECT * FROM queststore WHERE role ='student'";
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+
+                int Id = rs.getInt("personId");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String email = rs.getString("email");
+                String login = rs.getString("login");
+                String password = rs.getString("password");
+
+                objectsList.add(new Student(name, surname, email, login, password, Id));
+            }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 }
