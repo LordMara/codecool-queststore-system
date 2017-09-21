@@ -7,11 +7,20 @@ import java.sql.*;
 
 public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
+    private Connection connection;
+
     public MentorDAO(Connection connection) {
-        loadMentors(connection);
+        this.connection = connection;
+        loadMentors();
     }
 
-    private void loadMentors(Connection connection) {
+    @Override
+    public void add(Mentor object) {
+        super.add(object);
+        saveToDataBase(object);
+    }
+
+    private void loadMentors() {
 
         try {
             connection.setAutoCommit(false);
@@ -36,6 +45,33 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
             rs.close();
             stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void saveToDataBase(Mentor mentor) {
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            String values = String.format("(%d, %s, %s, %s, %s, %s, %s, mentor)", mentor.getId(), mentor.getName(), mentor.getSurname()
+                    , mentor.getEmail(), mentor.getPhone(), mentor.getLogin(), mentor.getPassword());
+
+            String values2 = String.format("(%d, %d", mentor.getId(), mentor.getClassId());
+
+            String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
+
+            String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
+
+            stmt.executeUpdate(query1);
+            stmt.executeQuery(query2);
+            stmt.close();
+            connection.commit();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

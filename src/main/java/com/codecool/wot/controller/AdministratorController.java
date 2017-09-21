@@ -16,7 +16,7 @@ public class AdministratorController{
     private final String SHOW_MENTORS = "3";
     private final String EXIT = "0";
 
-    public AdministratorController(MentorDAO mDAO){
+    public AdministratorController(MentorDAO mDAO) {
         this.view = new View();
         this.mentorDAO = mDAO;
     }

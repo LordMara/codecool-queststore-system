@@ -27,4 +27,5 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
         throw new NullPointerException();
     }
 
+
 }
