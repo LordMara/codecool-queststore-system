@@ -80,7 +80,7 @@ public class ClassDAO extends AbstractDAO<SchoolClass> {
 
             String values = String.format("(%d, %s)", schoolClass.getId(), schoolClass.getName());
 
-            String query = "INSERT INTO clases (classId, name) VALUES " + values;
+            String query = "INSERT INTO classes (classId, name) VALUES " + values;
 
             stmt.executeUpdate(query);
 
