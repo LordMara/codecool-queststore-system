@@ -19,7 +19,7 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             connection.setAutoCommit(false);
             Statement stmt = connection.createStatement();
 
-            String query = "SELECT * FROM persons JOIN persons_classes ON personId WHERE role ='student'";
+            String query = "SELECT * FROM persons JOIN persons_classes ON persons_classes.personId = persons.personId WHERE role ='student'";
 
             ResultSet rs = stmt.executeQuery(query);
 

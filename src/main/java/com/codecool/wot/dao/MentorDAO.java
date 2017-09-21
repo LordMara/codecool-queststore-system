@@ -17,7 +17,7 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
             connection.setAutoCommit(false);
             Statement stmt = connection.createStatement();
 
-            String query = "SELECT * FROM persons JOIN persons_classes ON personId WHERE role ='mentor'";
+            String query = "SELECT * FROM persons JOIN persons_classes ON persons_classes.personId = persons.personId WHERE role ='mentor'";
 
             ResultSet rs = stmt.executeQuery(query);
 

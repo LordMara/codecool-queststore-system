@@ -12,7 +12,7 @@ public class DatabaseConnection {
 
         try {
 
-            String url = "jdbc:sqlite:/queststore-system-wot/src/main/java/com/codecool/wot/queststore";
+            String url = "jdbc:sqlite:queststore";
             setConnection(url);
 
         } catch ( SQLException e ) {

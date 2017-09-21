@@ -21,9 +21,9 @@ public class CentralController {
         QuestDAO qDAO = new QuestDAO();
         ClassDAO cDAO = new ClassDAO();
 
-        AdminDAO aDAO = new AdminDAO();
-        MentorDAO mDAO = new MentorDAO();
-        StudentDAO sDAO = new StudentDAO();
+        AdminDAO aDAO = new AdminDAO(connection);
+        MentorDAO mDAO = new MentorDAO(connection);
+        StudentDAO sDAO = new StudentDAO(connection);
 
         View view = new View();
 
