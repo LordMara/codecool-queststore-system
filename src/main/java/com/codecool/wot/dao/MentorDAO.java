@@ -40,5 +40,30 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void saveToDataBase(Connection connection, Mentor mentor) {
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            String values = String.format("(%d, %s, %s, %s, %s, %s, %s mentor)", mentor.getId(), mentor.getName(), mentor.getSurname()
+                    , mentor.getEmail(), mentor.getPhone(), mentor.getLogin(), mentor.getPassword());
+
+            String values2 = String.format("(%d, %d", mentor.getId(), mentor.getClassId());
+
+            String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
+
+            String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
+
+            stmt.executeUpdate(query1);
+            stmt.executeQuery(query2);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
