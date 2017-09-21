@@ -155,7 +155,7 @@ public class MentorController{
     private void createQuest(QuestDAO questDAO) {
 
         String name = view.getStringInput("Enter quest name : ");
-        String description = view.getStringInput("Enter quest short destcription :");
+        String description = view.getStringInput("Enter quest short description :");
         Float price = view.getFloatInput("Enter quest price :");
         new Quest(name, description, price, questDAO);
     }
