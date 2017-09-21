@@ -18,6 +18,10 @@ public abstract class Account{
         this.login = login;
         this.password = password;
         this.ID = ID;
+
+        if(lastID < ID) {
+            lastID = ID;
+        }
     }
 
     public Account(String name, String surname, String email, String login, String password) {
@@ -26,7 +30,7 @@ public abstract class Account{
         this.email = email;
         this.login = login;
         this.password = password;
-        generateId();
+        this.ID = ++lastID;
     }
 
 
@@ -82,9 +86,4 @@ public abstract class Account{
         return null;
     }
 
-    protected void generateId(){
-
-        this.ID = Account.lastID;
-        Account.lastID ++;
-    }
 }
