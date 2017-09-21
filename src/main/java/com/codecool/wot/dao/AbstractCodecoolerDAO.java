@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public abstract class AbstractCodecoolerDAO <T extends Account> extends AbstractDAO <T> {
 
-
     public ArrayList<T> getByClass(String className) {
 
         ArrayList<T> temp = new ArrayList<T>();
