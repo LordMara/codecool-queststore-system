@@ -63,7 +63,7 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             String values = String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', 'student')", student.getId(), student.getName(), student.getSurname()
                     , student.getEmail(), student.getPhone(), student.getLogin(), student.getPassword());
 
-            String values2 = String.format("(%d, %d", student.getId(), student.getClassId());
+            String values2 = String.format("('%d', '%d')", student.getId(), student.getClassId());
 
             String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
 
@@ -71,7 +71,7 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
 
             stmt.executeUpdate(query1);
 
-            stmt.executeQuery(query2);
+            stmt.executeUpdate(query2);
             stmt.close();
             connection.commit();
 
