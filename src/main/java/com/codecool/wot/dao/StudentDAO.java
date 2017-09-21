@@ -6,8 +6,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-import src.dao.AbstractDAO;
-import src.model.Student;
+import com.codecool.wot.dao.DAOInterface;
 
 public class StudentDAO<T> extends AbstractDAO<T> {
 
