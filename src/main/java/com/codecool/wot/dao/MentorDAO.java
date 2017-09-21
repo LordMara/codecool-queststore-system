@@ -7,11 +7,20 @@ import java.sql.*;
 
 public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
+    private Connection connection;
+
     public MentorDAO(Connection connection) {
-        loadMentors(connection);
+        this.connection = connection;
+        loadMentors();
     }
 
-    private void loadMentors(Connection connection) {
+    @Override
+    public void add(Mentor object) {
+        super.add(object);
+        saveToDataBase(object);
+    }
+
+    private void loadMentors() {
 
         try {
             connection.setAutoCommit(false);
@@ -43,7 +52,7 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
     }
 
-    private void saveToDataBase(Connection connection, Mentor mentor) {
+    private void saveToDataBase(Mentor mentor) {
 
         try {
 
@@ -60,6 +69,8 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
             stmt.executeUpdate(query1);
             stmt.executeQuery(query2);
+            stmt.close();
+            connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
