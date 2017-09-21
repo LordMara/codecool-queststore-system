@@ -10,9 +10,13 @@ import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
+import java.sql.Connection;
 
 public class CentralController {
     public void startController() {
+
+        Connection connection = DatabaseConnection.getDBConnection().getConnection();
+
         ArtifactDAO arDAO = new ArtifactDAO();
         QuestDAO qDAO = new QuestDAO();
         ClassDAO cDAO = new ClassDAO();
