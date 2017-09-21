@@ -31,24 +31,33 @@ public class CentralController {
         String password = view.getStringInput("Enter password");
 
         try {
+            Admin admin = aDAO.getByLogin(login);
+            if (password.equals(admin.getPassword())) {
+                MentorController mentorController = new MentorController(connection);
+                mentorController.startController();
+            }
+        } catch (NullPointerException e1) {}
+
+        try {
             Mentor mentor = mDAO.getByLogin(login);
             if (password.equals(mentor.getPassword())) {
                 MentorController mentorController = new MentorController(connection);
                 mentorController.startController();
             }
-        } catch (NullPointerException e1) {
-            try {
-                Student student = sDAO.getByLogin(login);
-                if (password.equals(student.getPassword())) {
+        } catch (NullPointerException e1) {}
 
-                // add connection
-                StudentController studentController = new StudentController();
-                studentController.startController();
-                }
-            } catch (NullPointerException e2) {
-                view.printMessage("No such user");
+        try {
+            Student student = sDAO.getByLogin(login);
+            if (password.equals(student.getPassword())) {
+
+            // add connection
+            StudentController studentController = new StudentController();
+            studentController.startController();
             }
+        } catch (NullPointerException e2) {
+            view.printMessage("No such user");
         }
+
 
 //        for (Student student : sDAO.getPersonList()) {
 //            if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
