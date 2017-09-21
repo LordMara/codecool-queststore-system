@@ -2,7 +2,7 @@ package com.codecool.wot.model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import src.model.Student;
+import com.codecool.wot.model.Student;
 
 
 
