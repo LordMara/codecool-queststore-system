@@ -2,6 +2,12 @@ package com.codecool.wot.functional_model.Controller;
 
 import java.util.Scanner;
 
+import com.codecool.wot.controller.MentorController;
+import com.codecool.wot.controller.StudentController;
+import com.codecool.wot.controller.AdministratorController;
+import com.codecool.wot.model.Student;
+import com.codecool.wot.model.Mentor;
+import com.codecool.wot.model.Admin;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
 
@@ -15,26 +21,50 @@ public class Controller {
         MentorDAO mDAO = new MentorDAO();
         StudentDAO sDAO = new StudentDAO();
 
-        String menuOption;
-
         View view = new View();
-        do {
-            displayMainMenu(view);
 
-            menuOption = view.getStringInput("Choose menu option");
+        String login = view.getStringInput("Enter login");
+        String password = view.getStringInput("Enter password");
 
-            switch (menuOption) {
-                case "0":
-                    break;
-                case "1":
-                    break;
-                case "2":
-                    break;
-                default:
-                    view.printMessage("No such option");
-                    break;
+        for (Student student: sDAO.getPersonList()) {
+            if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
+                StudentController.startController();
             }
-        } while (!menuOption.equals("0"));
+        }
+
+        for (Mentor mentor: mDAO.getPersonList()) {
+            if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
+               MentorController.startController();
+            }
+        }
+
+        for (Admin admin: aDAO.getPersonList()) {
+            if (login.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
+                AdministratorController.startController();
+            }
+        }
+
+
+//        String menuOption;
+//
+//        View view = new View();
+//        do {
+//            displayMainMenu(view);
+//
+//            menuOption = view.getStringInput("Choose menu option");
+//
+//            switch (menuOption) {
+//                case "0":
+//                    break;
+//                case "1":
+//                    break;
+//                case "2":
+//                    break;
+//                default:
+//                    view.printMessage("No such option");
+//                    break;
+//            }
+//        } while (!menuOption.equals("0"));
     }
 
     private void displayMainMenu(View view) {
