@@ -1,10 +1,20 @@
 package com.codecool.wot.functional_model.Controller;
 
 import java.util.Scanner;
+
+import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
 
 public class Controller {
     public void startController() {
+        ArtifactDAO arDAO = new ArtifactDAO();
+        QuestDAO qDAO = new QuestDAO();
+        ClassDAO cDAO = new ClassDAO();
+
+        AdminDAO aDAO = new AdminDAO();
+        MentorDAO mDAO = new MentorDAO();
+        StudentDAO sDAO = new StudentDAO();
+
         String menuOption;
 
         View view = new View();
