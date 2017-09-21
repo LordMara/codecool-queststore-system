@@ -64,16 +64,12 @@ public class View<T> {
         }
     }
 
-    public void showMenu(String[] menu){
-
-        int count = 1;
-
-        for(String option : menu){
-            String row = String.format("%d %s", count, option);
-            System.out.println(row);
-            count ++;
+    public void showMenu(String menuTitile, String[] menuOptions, String exitMessage) {
+        System.out.println(String.format("%nWelcome in %s", menuTitile));
+        for (int index = 0; index < menuOptions.length; index++) {
+            System.out.println(String.format("\t%d. %s", ++index, menuOptions[index]));
         }
-        System.out.println("0 Exit");
+        System.out.println(String.format("\t0. %s%n", exitMessage));
     }
 
     public void printMessage(String message){
