@@ -11,6 +11,15 @@ public abstract class Account{
     protected String password;
     protected Integer ID;
 
+    public Account(String name, String surname, String email, String login, String password, Integer ID) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.ID = ID;
+    }
+
     public Account(String name, String surname, String email, String login, String password) {
         this.name = name;
         this.surname = surname;
@@ -18,6 +27,7 @@ public abstract class Account{
         this.login = login;
         this.password = password;
     }
+
 
     public String getName(){
         return this.name;

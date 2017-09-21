@@ -2,7 +2,6 @@ package com.codecool.wot.model;
 
 import java.util.ArrayList;
 
-import com.codecool.wot.model.*;
 
 public class Team {
 
@@ -32,7 +31,7 @@ public class Team {
     }
 
     public Mentor getMentor() {
-        return mento r;
+        return mentor;
     }
 
     public void setMentor(Mentor newMentor) {
