@@ -10,8 +10,8 @@ public class SchoolClass {
     private ArrayList<Mentor> mentors;
 
     public SchoolClass(String name, ClassDAO dao) {
-        this.students = ArrayList < Student > ();
-        this.mentors = new ArrayList<Mentor>();
+        this.students = new ArrayList <> ();
+        this.mentors = new ArrayList <> ();
         this.name = name;
         dao.add(this);
     }

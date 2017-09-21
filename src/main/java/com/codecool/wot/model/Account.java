@@ -17,11 +17,20 @@ public abstract class Account{
         this.email = email;
         this.login = login;
         this.password = password;
+        generateId();
     }
 
-    public String getName(){
-        return this.name;
+    public Account(String name, String surname, String email, String login, String password, Integer ID) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.ID = ID;
     }
+
+
+    public String getName(){ return this.name; }
 
     public void setName(String name){
         this.name = name;
@@ -31,10 +40,7 @@ public abstract class Account{
         return this.surname;
     }
 
-    public void setSurname(String surname){
-
-        this.surname = surname;
-    }
+    public void setSurname(String surname){ this.surname = surname; }
 
     public String getEmail(){
         return this.email;
@@ -60,9 +66,7 @@ public abstract class Account{
         this.phone = phone;
     }
 
-    public String getPassword(){
-        return this.password;
-    }
+    public String getPassword(){ return this.password; }
 
     public void setPassword(String password){
         this.password = password;

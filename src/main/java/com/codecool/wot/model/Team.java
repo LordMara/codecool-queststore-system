@@ -32,7 +32,7 @@ public class Team {
     }
 
     public Mentor getMentor() {
-        return mento r;
+        return mentor;
     }
 
     public void setMentor(Mentor newMentor) {
