@@ -28,14 +28,15 @@ public class View<T> {
 
         System.out.println(message);
 
-        do {
+        while (!operationSuccesful) {
             try {
                 fieldValue = scan.nextInt();
                 operationSuccesful = true;
             } catch (InputMismatchException e) {
                 System.out.println("Input correct value");
+                scan.next();
             }
-        } while (!operationSuccesful);
+        }
 
         return fieldValue;
     }
@@ -46,14 +47,15 @@ public class View<T> {
 
         System.out.println(message);
 
-        do {
+        while (!operationSuccesful) {
             try {
                 fieldValue = scan.nextFloat();
                 operationSuccesful = true;
             } catch (InputMismatchException e) {
                 System.out.println("Input correct value");
+                scan.next();
             }
-        } while (!operationSuccesful);
+        }
 
         return fieldValue;
     }
