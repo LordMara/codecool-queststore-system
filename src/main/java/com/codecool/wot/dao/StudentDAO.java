@@ -9,11 +9,20 @@ import java.sql.Statement;
 
 public class StudentDAO extends AbstractCodecoolerDAO<Student>{
 
+    private Connection connection;
+
     public StudentDAO(Connection connection) {
-        loadStudents(connection);
+        this.connection = connection;
+        loadStudents();
     }
 
-    private void loadStudents(Connection connection) {
+    @Override
+    public void add(Student object) {
+        super.add(object);
+        saveToDataBase(object);
+    }
+
+    private void loadStudents() {
 
         try {
             connection.setAutoCommit(false);
@@ -39,18 +48,19 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
 
             rs.close();
             stmt.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void saveToDataBase(Connection connection, Student student) {
+    private void saveToDataBase(Student student) {
 
         try {
 
             Statement stmt = connection.createStatement();
 
-            String values = String.format("(%d, %s, %s, %s, %s, %s, %s, student)", student.getId(), student.getName(), student.getSurname()
+            String values = String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', 'student')", student.getId(), student.getName(), student.getSurname()
                     , student.getEmail(), student.getPhone(), student.getLogin(), student.getPassword());
 
             String values2 = String.format("(%d, %d", student.getId(), student.getClassId());
@@ -60,12 +70,33 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
 
             stmt.executeUpdate(query1);
+
             stmt.executeQuery(query2);
+            stmt.close();
+            connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+
+    public void updateStudent(Student student) {
+
+        try {
+            Statement stmt = connection.createStatement();
+
+            String query = String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
+                    student.getName(), student.getSurname(), student.getLogin(), student.getPassword(), student.getId());
+
+            stmt.executeUpdate(query);
+
+            stmt.close();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
