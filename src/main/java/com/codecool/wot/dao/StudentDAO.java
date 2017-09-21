@@ -19,13 +19,13 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             connection.setAutoCommit(false);
             Statement stmt = connection.createStatement();
 
-            String query = "SELECT * FROM persons JOIN persons_classes ON personId WHERE role ='student'";
+            String query = "SELECT * FROM persons JOIN persons_classes ON persons_classes.personId = persons.personId WHERE role ='student'";
 
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
 
-                int Id = rs.getInt("personId");
+                Integer Id = rs.getInt("personId");
                 String name = rs.getString("name");
                 String surname = rs.getString("surname");
                 String email = rs.getString("email");
@@ -42,6 +42,8 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
     }
 }
 

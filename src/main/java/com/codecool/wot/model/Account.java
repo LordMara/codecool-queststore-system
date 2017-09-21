@@ -26,6 +26,7 @@ public abstract class Account{
         this.email = email;
         this.login = login;
         this.password = password;
+        generateId();
     }
 
 
@@ -41,10 +42,7 @@ public abstract class Account{
         return this.surname;
     }
 
-    public void setSurname(String surname){
-
-        this.surname = surname;
-    }
+    public void setSurname(String surname){ this.surname = surname; }
 
     public String getEmail(){
         return this.email;
@@ -70,9 +68,7 @@ public abstract class Account{
         this.phone = phone;
     }
 
-    public String getPassword(){
-        return this.password;
-    }
+    public String getPassword(){ return this.password; }
 
     public void setPassword(String password){
         this.password = password;

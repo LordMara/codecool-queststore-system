@@ -1,20 +1,24 @@
 package com.codecool.wot.controller;
 
 import java.util.ArrayList;
+
+import com.codecool.wot.dao.MentorDAO;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
 public class AdministratorController{
 
     View <Mentor> view;
+    MentorDAO mentorDAO;
 
     private final String CREATE_MENTOR = "1";
     private final String EDIT_MENTOR = "2";
     private final String SHOW_MENTORS = "3";
     private final String EXIT = "0";
 
-    public AdministratorController(){
+    public AdministratorController(MentorDAO mDAO){
         this.view = new View();
+        this.mentorDAO = mDAO;
     }
 
     public void startController(){
@@ -24,7 +28,7 @@ public class AdministratorController{
 
         while (! choose.equals("0")){
 
-            view.showMenu(menu);
+            view.showMenu("Menu", menu, "Bye, bye");
             choose = view.getStringInput("");
 
             switch (choose){
@@ -34,11 +38,11 @@ public class AdministratorController{
                     break;
 
                 case EDIT_MENTOR :
-                    editMentor(getMentorByLogin());
+                    //editMentor(getMentorByLogin());
                     break;
 
                 case SHOW_MENTORS :
-                    showAllMentors();
+                    //showAllMentors();
                     break;
 
                 case EXIT :
@@ -50,10 +54,11 @@ public class AdministratorController{
     public void createMentor(){
         String name = view.getStringInput("Enter mentor's name: ");
         String surname = view.getStringInput("Enter mentor's surname: ");
+        String email = view.getStringInput("Enter mentor's email: ");
         String login = view.getStringInput("Enter mentor's login: ");
         String password = view.getStringInput("Enter mentor's password: ");
 
-        Mentor mentor = new Mentor(name, surname, login, password);
+        Mentor mentor = new Mentor(name, surname, email, login, password, mentorDAO);
     }
 
     public void editMentor(Mentor mentor){
@@ -63,27 +68,29 @@ public class AdministratorController{
         mentor.setPassword(view.getStringInput("Enter new mentor's password: "));
     }
 
-    public void showAllMentors(){
-        view.showAll(Mentor.getMentors());
-    }
 
-    private Mentor getMentorByLogin(){
+    // following method uses methods of Mentor which doesnt exists yet .getMentors(), .getByLogin()
+    // public void showAllMentors(){
+//        view.showAll(Mentor.getMentors());
+//    }
 
-        boolean found = false;
-        Mentor mentor = null;
-
-        while (! found){
-
-            try {
-                String login = view.getStringInput("Enter mentor's login :");
-                mentor = Mentor.getByLogin(login);
-                found = true;
-            }
-            catch (NullPointerException e){
-                view.printMessage("NOT FOUND ! ");
-                found = false;
-            }
-        }
-        return mentor;
-    }
+//    private Mentor getMentorByLogin(){
+//
+//        boolean found = false;
+//        Mentor mentor = null;
+//
+//        while (! found){
+//
+//            try {
+//                String login = view.getStringInput("Enter mentor's login :");
+//                mentor = Mentor.getByLogin(login);
+//                found = true;
+//            }
+//            catch (NullPointerException e){
+//                view.printMessage("NOT FOUND ! ");
+//                found = false;
+//            }
+//        }
+//        return mentor;
+//    }
 }

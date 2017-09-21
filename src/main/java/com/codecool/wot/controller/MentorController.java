@@ -4,6 +4,7 @@ import com.codecool.wot.dao.*;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 
@@ -11,14 +12,18 @@ public class MentorController{
 
     private View <Student> view;
 
-    public MentorController(){
+    public Connection connection;
+
+    public MentorController(Connection connection){
+
+        this.connection = connection;
         this.view = new View<Student>();
     }
 
     public void startController(){
 
         ClassDAO classDao = new ClassDAO();
-        StudentDAO studentDAO = new StudentDAO();
+        StudentDAO studentDAO = new StudentDAO(connection);
         QuestDAO questDAO = new QuestDAO();
 
         final String EXIT = "0";
@@ -78,7 +83,7 @@ public class MentorController{
             String password = view.getStringInput("Enter student's password: ");
             Integer classId = getClassByName(classDAO).getId();
 
-            new Student(name, surname, email, login, password, studentDAO, classId);
+            new Student(name, surname, email, login, password, studentDAO);
         }
         else{
             view.printMessage("Create class first ! ");

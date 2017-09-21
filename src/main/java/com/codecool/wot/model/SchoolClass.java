@@ -20,8 +20,9 @@ public class SchoolClass {
     }
 
     public SchoolClass(String name, ClassDAO dao) {
-        this.students = new ArrayList<Student>();
-        this.mentors = new ArrayList<Mentor>();
+
+        this.students = new ArrayList <> ();
+        this.mentors = new ArrayList <> ();
         this.name = name;
         generateID();
         dao.add(this);
