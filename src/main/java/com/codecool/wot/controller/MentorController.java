@@ -12,7 +12,7 @@ public class MentorController{
     private View <Student> view;
 
     public MentorController(){
-        this.view = new View<>();
+        this.view = new View<Student>();
     }
 
     public void startController(){
@@ -76,9 +76,9 @@ public class MentorController{
             String email = view.getStringInput("Enter student's email: ");
             String login = view.getStringInput("Enter student's login: ");
             String password = view.getStringInput("Enter student's password: ");
-            SchoolClass schoolClass = getClassByName(classDAO);
+            Integer classId = getClassByName(classDAO).getId();
 
-            new Student(name, surname,email, login, password, studentDAO, schoolClass);
+            new Student(name, surname, email, login, password, studentDAO, classId);
         }
         else{
             view.printMessage("Create class first ! ");
@@ -165,7 +165,5 @@ public class MentorController{
         ArrayList<Student> students;
 
     }
-
-
 
 }
