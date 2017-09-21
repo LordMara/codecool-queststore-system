@@ -55,4 +55,7 @@ public class SchoolClass {
         this.Id = ++SchoolClass.lastID;
     }
 
+    public Integer getId() {
+        return Id;
+    }
 }
