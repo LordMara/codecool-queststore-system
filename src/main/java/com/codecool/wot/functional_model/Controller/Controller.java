@@ -26,24 +26,28 @@ public class Controller {
         String login = view.getStringInput("Enter login");
         String password = view.getStringInput("Enter password");
 
-        for (Student student: sDAO.getPersonList()) {
+        for (Student student : sDAO.getPersonList()) {
             if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
-                StudentController.startController();
+                StudentController studentController = new StudentController();
+                studentController.startController();
             }
         }
 
-        for (Mentor mentor: mDAO.getPersonList()) {
+        for (Mentor mentor : mDAO.getPersonList()) {
             if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
-               MentorController.startController();
+                MentorController mentorController = new MentorController();
+                mentorController.startController();
             }
         }
 
-        for (Admin admin: aDAO.getPersonList()) {
+        for (Admin admin : aDAO.getPersonList()) {
             if (login.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
-                AdministratorController.startController();
+                AdministratorController adminController = new AdministratorController();
+                adminController.startController();
             }
         }
-
+    }
+}
 
 //        String menuOption;
 //
@@ -65,14 +69,14 @@ public class Controller {
 //                    break;
 //            }
 //        } while (!menuOption.equals("0"));
-    }
+//    }
+//
+//    private void displayMainMenu(View view) {
+//        String menuTitle = "Main menu";
+//        String[] menuOptions = {"Option 1", "Option 2"};
+//
+//        String exitMessage = "Exit application";
+//
+//        view.showMenu(menuTitle, menuOptions, exitMessage);
+//    }
 
-    private void displayMainMenu(View view) {
-        String menuTitle = "Main menu";
-        String[] menuOptions = {"Option 1", "Option 2"};
-
-        String exitMessage = "Exit application";
-
-        view.showMenu(menuTitle, menuOptions, exitMessage);
-    }
-}
