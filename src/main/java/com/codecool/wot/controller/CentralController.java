@@ -26,26 +26,26 @@ public class CentralController {
         String login = view.getStringInput("Enter login");
         String password = view.getStringInput("Enter password");
 
-        for (Student student : sDAO.getPersonList()) {
-            if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
-                StudentController studentController = new StudentController();
-                studentController.startController();
-            }
-        }
-
-        for (Mentor mentor : mDAO.getPersonList()) {
-            if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
-                MentorController mentorController = new MentorController();
-                mentorController.startController();
-            }
-        }
-
-        for (Admin admin : aDAO.getPersonList()) {
-            if (login.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
-                AdministratorController adminController = new AdministratorController();
-                adminController.startController();
-            }
-        }
+//        for (Student student : sDAO.getPersonList()) {
+//            if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
+//                StudentController studentController = new StudentController();
+//                studentController.startController();
+//            }
+//        }
+//
+//        for (Mentor mentor : mDAO.getPersonList()) {
+//            if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
+//                MentorController mentorController = new MentorController();
+//                mentorController.startController();
+//            }
+//        }
+//
+//        for (Admin admin : aDAO.getPersonList()) {
+//            if (login.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
+//                AdministratorController adminController = new AdministratorController();
+//                adminController.startController();
+//            }
+//        }
     }
 }
 
