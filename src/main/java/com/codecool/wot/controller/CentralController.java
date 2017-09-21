@@ -1,4 +1,4 @@
-package com.codecool.wot.functional_model.Controller;
+package com.codecool.wot.controller;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ import com.codecool.wot.model.Admin;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
 
-public class Controller {
+public class CentralController {
     public void startController() {
         ArtifactDAO arDAO = new ArtifactDAO();
         QuestDAO qDAO = new QuestDAO();
