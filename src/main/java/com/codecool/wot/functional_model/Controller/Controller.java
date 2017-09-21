@@ -9,7 +9,7 @@ public class Controller {
 
         View view = new View();
         do {
-            view.showMenu(view);
+            displayMainMenu(view);
 
             menuOption = view.getStringInput("Choose menu option");
 
@@ -25,5 +25,14 @@ public class Controller {
                     break;
             }
         } while (!menuOption.equals("0"));
+    }
+
+    private void displayMainMenu(View view) {
+        String menuTitle = "Main menu";
+        String[] menuOptions = {"Option 1", "Option 2"};
+
+        String exitMessage = "Exit application";
+
+        view.showMenu(menuTitle, menuOptions, exitMessage);
     }
 }
