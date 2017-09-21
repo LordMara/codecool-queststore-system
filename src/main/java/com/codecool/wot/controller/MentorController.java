@@ -1,12 +1,10 @@
 package com.codecool.wot.controller;
 
-
-import com.codecool.wot.dao.ClassDAO;
-import com.codecool.wot.dao.QuestDAO;
-import com.codecool.wot.dao.StudentDAO;
-
+import com.codecool.wot.dao.*;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
+
+import java.util.ArrayList;
 
 
 public class MentorController{
@@ -37,7 +35,7 @@ public class MentorController{
 
         while (! choose.equals("0")){
 
-            view.showMenu(menu);
+            view.showMenu("Mentor Menu", menu, "EXIT ");
             choose = view.getStringInput("");
 
             switch (choose){
@@ -161,5 +159,13 @@ public class MentorController{
         Float price = view.getFloatInput("Enter quest price :");
         new Quest(name, description, price, questDAO);
     }
+
+    private void createTeam() {
+
+        ArrayList<Student> students;
+
+    }
+
+
 
 }
