@@ -6,7 +6,7 @@ public abstract class Account{
     protected String name;
     protected String surname;
     protected String email;
-    protected String phone;
+    protected String phone = null;
     protected String login;
     protected String password;
     protected Integer ID;
@@ -18,6 +18,10 @@ public abstract class Account{
         this.login = login;
         this.password = password;
         this.ID = ID;
+
+        if(lastID < ID) {
+            lastID = ID;
+        }
     }
 
     public Account(String name, String surname, String email, String login, String password) {
@@ -26,7 +30,7 @@ public abstract class Account{
         this.email = email;
         this.login = login;
         this.password = password;
-        generateId();
+        this.ID = ++lastID;
     }
 
 
@@ -82,9 +86,9 @@ public abstract class Account{
         return null;
     }
 
-    protected void generateId(){
-
-        this.ID = Account.lastID;
-        Account.lastID ++;
+    public String toString() {
+        return String.format("ID=%d, name=%s, surname=%s, email=%s, login=%s, password=%s",
+                ID, name, surname, email, login, password);
     }
+
 }

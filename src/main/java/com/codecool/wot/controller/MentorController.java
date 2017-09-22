@@ -13,18 +13,22 @@ public class MentorController{
     private View <Student> view;
 
     public Connection connection;
+    private ClassDAO classDAO;
+    private StudentDAO studentDAO;
+    private MentorDAO mentorDAO;
+    private QuestDAO questDAO;
 
-    public MentorController(Connection connection){
+    public MentorController(ClassDAO classDAO, StudentDAO studentDAO, MentorDAO mentorDAO, QuestDAO questDAO) {
+        this.classDAO = classDAO;
+        this.studentDAO = studentDAO;
+        this.mentorDAO = mentorDAO;
+        this.questDAO = questDAO;
 
-        this.connection = connection;
-        this.view = new View<Student>();
+        this.view = new View<>();
     }
 
     public void startController(){
 
-        ClassDAO classDao = new ClassDAO();
-        StudentDAO studentDAO = new StudentDAO(connection);
-        QuestDAO questDAO = new QuestDAO();
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
@@ -36,7 +40,7 @@ public class MentorController{
 
 
         String choose = "";
-        String[] menu = {"Create student", "Edit student", "Show students"};
+        String[] menu = {"Create student", "Edit student", "Show students", "Create class", "Edit Class", "Create quest"};
 
         while (! choose.equals("0")){
 
@@ -46,25 +50,28 @@ public class MentorController{
             switch (choose){
 
                 case CREATE_STUDENT :
-                    createStudent(classDao, studentDAO);
+                    createStudent();
                     break;
 
                 case EDIT_STUDENT :
-                    editStudent(getStudentByLogin(studentDAO));
+                    editStudent(getStudentByLogin());
                     break;
 
                 case SHOW_STUDENTS :
-                    showAllStudents(studentDAO);
+                    showAllStudents();
                     break;
 
                 case CREATE_CLASS :
-                    createClass(classDao);
+                    createClass();
+                    break;
 
                 case EDIT_CLASS :
-                    editClass(classDao);
+                    editClass();
+                    break;
 
                 case CREATE_QUEST:
-                    createQuest(questDAO);
+                    createQuest();
+                    break;
 
                 case EXIT :
                     break;
@@ -73,7 +80,7 @@ public class MentorController{
     }
 
 
-    private void createStudent(ClassDAO classDAO, StudentDAO studentDAO){
+    private void createStudent() {
 
         if (classDAO.getObjectList().size() > 0) {
             String name = view.getStringInput("Enter student's name: ");
@@ -81,7 +88,7 @@ public class MentorController{
             String email = view.getStringInput("Enter student's email: ");
             String login = view.getStringInput("Enter student's login: ");
             String password = view.getStringInput("Enter student's password: ");
-            Integer classId = getClassByName(classDAO).getId();
+            Integer classId = getClassByName().getId();
 
             new Student(name, surname, email, login, password, studentDAO);
         }
@@ -100,14 +107,16 @@ public class MentorController{
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
         student.setPassword(view.getStringInput("Enter new student's password: "));
+
+        studentDAO.updateStudent(student);
     }
 
-    private void showAllStudents(StudentDAO studentDAO){
+    private void showAllStudents() {
 
         view.showAll(studentDAO.getObjectList());
     }
 
-    private Student getStudentByLogin(StudentDAO studentDAO){
+    private Student getStudentByLogin() {
 
         boolean found = false;
         Student student = null;
@@ -127,17 +136,19 @@ public class MentorController{
         return student;
     }
 
-    private void createClass(ClassDAO classDao){
+    private void createClass() {
 
         String name = view.getStringInput("Enter class name :");
-        new SchoolClass(name, classDao);
+        new SchoolClass(name, classDAO);
     }
 
-    private void editClass(ClassDAO classDAO){
-       getClassByName(classDAO).setName(view.getStringInput("Enter new class name: "));
+    private void editClass() {
+        SchoolClass schoolClass = getClassByName();
+        schoolClass.setName(view.getStringInput("Enter new class name: "));
+        classDAO.updateClass(schoolClass);
     }
 
-    private SchoolClass getClassByName(ClassDAO classDAO){
+    private SchoolClass getClassByName() {
 
         boolean found = false;
         SchoolClass schoolClass = null;
@@ -157,12 +168,14 @@ public class MentorController{
         return schoolClass;
     }
 
-    private void createQuest(QuestDAO questDAO) {
+    private void createQuest() {
 
         String name = view.getStringInput("Enter quest name : ");
         String description = view.getStringInput("Enter quest short description :");
         Float price = view.getFloatInput("Enter quest price :");
         new Quest(name, description, price, questDAO);
+
+        view.printMessage("Feature in development");
     }
 
     private void createTeam() {

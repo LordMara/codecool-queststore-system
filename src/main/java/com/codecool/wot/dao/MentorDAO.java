@@ -7,11 +7,20 @@ import java.sql.*;
 
 public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
+    private Connection connection;
+
     public MentorDAO(Connection connection) {
-        loadMentors(connection);
+        this.connection = connection;
+        loadMentors();
     }
 
-    private void loadMentors(Connection connection) {
+    @Override
+    public void add(Mentor object) {
+        super.add(object);
+        saveToDataBase(object);
+    }
+
+    private void loadMentors() {
 
         try {
             connection.setAutoCommit(false);
@@ -40,5 +49,52 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void saveToDataBase(Mentor mentor) {
+
+        try {
+            System.out.println(mentor.getId());
+            Statement stmt = connection.createStatement();
+
+            String values = String.format(" ('%d', '%s', '%s', '%s', '%s', '%s', '%s', 'mentor');", mentor.getId(), mentor.getName(), mentor.getSurname()
+                    , mentor.getEmail(), "0000", mentor.getLogin(), mentor.getPassword());
+
+
+
+            String values2 = String.format("('%d', '%d');", mentor.getId(), mentor.getClassId());
+
+            String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
+
+            String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
+
+            stmt.executeUpdate(query1);
+            stmt.executeUpdate(query2);
+            stmt.close();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void updateMentor(Mentor mentor) {
+
+        try {
+            Statement stmt = connection.createStatement();
+
+            String query = String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
+                    mentor.getName(), mentor.getSurname(), mentor.getLogin(), mentor.getPassword(), mentor.getId());
+
+            stmt.executeUpdate(query);
+
+            stmt.close();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

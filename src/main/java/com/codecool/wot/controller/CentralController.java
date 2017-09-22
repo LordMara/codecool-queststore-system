@@ -19,7 +19,7 @@ public class CentralController {
 
         ArtifactDAO arDAO = new ArtifactDAO();
         QuestDAO qDAO = new QuestDAO();
-        ClassDAO cDAO = new ClassDAO();
+        ClassDAO cDAO = new ClassDAO(connection);
 
         AdminDAO aDAO = new AdminDAO(connection);
         MentorDAO mDAO = new MentorDAO(connection);
@@ -30,57 +30,35 @@ public class CentralController {
         String login = view.getStringInput("Enter login");
         String password = view.getStringInput("Enter password");
 
-//        for (Student student : sDAO.getPersonList()) {
-//            if (login.equals(student.getLogin()) && password.equals(student.getPassword())) {
-//                StudentController studentController = new StudentController();
-//                studentController.startController();
-//            }
-//        }
-//
-//        for (Mentor mentor : mDAO.getPersonList()) {
-//            if (login.equals(mentor.getLogin()) && password.equals(mentor.getPassword())) {
-//                MentorController mentorController = new MentorController();
-//                mentorController.startController();
-//            }
-//        }
-//
-//        for (Admin admin : aDAO.getPersonList()) {
-//            if (login.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
-//                AdministratorController adminController = new AdministratorController();
-//                adminController.startController();
-//            }
-//        }
+        try {
+            Admin admin = aDAO.getByLogin(login);
+            if (password.equals(admin.getPassword())) {
+                AdministratorController adminController = new AdministratorController(mDAO);
+                adminController.startController();
+            }
+        } catch (NullPointerException e1) {
+
+            try {
+                Mentor mentor = mDAO.getByLogin(login);
+                if (password.equals(mentor.getPassword())) {
+                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+                    mentorController.startController();
+                }
+            } catch (NullPointerException e2) {
+
+                try {
+                    Student student = sDAO.getByLogin(login);
+                    if (password.equals(student.getPassword())) {
+
+                        // add connection
+                        StudentController studentController = new StudentController();
+                        studentController.startController();
+                    }
+                } catch (NullPointerException e3) {
+                    view.printMessage("No such user");
+                }
+            }
+        }
+
     }
 }
-
-//        String menuOption;
-//
-//        View view = new View();
-//        do {
-//            displayMainMenu(view);
-//
-//            menuOption = view.getStringInput("Choose menu option");
-//
-//            switch (menuOption) {
-//                case "0":
-//                    break;
-//                case "1":
-//                    break;
-//                case "2":
-//                    break;
-//                default:
-//                    view.printMessage("No such option");
-//                    break;
-//            }
-//        } while (!menuOption.equals("0"));
-//    }
-//
-//    private void displayMainMenu(View view) {
-//        String menuTitle = "Main menu";
-//        String[] menuOptions = {"Option 1", "Option 2"};
-//
-//        String exitMessage = "Exit application";
-//
-//        view.showMenu(menuTitle, menuOptions, exitMessage);
-//    }
-
