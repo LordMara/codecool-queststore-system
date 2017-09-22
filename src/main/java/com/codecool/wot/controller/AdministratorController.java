@@ -8,8 +8,8 @@ import com.codecool.wot.view.*;
 
 public class AdministratorController{
 
-    View <Mentor> view;
-    MentorDAO mentorDAO;
+    private View <Mentor> view;
+    private MentorDAO mentorDAO;
 
     private final String CREATE_MENTOR = "1";
     private final String EDIT_MENTOR = "2";
@@ -38,7 +38,7 @@ public class AdministratorController{
                     break;
 
                 case EDIT_MENTOR :
-                    //editMentor(getMentorByLogin());
+                    editMentor(getMentorByLogin());
                     break;
 
                 case SHOW_MENTORS :
@@ -66,6 +66,28 @@ public class AdministratorController{
         mentor.setSurname(view.getStringInput("Enter new mentor's surname: "));
         mentor.setLogin(view.getStringInput("Enter new mentor's login: "));
         mentor.setPassword(view.getStringInput("Enter new mentor's password: "));
+
+        mentorDAO.updateMentor(mentor);
+    }
+
+    private Mentor getMentorByLogin() {
+
+        boolean found = false;
+        Mentor mentor = null;
+
+        while (! found){
+
+            try {
+                String login = view.getStringInput("Enter mentor's login :");
+                mentor = mentorDAO.getByLogin(login);
+                found = true;
+            }
+            catch (NullPointerException e){
+                view.printMessage("NOT FOUND ! ");
+                found = false;
+            }
+        }
+        return mentor;
     }
 
 
