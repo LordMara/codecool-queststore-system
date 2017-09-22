@@ -42,7 +42,7 @@ public class AdministratorController{
                     break;
 
                 case SHOW_MENTORS :
-                    //showAllMentors();
+                    showAllMentors();
                     break;
 
                 case EXIT :
@@ -88,6 +88,11 @@ public class AdministratorController{
             }
         }
         return mentor;
+    }
+
+    private void showAllMentors() {
+
+        view.showAll(mentorDAO.getObjectList());
     }
 
 
