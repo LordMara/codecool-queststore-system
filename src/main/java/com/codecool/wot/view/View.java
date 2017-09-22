@@ -14,13 +14,15 @@ public class View<T> {
 
 
     public String getStringInput(String message) {
+
         String fieldValue = null;
         boolean operationSuccesful = false;
 
-        System.out.println(message);
+
 
         while (!operationSuccesful) {
             try {
+                System.out.println(message);
                 fieldValue = scan.nextLine();
                 for (int i=0; i < fieldValue.length(); i++) {
                     if (fieldValue.charAt(i) == ';' || fieldValue.charAt(i) == '"' || fieldValue.charAt(i) == '\'') {
@@ -31,6 +33,7 @@ public class View<T> {
 
             } catch (IllegalArgumentException e) {
                 System.out.println("Don't hack");
+                operationSuccesful = false;
                 scan.nextLine();
             }
         }
@@ -43,9 +46,10 @@ public class View<T> {
         Integer fieldValue = null;
         boolean operationSuccesful = false;
 
-        System.out.println(message);
 
         while (!operationSuccesful) {
+
+            System.out.println(message);
             try {
                 fieldValue = scan.nextInt();
                 operationSuccesful = true;
@@ -62,9 +66,10 @@ public class View<T> {
         Float fieldValue = null;
         boolean operationSuccesful = false;
 
-        System.out.println(message);
 
         while (!operationSuccesful) {
+
+            System.out.println(message);
             try {
                 fieldValue = scan.nextFloat();
                 operationSuccesful = true;
