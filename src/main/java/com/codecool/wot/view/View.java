@@ -34,7 +34,7 @@ public class View<T> {
             } catch (IllegalArgumentException e) {
                 System.out.println("Don't hack");
                 operationSuccesful = false;
-                scan.nextLine();
+//                scan.nextLine();
             }
         }
 
