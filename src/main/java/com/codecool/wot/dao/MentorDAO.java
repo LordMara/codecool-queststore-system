@@ -79,4 +79,22 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
         }
 
     }
+
+    public void updateMentor(Mentor mentor) {
+
+        try {
+            Statement stmt = connection.createStatement();
+
+            String query = String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
+                    mentor.getName(), mentor.getSurname(), mentor.getLogin(), mentor.getPassword(), mentor.getId());
+
+            stmt.executeUpdate(query);
+
+            stmt.close();
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
