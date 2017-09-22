@@ -94,30 +94,4 @@ public class AdministratorController{
 
         view.showAll(mentorDAO.getObjectList());
     }
-
-
-    // following method uses methods of Mentor which doesnt exists yet .getMentors(), .getByLogin()
-    // public void showAllMentors(){
-//        view.showAll(Mentor.getMentors());
-//    }
-
-//    private Mentor getMentorByLogin(){
-//
-//        boolean found = false;
-//        Mentor mentor = null;
-//
-//        while (! found){
-//
-//            try {
-//                String login = view.getStringInput("Enter mentor's login :");
-//                mentor = Mentor.getByLogin(login);
-//                found = true;
-//            }
-//            catch (NullPointerException e){
-//                view.printMessage("NOT FOUND ! ");
-//                found = false;
-//            }
-//        }
-//        return mentor;
-//    }
 }
