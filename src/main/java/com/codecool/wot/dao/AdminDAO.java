@@ -5,10 +5,10 @@ import java.sql.*;
 
 public class AdminDAO extends AbstractCodecoolerDAO<Admin> {
 
-
+    private Connection connection;
 
     public AdminDAO(Connection connection) {
-
+        this.connection = connection;
         loadAdmins(connection);
 
     }
