@@ -14,10 +14,27 @@ public class View<T> {
 
 
     public String getStringInput(String message) {
-        String fieldValue;
+        String fieldValue = null;
+        boolean operationSuccesful = false;
 
         System.out.println(message);
-        fieldValue = scan.nextLine();
+
+        while (!operationSuccesful) {
+            try {
+                fieldValue = scan.nextLine();
+                for (int i=0; i < fieldValue.length(); i++) {
+                    if (fieldValue.charAt(i) == ';' || fieldValue.charAt(i) == '"' || fieldValue.charAt(i) == '\'') {
+                        throw new IllegalArgumentException();
+                    }
+                }
+                operationSuccesful = true;
+
+            } catch (IllegalArgumentException e) {
+                System.out.println("Don't hack");
+                scan.nextLine();
+            }
+        }
+
 
         return fieldValue;
     }
