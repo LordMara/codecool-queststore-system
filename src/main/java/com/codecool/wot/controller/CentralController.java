@@ -30,31 +30,90 @@ public class CentralController {
             String login = view.getStringInput("Enter login");
             String password = view.getStringInput("Enter password");
 
-            Admin admin = aDAO.getByLogin(login);
-            Mentor mentor = mDAO.getByLogin(login);
-            Student student = sDAO.getByLogin(login);
+            Account user = validateUser(login, password, aDAO, mDAO, sDAO);
 
-            if (admin != null) {
-                if (password.equals(admin.getPassword())) {
-                    AdministratorController adminController = new AdministratorController(mDAO);
-                    adminController.startController();
-                }
-            }
-            if (mentor != null) {
-                if (password.equals(mentor.getPassword())) {
-                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
-                    mentorController.startController();
-                }
-            }
-            if (student != null) {
-                if (password.equals(student.getPassword())) {
-                    // add connection
-                    StudentController studentController = new StudentController();
-                    studentController.startController();
-                }
-            } else {
+            if (!startProperController(user, arDAO, qDAO, cDAO, aDAO, mDAO, sDAO)) {
                 view.printMessage("No such user");
             }
+
+
+//            String login = view.getStringInput("Enter login");
+//            String password = view.getStringInput("Enter password");
+//
+//            Admin admin = aDAO.getByLogin(login);
+//            Mentor mentor = mDAO.getByLogin(login);
+//            Student student = sDAO.getByLogin(login);
+
+//            if (admin != null) {
+//                if (password.equals(admin.getPassword())) {
+//                    AdministratorController adminController = new AdministratorController(mDAO);
+//                    adminController.startController();
+//                }
+//            }
+//            if (mentor != null) {
+//                if (password.equals(mentor.getPassword())) {
+//                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+//                    mentorController.startController();
+//                }
+//            }
+//            if (student != null) {
+//                if (password.equals(student.getPassword())) {
+//                    // add connection
+//                    StudentController studentController = new StudentController();
+//                    studentController.startController();
+//                }
+//            } else {
+//                view.printMessage("No such user");
+//            }
         }
+    }
+
+    private Account validateUser(String login, String password, AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
+        Account user = null;
+
+        Admin admin = aDAO.getByLogin(login);
+        Mentor mentor = mDAO.getByLogin(login);
+        Student student = sDAO.getByLogin(login);
+
+        if (admin != null) {
+            if (password.equals(admin.getPassword())) {
+                user = admin;
+            }
+        }
+
+        if (mentor != null) {
+            if (password.equals(mentor.getPassword())) {
+            user = mentor;
+            }
+        }
+        if (student != null) {
+            if (password.equals(student.getPassword())) {
+                user = student;
+            }
+        }
+        return user;
+    }
+
+    private boolean startProperController(Account user, ArtifactDAO arDAO, QuestDAO qDAO,
+            ClassDAO cDAO, AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
+
+        boolean operationSuccessful = true;
+        if (user instanceof Admin) {
+            AdministratorController adminController = new AdministratorController(mDAO);
+            adminController.startController();
+
+        } else if (user instanceof Mentor) {
+            MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+            mentorController.startController();
+
+        } else if (user instanceof Student) {
+            // add connection
+            StudentController studentController = new StudentController();
+            studentController.startController();
+
+        } else {
+            operationSuccessful = false;
+        }
+        return operationSuccessful;
     }
 }
