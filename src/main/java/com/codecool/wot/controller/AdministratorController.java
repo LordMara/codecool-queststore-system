@@ -1,6 +1,5 @@
 package com.codecool.wot.controller;
 
-import java.util.ArrayList;
 
 import com.codecool.wot.dao.MentorDAO;
 import com.codecool.wot.model.*;
@@ -58,7 +57,7 @@ public class AdministratorController{
         String login = view.getStringInput("Enter mentor's login: ");
         String password = view.getStringInput("Enter mentor's password: ");
 
-        Mentor mentor = new Mentor(name, surname, email, login, password, mentorDAO);
+        mentorDAO.add(new Mentor(name, surname, email, login, password));
     }
 
     public void editMentor(Mentor mentor){
