@@ -75,11 +75,13 @@ public class AdministratorController{
         Mentor mentor = null;
 
         while (! found){
-
+            String login = view.getStringInput("Enter mentor's login :");
+            mentor = mentorDAO.getByLogin(login);
+            found = true;
             try {
-                String login = view.getStringInput("Enter mentor's login :");
-                mentor = mentorDAO.getByLogin(login);
-                found = true;
+                if (mentor == null) {
+                    throw new NullPointerException();
+                }
             }
             catch (NullPointerException e){
                 view.printMessage("NOT FOUND ! ");
