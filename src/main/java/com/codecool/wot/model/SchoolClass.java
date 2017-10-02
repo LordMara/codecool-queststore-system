@@ -17,13 +17,12 @@ public class SchoolClass {
         this.name = name;
     }
 
-    public SchoolClass(String name, ClassDAO dao) {
+    public SchoolClass(String name) {
 
         this.students = new ArrayList <> ();
         this.mentors = new ArrayList <> ();
         this.name = name;
         generateID();
-        dao.add(this);
     }
 
     public String getName() {
