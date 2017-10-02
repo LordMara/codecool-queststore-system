@@ -3,13 +3,38 @@ package com.codecool.wot.dao;
 import com.codecool.wot.interfaces.*;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
 
 public abstract class AbstractDAO<T> implements DAO<T> {
 
-    protected ArrayList<T> objectsList = new ArrayList<T>();
 
-    public void load(T object) {}
+    protected ArrayList<T> objectsList = new ArrayList<T>();
+    protected Connection connection;
+
+
+    public void load(String query, String ... args) throws SQLException {
+
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs.next()) {
+            T obj = createObject(args);
+            objectsList.add(obj);
+        }
+    }
+
+    public T createObject(String ... args) {
+
+        for (String attr: args) {
+
+            
+        }
+    }
+
 
     public void add(T object) {
         objectsList.add(object);

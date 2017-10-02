@@ -54,7 +54,7 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         }
     }
 
-    private void saveToDataBase(Student student) {
+    void saveToDataBase(Student student) {
 
         try {
 
