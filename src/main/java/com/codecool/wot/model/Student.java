@@ -1,17 +1,13 @@
 package com.codecool.wot.model;
 
-import  com.codecool.wot.dao.StudentDAO;
-
 public class Student extends Account{
 
 
      private Integer classId;
 //     private Integer teamId;
 
-    public Student(String name, String surname, String email, String login, String password, StudentDAO studentDAO) {
+    public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
-
-        studentDAO.add(this);
     }
 
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {

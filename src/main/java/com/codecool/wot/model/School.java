@@ -13,7 +13,6 @@ public class School {
     String name;
 
     public School(ArrayList<Account> newAccounts, ArrayList<Class> newClasses, String newName) {
-        
         accounts = newAccounts;
         classes = newClasses;
         name = newName;

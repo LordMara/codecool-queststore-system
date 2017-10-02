@@ -29,7 +29,6 @@ public class MentorController{
 
     public void startController(){
 
-
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
         final String EDIT_STUDENT = "2";
@@ -37,7 +36,6 @@ public class MentorController{
         final String CREATE_CLASS = "4";
         final String EDIT_CLASS = "5";
         final String CREATE_QUEST = "6";
-
 
         String choose = "";
         String[] menu = {"Create student", "Edit student", "Show students", "Create class", "Edit Class", "Create quest"};
@@ -90,9 +88,9 @@ public class MentorController{
             String password = view.getStringInput("Enter student's password: ");
             Integer classId = getClassByName().getId();
 
-            new Student(name, surname, email, login, password, studentDAO);
-        }
-        else{
+            studentDAO.add(new Student(name, surname, email, login, password));
+
+        } else{
             view.printMessage("Create class first ! ");
         }
     }
@@ -107,6 +105,7 @@ public class MentorController{
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
         student.setPassword(view.getStringInput("Enter new student's password: "));
+        student.setEmail(view.getStringInput("Enter new student's email: "));
 
         studentDAO.updateStudent(student);
     }
@@ -127,8 +126,7 @@ public class MentorController{
                 String login = view.getStringInput("Enter student's login :");
                 student = studentDAO.getByLogin(login);
                 found = true;
-            }
-            catch (NullPointerException e){
+            } catch (NullPointerException e){
                 view.printMessage("NOT FOUND ! ");
                 found = false;
             }
@@ -139,7 +137,7 @@ public class MentorController{
     private void createClass() {
 
         String name = view.getStringInput("Enter class name :");
-        new SchoolClass(name, classDAO);
+        classDAO.add(new SchoolClass(name));
     }
 
     private void editClass() {
@@ -159,8 +157,7 @@ public class MentorController{
                 String name = view.getStringInput("Enter class name :");
                 schoolClass = classDAO.getByName(name);
                 found = true;
-            }
-            catch (NullPointerException e){
+            } catch (NullPointerException e){
                 view.printMessage("NOT FOUND ! ");
                 found = false;
             }
@@ -170,18 +167,16 @@ public class MentorController{
 
     private void createQuest() {
 
+        ArrayList<Student> students;
         String name = view.getStringInput("Enter quest name : ");
         String description = view.getStringInput("Enter quest short description :");
         Float price = view.getFloatInput("Enter quest price :");
-        new Quest(name, description, price, questDAO);
+        questDAO.add(new Quest(name, description, price));
 
         view.printMessage("Feature in development");
     }
 
     private void createTeam() {
-
-        ArrayList<Student> students;
-
     }
 
 }
