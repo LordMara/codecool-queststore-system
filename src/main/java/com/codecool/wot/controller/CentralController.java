@@ -1,5 +1,6 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Student;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Admin;
@@ -13,6 +14,8 @@ public class CentralController {
     public void startController() throws SQLException {
 
         try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
+
+            // close in one object
             ArtifactDAO arDAO = new ArtifactDAO();
             QuestDAO qDAO = new QuestDAO();
             ClassDAO cDAO = new ClassDAO(connection);
@@ -20,6 +23,7 @@ public class CentralController {
             AdminDAO aDAO = new AdminDAO(connection);
             MentorDAO mDAO = new MentorDAO(connection);
             StudentDAO sDAO = new StudentDAO(connection);
+            // close in one object
 
             View view = new View();
 
@@ -35,12 +39,14 @@ public class CentralController {
                     AdministratorController adminController = new AdministratorController(mDAO);
                     adminController.startController();
                 }
-            } else if (mentor != null) {
+            }
+            if (mentor != null) {
                 if (password.equals(mentor.getPassword())) {
                     MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
                     mentorController.startController();
                 }
-            } else if (student != null) {
+            }
+            if (student != null) {
                 if (password.equals(student.getPassword())) {
                     // add connection
                     StudentController studentController = new StudentController();
@@ -50,8 +56,5 @@ public class CentralController {
                 view.printMessage("No such user");
             }
         }
-
-
-
     }
 }
