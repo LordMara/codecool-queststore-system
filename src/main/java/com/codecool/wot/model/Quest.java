@@ -10,12 +10,11 @@ public class Quest {
     private Float price;
     private static Integer lastID = 1;
 
-    public Quest(String name, String description, Float price, QuestDAO questDAO) {
+    public Quest(String name, String description, Float price) {
         this.name = name;
         this.description = description;
         generateID();
         this.price = price;
-        questDAO.add(this);
     }
 
     private void generateID() {
