@@ -1,10 +1,5 @@
 package com.codecool.wot.controller;
 
-import java.util.Scanner;
-
-import com.codecool.wot.controller.MentorController;
-import com.codecool.wot.controller.StudentController;
-import com.codecool.wot.controller.AdministratorController;
 import com.codecool.wot.model.Student;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Admin;
@@ -13,6 +8,7 @@ import com.codecool.wot.view.View;
 import java.sql.Connection;
 
 public class CentralController {
+
     public void startController() {
 
         Connection connection = DatabaseConnection.getDBConnection().getConnection();
@@ -59,6 +55,5 @@ public class CentralController {
                 }
             }
         }
-
     }
 }
