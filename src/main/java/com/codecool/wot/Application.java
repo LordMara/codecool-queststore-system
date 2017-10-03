@@ -28,35 +28,3 @@ class Application {
     }
 
 }
-
-//        final String MENTOR_CONTROLLER = "1";
-//        final String ADMIN_CONTROLLER = "2";
-//        final String EXIT = "0";
-//
-//        String choose = "";
-//        String[] menu = {"Mentor ", "Admin"};
-//        AdministratorController admin = new AdministratorController(controller);
-//        MentorController mentor = new MentorController(controller);
-//        View view = new View();
-//
-//        while (! choose.equals("0")){
-//
-//            view.showMenu("Menu",menu, "Bye bye");
-//            choose = view.getStringInput("");
-//
-//            switch (choose){
-//
-//                case MENTOR_CONTROLLER :
-//                    mentor.startController();
-//                    break;
-//
-//                case ADMIN_CONTROLLER :
-//                    admin.startController();
-//                    break;
-//
-//                case EXIT :
-//                    break;
-//            }
-//        }
-//    }
-
