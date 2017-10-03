@@ -1,6 +1,7 @@
 package com.codecool.wot.controller;
 
 import com.codecool.wot.dao.*;
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
@@ -8,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 
-public class MentorController{
+public class MentorController implements ControllerInterface {
 
     private View <Student> view;
 
@@ -27,7 +28,7 @@ public class MentorController{
         this.view = new View<>();
     }
 
-    public void startController(){
+    public void startController() {
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";

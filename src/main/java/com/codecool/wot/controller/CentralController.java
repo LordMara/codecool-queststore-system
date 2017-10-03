@@ -1,5 +1,6 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Student;
 import com.codecool.wot.model.Mentor;
@@ -73,16 +74,16 @@ public class CentralController {
 
         boolean operationSuccessful = true;
         if (user instanceof Admin) {
-            AdministratorController adminController = new AdministratorController(mDAO);
+            ControllerInterface adminController = new AdministratorController(mDAO);
             adminController.startController();
 
         } else if (user instanceof Mentor) {
-            MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+            ControllerInterface mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
             mentorController.startController();
 
         } else if (user instanceof Student) {
             // add connection
-            StudentController studentController = new StudentController();
+            ControllerInterface studentController = new StudentController();
             studentController.startController();
 
         } else {
