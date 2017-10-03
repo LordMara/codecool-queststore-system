@@ -34,7 +34,7 @@ public class StudentDAO extends AbstractDAO<Student, String>{
     }
 
     public String updateQuery(Student student) {
-        return String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
+        return String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %s ;",
                 student.getName(), student.getSurname(), student.getLogin(), student.getPassword(), student.getId());
     }
 
