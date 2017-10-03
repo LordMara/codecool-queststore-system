@@ -17,7 +17,6 @@ public class CentralController {
 
     public CentralController() {
         view = new View();
-        setup();
     }
 
     public void startController() throws SQLException {
@@ -34,6 +33,7 @@ public class CentralController {
             StudentDAO sDAO = new StudentDAO(connection);
             // close in one object
 
+            setup();
 
             Account user = validateUser(aDAO, mDAO, sDAO);
 
