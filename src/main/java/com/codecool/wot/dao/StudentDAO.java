@@ -45,7 +45,7 @@ public class StudentDAO extends AbstractDAO<Student, String>{
     public String insertionQuery(String ... args) {
 
         String values = String.format("('%s', 'student')",String.join("', '", args));
-        String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
+        String query = "INSERT INTO persons (name, surname, email, login, password, role) VALUES " + values;
 
         return query;
     }
