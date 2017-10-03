@@ -10,6 +10,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CentralController {
+    private View view;
+    private String login;
+    private String password;
+
+    public CentralController() {
+        view = new View();
+        setup();
+    }
 
     public void startController() throws SQLException {
 
@@ -25,69 +33,35 @@ public class CentralController {
             StudentDAO sDAO = new StudentDAO(connection);
             // close in one object
 
-            View view = new View();
 
-            String login = view.getStringInput("Enter login");
-            String password = view.getStringInput("Enter password");
-
-            Account user = validateUser(login, password, aDAO, mDAO, sDAO);
+            Account user = validateUser(aDAO, mDAO, sDAO);
 
             if (!startProperController(user, arDAO, qDAO, cDAO, aDAO, mDAO, sDAO)) {
-                view.printMessage("No such user");
+                this.view.printMessage("No such user");
             }
-
-
-//            String login = view.getStringInput("Enter login");
-//            String password = view.getStringInput("Enter password");
-//
-//            Admin admin = aDAO.getByLogin(login);
-//            Mentor mentor = mDAO.getByLogin(login);
-//            Student student = sDAO.getByLogin(login);
-
-//            if (admin != null) {
-//                if (password.equals(admin.getPassword())) {
-//                    AdministratorController adminController = new AdministratorController(mDAO);
-//                    adminController.startController();
-//                }
-//            }
-//            if (mentor != null) {
-//                if (password.equals(mentor.getPassword())) {
-//                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
-//                    mentorController.startController();
-//                }
-//            }
-//            if (student != null) {
-//                if (password.equals(student.getPassword())) {
-//                    // add connection
-//                    StudentController studentController = new StudentController();
-//                    studentController.startController();
-//                }
-//            } else {
-//                view.printMessage("No such user");
-//            }
         }
     }
 
-    private Account validateUser(String login, String password, AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
+    private Account validateUser(AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
         Account user = null;
 
-        Admin admin = aDAO.getByLogin(login);
-        Mentor mentor = mDAO.getByLogin(login);
-        Student student = sDAO.getByLogin(login);
+        Admin admin = aDAO.getByLogin(this.login);
+        Mentor mentor = mDAO.getByLogin(this.login);
+        Student student = sDAO.getByLogin(this.login);
 
         if (admin != null) {
-            if (password.equals(admin.getPassword())) {
+            if (this.password.equals(admin.getPassword())) {
                 user = admin;
             }
         }
 
         if (mentor != null) {
-            if (password.equals(mentor.getPassword())) {
-            user = mentor;
+            if (this.password.equals(mentor.getPassword())) {
+                user = mentor;
             }
         }
         if (student != null) {
-            if (password.equals(student.getPassword())) {
+            if (this.password.equals(student.getPassword())) {
                 user = student;
             }
         }
@@ -115,5 +89,10 @@ public class CentralController {
             operationSuccessful = false;
         }
         return operationSuccessful;
+    }
+
+    private void setup() {
+        this.login = this.view.getStringInput("Enter login");
+        this.password = this.view.getStringInput("Enter password");
     }
 }
