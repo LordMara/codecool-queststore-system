@@ -2,6 +2,10 @@ package com.codecool.wot.dao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,20 +15,23 @@ public class FactoryDAO {
 
     private Connection connection;
 
-    public FactoryDAO(Connection connection) {
 
-        System.out.println("dupa w Factory");
 
-        this.connection = connection;
-
-        File database = new File("src/main/resources/db/queststore.db");
+    public Connection loadDB(){
 
         System.out.println("dupa przed ifem");
+        Path path = Paths.get("src/main/resources/db/queststore.db");
 
-        if (!database.exists()) {
+        if (Files.notExists(path)) {
             System.out.println("dupa1");
+            connection = DatabaseConnection.getDBConnection().getConnection();
             createDataBase();
+
         }
+        else connection = DatabaseConnection.getDBConnection().getConnection();
+
+        return connection;
+
     }
 
     private void createDataBase() {

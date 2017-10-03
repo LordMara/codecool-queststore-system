@@ -56,6 +56,19 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
 
     public abstract boolean getByCondition(T object, V identifier);
 
+    public String getIDFromDB(V identifier) throws SQLException {
+
+        Statement stmt = connection.createStatement();
+        String query = getIDFromDBQuery(identifier);
+        ResultSet rs = stmt.executeQuery(query);
+
+        return rs.getString(1);
+
+
+    }
+
+    public abstract String getIDFromDBQuery(V identifier);
+
 
     public void saveToDataBase(String ... args) throws  SQLException {
 
@@ -87,14 +100,10 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
 
     public String insertionQuery(String ID, String classID) {
 
-        String values = String.format("('%d', '%d')", ID, classID);
+        String values = String.format("('%s', '%s')", ID, classID);
         String query = "INSERT INTO persons_classes (personId, classId) VALUES " + values;
 
         return  query;
-    }
-
-    public void setObjectList(ArrayList<T> newObjectsList) {
-        objectsList = newObjectsList;
     }
 
     public ArrayList<T> getObjectList() {

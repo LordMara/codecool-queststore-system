@@ -39,5 +39,9 @@ public class ClassDAO extends AbstractDAO<SchoolClass, String> {
         return "INSERT INTO classes (classId, name) VALUES " + values;
     }
 
+    public String getIDFromDBQuery(String name) {
+        return "SELECT classId FROM classes WHERE name = " + String.format("'%s';", name);
+    }
+
 
 }

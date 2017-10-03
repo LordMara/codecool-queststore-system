@@ -76,13 +76,15 @@ public class AdministratorController{
         String password = view.getStringInput("Enter mentor's password: ");
 
         String classID = classDAO.getBy(name).getName();
-        mentorDAO.saveToDataBase(name, surname, email, login, password, classID);
-        String ID = mentorDAO.getBy(login).getId();
+        mentorDAO.saveToDataBase(name, surname, email, login, password);
+
+        String ID = mentorDAO.getIDFromDB(login);
+
         mentorDAO.saveToDataBase(ID, classID);
         mentorDAO.add(new Mentor(name, surname, email, login, password, ID, classID));
     }
 
-    public void editMentor(Mentor mentor) throws SQLException{
+    private void editMentor(Mentor mentor) throws SQLException{
 
         mentor.setName(view.getStringInput("Enter new mentor's name: "));
         mentor.setSurname(view.getStringInput("Enter new mentor's surname: "));
@@ -110,7 +112,7 @@ public class AdministratorController{
         String name = view.getStringInput("Enter class name :");
 
         classDAO.saveToDataBase(name);
-        String classID = classDAO.getBy(name).getId();
+        String classID = classDAO.getIDFromDB(name);
 
         classDAO.add(new SchoolClass(name, classID));
     }

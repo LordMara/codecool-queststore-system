@@ -24,7 +24,7 @@ public class MentorController{
         this.classDAO = dao.getcDAO();
         this.studentDAO = dao.getsDAO();
         this.mentorDAO = dao.getmDAO();
-       // this.questDAO = dao.getqDAO();
+//        this.questDAO = dao.getqDAO();
         this.tools = tools;
         this.view = new View<>();
     }
@@ -82,8 +82,8 @@ public class MentorController{
 
             studentDAO.saveToDataBase(name, surname, email, login, password);
 
-            String ID = studentDAO.getBy(login).getId();
             String classId = tools.getClassByName().getId();
+            String ID = studentDAO.getIDFromDB(login);
 
             studentDAO.saveToDataBase(ID, classId);
             studentDAO.add(new Student(name, surname, email, login, password, ID, classId));
@@ -125,21 +125,17 @@ public class MentorController{
         return student;
     }
 
-    private void createQuest() {
+    private void createQuest() throws SQLException{
 
 //        String name = view.getStringInput("Enter quest name : ");
 //        String description = view.getStringInput("Enter quest short description :");
-//        Float price = view.getFloatInput("Enter quest price :");
+//        String price = view.getFloatInput("Enter quest price :").toString();
+//
 //        questDAO.saveToDataBase(name, description, price);
 //
-//        String questID = questDAO.getBy(name, description, price);
+//        String questID = questDAO.getIDFromDBQuery(name);
 //
-//        questDAO.add(new Quest(name, description, price, questID));
-//
-//        view.printMessage("Feature in development");
-    }
-
-    private void createTeam() {
+//        questDAO.add(new Quest(name, description, Float.parseFloat(price), questID));
     }
 
 }

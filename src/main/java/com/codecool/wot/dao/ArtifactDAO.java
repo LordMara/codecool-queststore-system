@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ArtifactDAO extends AbstractDAO<Artifact, Integer> {
+public class ArtifactDAO extends AbstractDAO<Artifact, String> {
 
     public ArtifactDAO(Connection connection) throws SQLException{
         this.connection = connection;
@@ -29,11 +29,15 @@ public class ArtifactDAO extends AbstractDAO<Artifact, Integer> {
         return "";
     }
 
-    public boolean getByCondition(Artifact artifact, Integer id) {
+    public boolean getByCondition(Artifact artifact, String id) {
         return false;
     }
 
     public String insertionQuery(String ... args) {
         return "";
+    }
+
+    public String getIDFromDBQuery(String name) {
+        return "SELECT artifactId FROM artifacts WHERE name = " + String.format("'%s';", name);
     }
 }

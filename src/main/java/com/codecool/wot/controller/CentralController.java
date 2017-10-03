@@ -20,20 +20,23 @@ public class CentralController {
 
     public void startController() throws SQLException {
 
-        try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
-            
+
+        FactoryDAO factoryDAO = new FactoryDAO();
+
+        try (Connection connection = factoryDAO.loadDB()){
+
             // close in one object
-            new FactoryDAO(connection);
-//            DAOs dao = new DAOs(connection);
-//            Tools tools = new Tools(this.view, dao);
-//            // close in one object
-//
-//
-//            Account user = validateUser(dao);
-//
-//            if (!startProperController(user, dao, tools)) {
-//                this.view.printMessage("No such user");
-//            }
+            DAOs dao = new DAOs(connection);
+            Tools tools = new Tools(this.view, dao);
+            // close in one object
+
+
+            Account user = validateUser(dao);
+
+            if (!startProperController(user, dao, tools)) {
+                this.view.printMessage("No such user");
+            }
+            connection.close();
         }
     }
 

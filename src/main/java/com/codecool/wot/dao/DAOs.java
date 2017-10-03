@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class DAOs {
 //
 //    ArtifactDAO arDAO;
-//    QuestDAO qDAO;
+    QuestDAO qDAO;
     ClassDAO cDAO;
 
     AdminDAO aDAO;
@@ -18,7 +18,6 @@ public class DAOs {
 //        arDAO = new ArtifactDAO(connection);
 //        qDAO = new QuestDAO(connection);
         cDAO = new ClassDAO(connection);
-
         aDAO = new AdminDAO(connection);
         mDAO = new MentorDAO(connection);
         sDAO = new StudentDAO(connection);
