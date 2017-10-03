@@ -136,6 +136,7 @@ public class MentorController{
 //        String questID = questDAO.getIDFromDBQuery(name);
 //
 //        questDAO.add(new Quest(name, description, Float.parseFloat(price), questID));
+        view.printMessage("IN PROGRESS ");
     }
 
 }
