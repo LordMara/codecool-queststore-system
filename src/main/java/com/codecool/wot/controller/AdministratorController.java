@@ -2,10 +2,11 @@ package com.codecool.wot.controller;
 
 
 import com.codecool.wot.dao.MentorDAO;
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
-public class AdministratorController{
+public class AdministratorController implements ControllerInterface {
 
     private View <Mentor> view;
     private MentorDAO mentorDAO;
