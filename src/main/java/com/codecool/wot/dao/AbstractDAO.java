@@ -45,23 +45,23 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
     public abstract String updateQuery(T object);
 
     public T getBy(V identifier) throws NullPointerException {
-
+        T person = null;
         for (T object : objectsList){
             if (getByCondition(object, identifier)){
-                return object;
+                person = object;
             }
         }
-        throw new NullPointerException();
+        return person;
     }
 
     public abstract boolean getByCondition(T object, V identifier);
 
 
-    public void saveToDataBase(T object) throws  SQLException {
+    public void saveToDataBase(String ... args) throws  SQLException {
 
         Statement stmt = connection.createStatement();
 
-        String query = insertionQuery(object);
+        String query = insertionQuery(args);
 
         stmt.executeUpdate(query);
 
@@ -70,7 +70,28 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
 
     }
 
-    public abstract String insertionQuery(T object);
+    public void saveToDataBase(String ID, String classID) throws  SQLException {
+
+        Statement stmt = connection.createStatement();
+
+        String query = insertionQuery(ID, classID);
+
+        stmt.executeUpdate(query);
+
+        stmt.close();
+        connection.commit();
+
+    }
+
+    public abstract String insertionQuery(String ... args);
+
+    public String insertionQuery(String ID, String classID) {
+
+        String values = String.format("('%d', '%d')", ID, classID);
+        String query = "INSERT INTO persons_classes (personId, classId) VALUES " + values;
+
+        return  query;
+    }
 
     public void setObjectList(ArrayList<T> newObjectsList) {
         objectsList = newObjectsList;

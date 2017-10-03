@@ -6,12 +6,6 @@ public class Admin extends Account{
 
     private static ArrayList<Admin> admins = new ArrayList<Admin>();
 
-    public Admin(String name, String surname, String email, String login, String password){
-
-        super(name, surname, email, login, password);
-
-    }
-
     public Admin(String name, String surname, String email, String login, String password, String adminId){
 
         super(name, surname, email, login, password, adminId);

@@ -38,8 +38,12 @@ public class AdminDAO extends AbstractDAO<Admin, String> {
         return false;
     }
 
-    public String insertionQuery(Admin admin) {
-        return "";
+    public String insertionQuery(String ... args) {
+
+        String values = String.format("('%s', 'admin')",String.join("', '", args));
+        String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
+
+        return query;
     }
 
 }

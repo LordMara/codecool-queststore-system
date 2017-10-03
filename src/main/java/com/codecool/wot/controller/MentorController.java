@@ -5,6 +5,7 @@ import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -17,28 +18,27 @@ public class MentorController{
     private StudentDAO studentDAO;
     private MentorDAO mentorDAO;
     private QuestDAO questDAO;
+    private Tools tools;
 
-    public MentorController(ClassDAO classDAO, StudentDAO studentDAO, MentorDAO mentorDAO, QuestDAO questDAO) {
-        this.classDAO = classDAO;
-        this.studentDAO = studentDAO;
-        this.mentorDAO = mentorDAO;
-        this.questDAO = questDAO;
-
+    public MentorController(DAOs dao, Tools tools) {
+        this.classDAO = dao.getcDAO();
+        this.studentDAO = dao.getsDAO();
+        this.mentorDAO = dao.getmDAO();
+       // this.questDAO = dao.getqDAO();
+        this.tools = tools;
         this.view = new View<>();
     }
 
-    public void startController(){
+    public void startController() throws SQLException {
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
         final String EDIT_STUDENT = "2";
         final String SHOW_STUDENTS = "3";
-        final String CREATE_CLASS = "4";
-        final String EDIT_CLASS = "5";
-        final String CREATE_QUEST = "6";
+        final String CREATE_QUEST = "4";
 
         String choose = "";
-        String[] menu = {"Create student", "Edit student", "Show students", "Create class", "Edit Class", "Create quest"};
+        String[] menu = {"Create student", "Edit student", "Show students", "Create quest"};
 
         while (! choose.equals("0")){
 
@@ -59,14 +59,6 @@ public class MentorController{
                     showAllStudents();
                     break;
 
-                case CREATE_CLASS :
-                    createClass();
-                    break;
-
-                case EDIT_CLASS :
-                    editClass();
-                    break;
-
                 case CREATE_QUEST:
                     createQuest();
                     break;
@@ -78,36 +70,41 @@ public class MentorController{
     }
 
 
-    private void createStudent() {
+    private void createStudent() throws SQLException {
 
         if (classDAO.getObjectList().size() > 0) {
+
             String name = view.getStringInput("Enter student's name: ");
             String surname = view.getStringInput("Enter student's surname: ");
             String email = view.getStringInput("Enter student's email: ");
             String login = view.getStringInput("Enter student's login: ");
             String password = view.getStringInput("Enter student's password: ");
-            Integer classId = getClassByName().getId();
 
-            studentDAO.add(new Student(name, surname, email, login, password));
+            studentDAO.saveToDataBase(name, surname, email, login, password);
+
+            String ID = studentDAO.getBy(login).getId();
+            String classId = tools.getClassByName().getId();
+
+            studentDAO.saveToDataBase(ID, classId);
+            studentDAO.add(new Student(name, surname, email, login, password, ID, classId));
 
         } else{
             view.printMessage("Create class first ! ");
         }
     }
-
-    private void editStudent(Student student){
+    private void editStudent(Student student) throws SQLException{
         updateWholeStudent(student);
 
     }
 
-    private void updateWholeStudent(Student student) {
+    private void updateWholeStudent(Student student) throws SQLException {
         student.setName(view.getStringInput("Enter new student's name: "));
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
         student.setPassword(view.getStringInput("Enter new student's password: "));
         student.setEmail(view.getStringInput("Enter new student's email: "));
 
-        studentDAO.updateStudent(student);
+        studentDAO.update(student);
     }
 
     private void showAllStudents() {
@@ -116,64 +113,30 @@ public class MentorController{
     }
 
     private Student getStudentByLogin() {
-
-        boolean found = false;
         Student student = null;
 
-        while (! found){
-
-            try {
-                String login = view.getStringInput("Enter student's login :");
-                student = studentDAO.getByLogin(login);
-                found = true;
-            } catch (NullPointerException e){
+        while (student == null){
+            String login = view.getStringInput("Enter student's login :");
+            student = studentDAO.getBy(login);
+            if (student == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
             }
         }
         return student;
     }
 
-    private void createClass() {
-
-        String name = view.getStringInput("Enter class name :");
-        classDAO.add(new SchoolClass(name));
-    }
-
-    private void editClass() {
-        SchoolClass schoolClass = getClassByName();
-        schoolClass.setName(view.getStringInput("Enter new class name: "));
-        classDAO.updateClass(schoolClass);
-    }
-
-    private SchoolClass getClassByName() {
-
-        boolean found = false;
-        SchoolClass schoolClass = null;
-
-        while (! found){
-
-            try {
-                String name = view.getStringInput("Enter class name :");
-                schoolClass = classDAO.getByName(name);
-                found = true;
-            } catch (NullPointerException e){
-                view.printMessage("NOT FOUND ! ");
-                found = false;
-            }
-        }
-        return schoolClass;
-    }
-
     private void createQuest() {
 
-        ArrayList<Student> students;
-        String name = view.getStringInput("Enter quest name : ");
-        String description = view.getStringInput("Enter quest short description :");
-        Float price = view.getFloatInput("Enter quest price :");
-        questDAO.add(new Quest(name, description, price));
-
-        view.printMessage("Feature in development");
+//        String name = view.getStringInput("Enter quest name : ");
+//        String description = view.getStringInput("Enter quest short description :");
+//        Float price = view.getFloatInput("Enter quest price :");
+//        questDAO.saveToDataBase(name, description, price);
+//
+//        String questID = questDAO.getBy(name, description, price);
+//
+//        questDAO.add(new Quest(name, description, price, questID));
+//
+//        view.printMessage("Feature in development");
     }
 
     private void createTeam() {

@@ -10,7 +10,9 @@ public class DatabaseConnection {
 
     private DatabaseConnection() {
 
-            String url = "jdbc:sqlite:queststore";
+
+            String url = "jdbc:sqlite:src/main/resources/db/queststore.db";
+
             setConnection(url);
 
     }

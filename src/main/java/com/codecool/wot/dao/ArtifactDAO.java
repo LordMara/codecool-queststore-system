@@ -33,7 +33,7 @@ public class ArtifactDAO extends AbstractDAO<Artifact, Integer> {
         return false;
     }
 
-    public String insertionQuery(Artifact artifact) {
+    public String insertionQuery(String ... args) {
         return "";
     }
 }

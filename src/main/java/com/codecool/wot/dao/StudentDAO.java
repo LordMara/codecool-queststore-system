@@ -19,13 +19,13 @@ public class StudentDAO extends AbstractDAO<Student, String>{
 
         while (rs.next()) {
 
-            Integer Id = rs.getInt("personId");
+            String Id = rs.getString("personId");
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             String email = rs.getString("email");
             String login = rs.getString("login");
             String password = rs.getString("password");
-            Integer classId = rs.getInt("classId");
+            String classId = rs.getString("classId");
 
 
             objectsList.add(new Student(name, surname, email, login, password, Id, classId));
@@ -42,18 +42,12 @@ public class StudentDAO extends AbstractDAO<Student, String>{
         return student.getLogin().equals(login);
     }
 
-    public String insertionQuery(Student student) {
+    public String insertionQuery(String ... args) {
 
-        String values = String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', 'student')", student.getId(), student.getName(), student.getSurname()
-                , student.getEmail(), student.getPhone(), student.getLogin(), student.getPassword());
+        String values = String.format("('%s', 'student')",String.join("', '", args));
+        String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
 
-        String values2 = String.format("('%d', '%d')", student.getId(), student.getClassId());
-
-        String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
-
-        String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
-
-        return query1+query2;
+        return query;
     }
 
 }

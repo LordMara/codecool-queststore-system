@@ -17,7 +17,7 @@ public class ClassDAO extends AbstractDAO<SchoolClass, String> {
 
         while (rs.next()) {
 
-            Integer classId = rs.getInt("classId");
+            String classId = rs.getString("classId");
             String name = rs.getString("name");
 
             objectsList.add(new SchoolClass(classId, name));
@@ -27,16 +27,15 @@ public class ClassDAO extends AbstractDAO<SchoolClass, String> {
 
     public String updateQuery(SchoolClass schoolClass) {
         return String.format("UPDATE classes SET name = '%s' WHERE classId = %d ;", schoolClass.getName(), schoolClass.getId());
-
     }
 
     public boolean getByCondition(SchoolClass schoolClass, String name) {
         return (schoolClass.getName().equals(name));
     }
 
-    public String insertionQuery(SchoolClass schoolClass) {
+    public String insertionQuery(String ... args) {
 
-        String values = String.format("(%d, %s)", schoolClass.getId(), schoolClass.getName());
+        String values = String.format("('%s')",String.join("', '", args));
         return "INSERT INTO classes (classId, name) VALUES " + values;
     }
 

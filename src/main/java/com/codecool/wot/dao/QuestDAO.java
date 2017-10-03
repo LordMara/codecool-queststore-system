@@ -21,7 +21,6 @@ public class QuestDAO extends AbstractDAO<Quest, Integer> {
 
             // code to get Artifact attributes
 
-            objectsList.add(new Quest("", "", (float)0));
         }
 
     }
@@ -34,7 +33,7 @@ public class QuestDAO extends AbstractDAO<Quest, Integer> {
         return false;
     }
 
-    public String insertionQuery(Quest quest) {
+    public String insertionQuery(String ... args) {
         return "";
     }
 }

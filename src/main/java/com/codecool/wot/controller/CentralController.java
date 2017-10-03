@@ -1,59 +1,91 @@
 package com.codecool.wot.controller;
 
-import com.codecool.wot.model.Student;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Admin;
+import com.codecool.wot.model.*;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class CentralController {
+    private View view;
+    private String login;
+    private String password;
 
-    public void startController() {
 
-        Connection connection = DatabaseConnection.getDBConnection().getConnection();
+    public CentralController() throws SQLException {
 
-        ArtifactDAO arDAO = new ArtifactDAO();
-        QuestDAO qDAO = new QuestDAO();
-        ClassDAO cDAO = new ClassDAO(connection);
+        view = new View();
+        setup();
+    }
 
-        AdminDAO aDAO = new AdminDAO(connection);
-        MentorDAO mDAO = new MentorDAO(connection);
-        StudentDAO sDAO = new StudentDAO(connection);
+    public void startController() throws SQLException {
 
-        View view = new View();
+        try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
+            
+            // close in one object
+            DAOs dao = new DAOs(connection);
+            Tools tools = new Tools(this.view, dao);
+            // close in one object
 
-        String login = view.getStringInput("Enter login");
-        String password = view.getStringInput("Enter password");
 
-        try {
-            Admin admin = aDAO.getByLogin(login);
-            if (password.equals(admin.getPassword())) {
-                AdministratorController adminController = new AdministratorController(mDAO);
-                adminController.startController();
-            }
-        } catch (NullPointerException e1) {
+            Account user = validateUser(dao);
 
-            try {
-                Mentor mentor = mDAO.getByLogin(login);
-                if (password.equals(mentor.getPassword())) {
-                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
-                    mentorController.startController();
-                }
-            } catch (NullPointerException e2) {
-
-                try {
-                    Student student = sDAO.getByLogin(login);
-                    if (password.equals(student.getPassword())) {
-
-                        // add connection
-                        StudentController studentController = new StudentController();
-                        studentController.startController();
-                    }
-                } catch (NullPointerException e3) {
-                    view.printMessage("No such user");
-                }
+            if (!startProperController(user, dao, tools)) {
+                this.view.printMessage("No such user");
             }
         }
+    }
+
+    private Account validateUser(DAOs dao) {
+        Account user = null;
+
+        Admin admin = dao.getaDAO().getBy(this.login);
+        Mentor mentor = dao.getmDAO().getBy(this.login);
+        Student student = dao.getsDAO().getBy(this.login);
+
+        if (admin != null) {
+            if (this.password.equals(admin.getPassword())) {
+                user = admin;
+            }
+        }
+
+        if (mentor != null) {
+            if (this.password.equals(mentor.getPassword())) {
+                user = mentor;
+            }
+        }
+        if (student != null) {
+            if (this.password.equals(student.getPassword())) {
+                user = student;
+            }
+        }
+        return user;
+    }
+
+    private boolean startProperController(Account user, DAOs dao, Tools tools) throws SQLException{
+
+        boolean operationSuccessful = true;
+        if (user instanceof Admin) {
+            AdministratorController adminController = new AdministratorController(dao, tools);
+            adminController.startController();
+
+        } else if (user instanceof Mentor) {
+            MentorController mentorController = new MentorController(dao, tools);
+            mentorController.startController();
+
+        } else if (user instanceof Student) {
+
+            StudentController studentController = new StudentController();
+            studentController.startController();
+
+        } else {
+            operationSuccessful = false;
+        }
+        return operationSuccessful;
+    }
+
+    private void setup() {
+        this.login = this.view.getStringInput("Enter login");
+        this.password = this.view.getStringInput("Enter password");
     }
 }

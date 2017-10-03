@@ -2,22 +2,18 @@ package com.codecool.wot.model;
 
 public class Mentor extends Account{
 
-    private Integer classId;
+    private String classId;
 
-    public Mentor(String name, String surname, String email, String login, String password) {
-        super(name, surname, email, login, password);
-    }
-
-    public Mentor(String name, String surname, String email, String login, String password, Integer ID, Integer classId) {
+    public Mentor(String name, String surname, String email, String login, String password, String ID, String classId) {
         super(name, surname, email, login, password, ID);
         this.classId = classId;
     }
 
-    public Integer getClassId() {
+    public String getClassId() {
         return classId;
     }
 
-    public void setClassId(Integer classId) {
+    public void setClassId(String classId) {
         this.classId = classId;
     }
 }
