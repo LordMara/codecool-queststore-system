@@ -31,8 +31,8 @@ public class MentorDAO extends AbstractDAO<Mentor, String> {
     }
 
     public  String updateQuery(Mentor mentor) {
-        return String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
-                mentor.getName(), mentor.getSurname(), mentor.getLogin(), mentor.getPassword(), mentor.getId());
+        return String.format("UPDATE persons SET name = '%s', surname = '%s', email = '%s', login = '%s', password = '%s'	WHERE personId = '%s' ;",
+                mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getLogin(), mentor.getPassword(), mentor.getId());
     }
 
     public boolean getByCondition(Mentor mentor, String login) {
@@ -42,8 +42,8 @@ public class MentorDAO extends AbstractDAO<Mentor, String> {
 
     public String insertionQuery(String ... args) {
 
-        String values = String.format("('%s' , 'mentor,)",String.join("', '", args));
-        String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
+        String values = String.format("('%s', 'mentor')", String.join("', '", args));
+        String query = "INSERT INTO persons (name, surname, email, login, password, role) VALUES " + values;
 
         return query;
     }
