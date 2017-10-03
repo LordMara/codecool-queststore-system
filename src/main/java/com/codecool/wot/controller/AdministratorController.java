@@ -34,7 +34,7 @@ public class AdministratorController{
     public void startController() throws SQLException{
 
         String choose = "";
-        String[] menu = {"Create mentor", "Edit mentor", "Create class", "Edit class", "Show mentors"};
+        String[] menu = {"Create mentor", "Edit mentor", "Show mentors", "Create class", "Edit class"};
 
         while (! choose.equals("0")){
 
@@ -75,9 +75,9 @@ public class AdministratorController{
         String login = view.getStringInput("Enter mentor's login: ");
         String password = view.getStringInput("Enter mentor's password: ");
 
-        String classID = classDAO.getBy(name).getName();
         mentorDAO.saveToDataBase(name, surname, email, login, password);
 
+        String classID = tools.getClassByName().getId();
         String ID = mentorDAO.getIDFromDB(login);
 
         mentorDAO.saveToDataBase(ID, classID);
