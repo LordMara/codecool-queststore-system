@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
-public abstract class AbstractDAO<T> implements DAO<T> {
+public abstract class AbstractDAO<T, V> implements DAO<T> {
 
 
     protected ArrayList<T> objectsList = new ArrayList<T>();
@@ -29,19 +29,48 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     public abstract void loadObjectsToLocalList(ResultSet resultSet) throws SQLException;
 
 
-    public void add(T object) {
-        objectsList.add(object);
+    public void update(T object) throws SQLException {
+
+        Statement stmt = connection.createStatement();
+
+        String query = updateQuery(object);
+
+        stmt.executeUpdate(query);
+
+        stmt.close();
+        connection.commit();
+
     }
 
-    public void update(T object) {}
+    public abstract String updateQuery(T object);
 
-    public void remove(T object) {
-        objectsList.remove(object);
+    public T getBy(V identifier) throws NullPointerException {
+
+        for (T object : objectsList){
+            if (getByCondition(object, identifier)){
+                return object;
+            }
+        }
+        throw new NullPointerException();
     }
 
-    public T getBy(String identifier) {}
+    public abstract boolean getByCondition(T object, V identifier);
 
-    public T getBy(Integer identifier) {}
+
+    public void saveToDataBase(T object) throws  SQLException {
+
+        Statement stmt = connection.createStatement();
+
+        String query = insertionQuery(object);
+
+        stmt.executeUpdate(query);
+
+        stmt.close();
+        connection.commit();
+
+    }
+
+    public abstract String insertionQuery(T object);
 
     public void setObjectList(ArrayList<T> newObjectsList) {
         objectsList = newObjectsList;
@@ -51,7 +80,13 @@ public abstract class AbstractDAO<T> implements DAO<T> {
         return objectsList;
     }
 
-    public void saveToDataBase(T object) {}
+    public void add(T object) {
+        objectsList.add(object);
+    }
+
+    public void remove(T object) {
+        objectsList.remove(object);
+    }
 
 
 }

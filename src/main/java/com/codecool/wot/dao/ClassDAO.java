@@ -6,18 +6,19 @@ import java.sql.*;
 
 public class ClassDAO extends AbstractDAO<SchoolClass> {
 
-    private Connection connection;
+    public ClassDAO(Connection connection) throws SQLException {
 
-    public ClassDAO(Connection connection) {
         this.connection = connection;
-        loadClasses();
+        String loadQuery = "SELECT * FROM classes";
+        load(loadQuery);
     }
 
-    @Override
-    public void add(SchoolClass object) {
-        super.add(object);
-        saveToDataBase(object);
-    }
+
+
+
+    /////////////////////////////////////////////////////////////////
+
+
 
     private void loadClasses() {
 

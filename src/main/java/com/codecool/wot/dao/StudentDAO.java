@@ -70,7 +70,6 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             String query2 = "INSERT INTO persons_classes (personId, classId) VALUES " + values2;
 
             stmt.executeUpdate(query1);
-
             stmt.executeUpdate(query2);
             stmt.close();
             connection.commit();
@@ -85,8 +84,6 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         try {
             Statement stmt = connection.createStatement();
 
-            String query = String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
-                    student.getName(), student.getSurname(), student.getLogin(), student.getPassword(), student.getId());
 
             stmt.executeUpdate(query);
 
@@ -98,5 +95,12 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
         }
     }
 
+    @Override
+    public String updateQuery(Student student) {
+
+        return String.format("UPDATE persons SET name = '%s', surname = '%s', login = '%s', password = '%s'	WHERE personId = %d ;",
+                student.getName(), student.getSurname(), student.getLogin(), student.getPassword(), student.getId());
+
+    }
 }
 

@@ -3,12 +3,13 @@ package com.codecool.wot.dao;
 import com.codecool.wot.model.Admin;
 import java.sql.*;
 
-public class AdminDAO extends AbstractCodecoolerDAO<Admin> {
+public class AdminDAO extends AbstractDAO<Admin, String> {
 
 
     public AdminDAO(Connection connection) throws SQLException {
         this.connection = connection;
-        load("SELECT * FROM persons WHERE role ='administrator'");
+        String loadQuery = "SELECT * FROM persons WHERE role ='administrator'";
+        load(loadQuery);
 
     }
 
@@ -28,6 +29,12 @@ public class AdminDAO extends AbstractCodecoolerDAO<Admin> {
         }
 
     }
+
+    public String updateQuery(Admin admin) {}
+
+    public boolean getByCondition(Admin admin, String login) {}
+
+    public String insertionQuery(Admin admin) {}
 
 }
 
