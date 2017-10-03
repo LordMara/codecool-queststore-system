@@ -21,7 +21,7 @@ public class CentralController {
     public void startController() throws SQLException {
 
         try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
-            
+
             // close in one object
             DAOs dao = new DAOs(connection);
             Tools tools = new Tools(this.view, dao);
