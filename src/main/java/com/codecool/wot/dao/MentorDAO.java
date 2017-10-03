@@ -46,8 +46,10 @@ public class MentorDAO extends AbstractDAO<Mentor, String> {
         String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
 
         return query;
+    }
 
-
+    public String getIDFromDBQuery(String login) {
+        return "SELECT personId FROM persons WHERE login = " + String.format("'%s';", login);
     }
 
 }

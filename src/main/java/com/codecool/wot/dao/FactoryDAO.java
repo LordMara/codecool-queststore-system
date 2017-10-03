@@ -13,9 +13,9 @@ public class FactoryDAO {
 
         File database = new File("src/main/resources/db/queststore.db");
 
-        if (!database.exists()) {
+        //if (!database.exists()) {
             createDataBase();
-        }
+        //}
     }
 
     private void createDataBase() {

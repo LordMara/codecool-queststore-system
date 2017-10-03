@@ -59,15 +59,15 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
     public String getIDFromDB(V identifier) throws SQLException {
 
         Statement stmt = connection.createStatement();
-        String query = getIDFromDBQuery();
+        String query = getIDFromDBQuery(identifier);
         ResultSet rs = stmt.executeQuery(query);
 
-        String id = rs.getString(0);
+        return rs.getString(0);
 
 
     }
 
-    public abstract String getIDFromDBQuery();
+    public abstract String getIDFromDBQuery(V identifier);
 
 
     public void saveToDataBase(String ... args) throws  SQLException {

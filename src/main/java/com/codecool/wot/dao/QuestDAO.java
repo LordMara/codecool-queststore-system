@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class QuestDAO extends AbstractDAO<Quest, Integer> {
+public class QuestDAO extends AbstractDAO<Quest, String> {
 
     public QuestDAO(Connection connection) throws SQLException {
         this.connection = connection;
@@ -29,11 +29,15 @@ public class QuestDAO extends AbstractDAO<Quest, Integer> {
         return "";
     }
 
-    public boolean getByCondition(Quest quest, Integer id) {
+    public boolean getByCondition(Quest quest, String id) {
         return false;
     }
 
     public String insertionQuery(String ... args) {
         return "";
+    }
+
+    public String getIDFromDBQuery(String name) {
+        return "SELECT questId FROM quests WHERE name = " + String.format("'%s';", name);
     }
 }

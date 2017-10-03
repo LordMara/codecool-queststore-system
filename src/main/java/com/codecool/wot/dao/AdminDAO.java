@@ -46,5 +46,9 @@ public class AdminDAO extends AbstractDAO<Admin, String> {
         return query;
     }
 
+    public String getIDFromDBQuery(String login) {
+        return "SELECT personId FROM persons WHERE login = " + String.format("'%s';", login);
+    }
+
 }
 
