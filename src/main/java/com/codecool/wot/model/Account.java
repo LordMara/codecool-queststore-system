@@ -9,9 +9,9 @@ public abstract class Account{
     protected String phone = null;
     protected String login;
     protected String password;
-    protected Integer ID;
+    protected String ID;
 
-    public Account(String name, String surname, String email, String login, String password, Integer ID) {
+    public Account(String name, String surname, String email, String login, String password, String ID) {
         this.name = name;
         this.surname = surname;
         this.email = email;
