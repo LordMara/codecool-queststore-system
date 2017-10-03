@@ -9,11 +9,20 @@ import java.util.Scanner;
 
 public class FactoryDAO {
 
-    public FactoryDAO() {
+    private Connection connection;
+
+    public FactoryDAO(Connection connection) {
+
+        System.out.println("dupa w Factory");
+
+        this.connection = connection;
 
         File database = new File("src/main/resources/db/queststore.db");
 
+        System.out.println("dupa przed ifem");
+
         if (!database.exists()) {
+            System.out.println("dupa1");
             createDataBase();
         }
     }
@@ -21,12 +30,13 @@ public class FactoryDAO {
     private void createDataBase() {
 
         try {
-            Connection connection = DatabaseConnection.getDBConnection().getConnection();
+            System.out.println("dupa wchodzi do traja");
             Statement stmt = connection.createStatement();
-
+            System.out.println("dupa tworzy stejtmenta");
             stmt.executeUpdate(loadQuery());
+            System.out.println("dupa egzekwoje zapytanie");
             stmt.close();
-            connection.close();
+            System.out.println("dupa zamyka stejtmenta");
 
         } catch (SQLException e) {
             e.printStackTrace();
