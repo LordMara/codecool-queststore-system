@@ -62,14 +62,14 @@ public class ClassDAO extends AbstractDAO<SchoolClass> {
     }
 
 
-    public SchoolClass getByName(String name) throws NullPointerException {
-
-        for (SchoolClass schoolClass : objectsList){
-            if (schoolClass.getName().equals(name)){
-                return schoolClass;
+    public SchoolClass getByName(String name) {
+        SchoolClass schoolClass = null;
+        for (SchoolClass elem : objectsList){
+            if (elem.getName().equals(name)){
+                schoolClass = elem;
             }
         }
-        throw new NullPointerException();
+        return schoolClass;
     }
 
     private void saveToDataBase(SchoolClass schoolClass) {
