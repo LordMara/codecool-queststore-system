@@ -64,8 +64,8 @@ public class ClassDAO extends AbstractDAO<SchoolClass> {
 
     public SchoolClass getByName(String name) {
         SchoolClass schoolClass = null;
-        for (SchoolClass elem : objectsList){
-            if (elem.getName().equals(name)){
+        for (SchoolClass elem : objectsList) {
+            if (elem.getName().equals(name)) {
                 schoolClass = elem;
             }
         }
