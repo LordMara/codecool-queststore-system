@@ -99,14 +99,12 @@ public class MentorController{
             view.printMessage("Create class first ! ");
         }
     }
-
     private void editStudent(Student student){
         updateWholeStudent(student);
 
     }
 
     private void updateWholeStudent(Student student) {
-
         student.setName(view.getStringInput("Enter new student's name: "));
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
@@ -117,22 +115,18 @@ public class MentorController{
     }
 
     private void showAllStudents() {
+
         view.showAll(studentDAO.getObjectList());
     }
 
     private Student getStudentByLogin() {
-
-        boolean found = false;
         Student student = null;
 
-        while (! found){
-            try {
-                String login = view.getStringInput("Enter student's login :");
-                student = studentDAO.getByLogin(login);
-                found = true;
-            } catch (NullPointerException e){
+        while (student == null){
+            String login = view.getStringInput("Enter student's login :");
+            student = studentDAO.getByLogin(login);
+            if (student == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
             }
         }
         return student;
@@ -148,6 +142,7 @@ public class MentorController{
         classDAO.add(new SchoolClass(name, classID));
     }
 
+
     private void editClass() {
         SchoolClass schoolClass = getClassByName();
         schoolClass.setName(view.getStringInput("Enter new class name: "));
@@ -156,22 +151,19 @@ public class MentorController{
 
     private SchoolClass getClassByName() {
 
-        boolean found = false;
         SchoolClass schoolClass = null;
 
-        while (! found){
+        while (schoolClass == null){
+            String name = view.getStringInput("Enter class name :");
+            schoolClass = classDAO.getByName(name);
 
-            try {
-                String name = view.getStringInput("Enter class name :");
-                schoolClass = classDAO.getByName(name);
-                found = true;
-            } catch (NullPointerException e){
+            if (schoolClass == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
             }
         }
         return schoolClass;
     }
+
 
     private void createQuest() {
 
@@ -188,8 +180,6 @@ public class MentorController{
     }
 
     private void createTeam() {
-
-
     }
 
 }
