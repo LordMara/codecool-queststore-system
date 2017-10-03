@@ -18,9 +18,9 @@ public class AdministratorController{
 
     private final String CREATE_MENTOR = "1";
     private final String EDIT_MENTOR = "2";
-    private final String SHOW_MENTORS = "3";
-    private final String CREATE_CLASS = "4";
-    private final String EDIT_CLASS = "5";
+    private final String CREATE_CLASS = "3";
+    private final String EDIT_CLASS = "4";
+    private final String SHOW_MENTORS = "5";
     private final String EXIT = "0";
 
     public AdministratorController(DAOs dao, Tools tools) {
@@ -34,7 +34,7 @@ public class AdministratorController{
     public void startController() throws SQLException{
 
         String choose = "";
-        String[] menu = {"Create mentor", "Edit mentor", "Show mentors", "Create class", "Edit class"};
+        String[] menu = {"Create mentor", "Edit mentor", "Create class", "Edit class", "Show mentors"};
 
         while (! choose.equals("0")){
 
@@ -53,9 +53,11 @@ public class AdministratorController{
 
                 case CREATE_CLASS:
                     createClass();
+                    break;
 
                 case EDIT_CLASS:
                     editClass();
+                    break;
 
                 case SHOW_MENTORS :
                     showAllMentors();
