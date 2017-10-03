@@ -19,11 +19,9 @@ public class FactoryDAO {
 
     public Connection loadDB(){
 
-        System.out.println("dupa przed ifem");
         Path path = Paths.get("src/main/resources/db/queststore.db");
 
         if (Files.notExists(path)) {
-            System.out.println("dupa1");
             connection = DatabaseConnection.getDBConnection().getConnection();
             createDataBase();
 
@@ -37,13 +35,9 @@ public class FactoryDAO {
     private void createDataBase() {
 
         try {
-            System.out.println("dupa wchodzi do traja");
             Statement stmt = connection.createStatement();
-            System.out.println("dupa tworzy stejtmenta");
             stmt.executeUpdate(loadQuery());
-            System.out.println("dupa egzekwoje zapytanie");
             stmt.close();
-            System.out.println("dupa zamyka stejtmenta");
 
         } catch (SQLException e) {
             e.printStackTrace();
