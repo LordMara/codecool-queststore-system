@@ -16,24 +16,17 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     protected Connection connection;
 
 
-    public void load(String query, String ... args) throws SQLException {
+    public void load(String query) throws SQLException {
 
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
-        while (rs.next()) {
-            T obj = createObject(args);
-            objectsList.add(obj);
-        }
+        loadObjectsToLocalList(rs);
+        stmt.close();
+        rs.close();
     }
 
-    public T createObject(String ... args) {
-
-        for (String attr: args) {
-
-            
-        }
-    }
+    public abstract void loadObjectsToLocalList(ResultSet resultSet) throws SQLException;
 
 
     public void add(T object) {
@@ -47,6 +40,8 @@ public abstract class AbstractDAO<T> implements DAO<T> {
     }
 
     public T getBy(String identifier) {}
+
+    public T getBy(Integer identifier) {}
 
     public void setObjectList(ArrayList<T> newObjectsList) {
         objectsList = newObjectsList;

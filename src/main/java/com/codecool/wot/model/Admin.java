@@ -12,7 +12,7 @@ public class Admin extends Account{
 
     }
 
-    public Admin(String name, String surname, String email, String login, String password, Integer adminId){
+    public Admin(String name, String surname, String email, String login, String password, String adminId){
 
         super(name, surname, email, login, password, adminId);
 

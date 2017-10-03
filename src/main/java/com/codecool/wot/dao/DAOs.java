@@ -6,8 +6,8 @@ public class DAOs {
 
     Connection connection = DatabaseConnection.getDBConnection().getConnection();
 
-    ArtifactDAO arDAO = new ArtifactDAO();
-    QuestDAO qDAO = new QuestDAO();
+    ArtifactDAO arDAO = new ArtifactDAO(connection);
+    QuestDAO qDAO = new QuestDAO(connection);
     ClassDAO cDAO = new ClassDAO(connection);
 
     AdminDAO aDAO = new AdminDAO(connection);
