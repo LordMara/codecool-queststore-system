@@ -116,22 +116,14 @@ public class MentorController{
     }
 
     private Student getStudentByLogin() {
-
-        boolean found = false;
         Student student = null;
 
-        while (! found){
+        while (student == null){
             String login = view.getStringInput("Enter student's login :");
             student = studentDAO.getByLogin(login);
-            found = true;
-            try {
-                if (student == null) {
-                    throw new NullPointerException();
-                }
-            } catch (NullPointerException e){
+            if (student == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
-            }
+                }
         }
         return student;
     }
@@ -149,21 +141,14 @@ public class MentorController{
     }
 
     private SchoolClass getClassByName() {
-
-        boolean found = false;
         SchoolClass schoolClass = null;
 
-        while (! found){
+        while (schoolClass == null){
             String name = view.getStringInput("Enter class name :");
             schoolClass = classDAO.getByName(name);
-            found = true;
-            try {
-                if (schoolClass == null) {
-                    throw new NullPointerException();
-                }
-            } catch (NullPointerException e){
+
+            if (schoolClass == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
             }
         }
         return schoolClass;
