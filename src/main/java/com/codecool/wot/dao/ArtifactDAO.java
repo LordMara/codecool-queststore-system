@@ -25,9 +25,15 @@ public class ArtifactDAO extends AbstractDAO<Artifact, Integer> {
 
     }
 
-    public String updateQuery(Artifact artifact) {}
+    public String updateQuery(Artifact artifact) {
+        return "";
+    }
 
-    public boolean getByCondition(Artifact artifact, Integer login) {}
+    public boolean getByCondition(Artifact artifact, Integer id) {
+        return false;
+    }
 
-    public String insertionQuery(Artifact artifact) {}
+    public String insertionQuery(Artifact artifact) {
+        return "";
+    }
 }

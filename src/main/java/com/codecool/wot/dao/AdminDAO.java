@@ -30,11 +30,17 @@ public class AdminDAO extends AbstractDAO<Admin, String> {
 
     }
 
-    public String updateQuery(Admin admin) {}
+    public String updateQuery(Admin admin) {
+        return "";
+    }
 
-    public boolean getByCondition(Admin admin, String login) {}
+    public boolean getByCondition(Admin admin, String login) {
+        return false;
+    }
 
-    public String insertionQuery(Admin admin) {}
+    public String insertionQuery(Admin admin) {
+        return "";
+    }
 
 }
 
