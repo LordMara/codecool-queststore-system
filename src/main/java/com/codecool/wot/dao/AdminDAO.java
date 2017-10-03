@@ -35,7 +35,7 @@ public class AdminDAO extends AbstractDAO<Admin, String> {
     }
 
     public boolean getByCondition(Admin admin, String login) {
-        return false;
+        return admin.getLogin().equals(login);
     }
 
     public String insertionQuery(String ... args) {
