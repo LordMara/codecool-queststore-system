@@ -118,5 +118,4 @@ public abstract class AbstractDAO<T, V> implements DAO<T> {
         objectsList.remove(object);
     }
 
-
 }
