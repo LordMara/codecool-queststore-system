@@ -16,8 +16,6 @@ class Application {
 
     private void start() {
 
-
-
         try {
             CentralController controller = new CentralController();
             controller.startController();
