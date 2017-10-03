@@ -23,16 +23,17 @@ public class CentralController {
         try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
             
             // close in one object
-            DAOs dao = new DAOs(connection);
-            Tools tools = new Tools(this.view, dao);
-            // close in one object
-
-
-            Account user = validateUser(dao);
-
-            if (!startProperController(user, dao, tools)) {
-                this.view.printMessage("No such user");
-            }
+            new FactoryDAO(connection);
+//            DAOs dao = new DAOs(connection);
+//            Tools tools = new Tools(this.view, dao);
+//            // close in one object
+//
+//
+//            Account user = validateUser(dao);
+//
+//            if (!startProperController(user, dao, tools)) {
+//                this.view.printMessage("No such user");
+//            }
         }
     }
 
