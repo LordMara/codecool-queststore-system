@@ -1,4 +1,4 @@
-BEGIN TRANSACTION;
+
 CREATE TABLE wallets(personId int, xp int, ballance real, levelId int, foreign key(personId) references persons(personId), foreign key(levelId) references levels(levelId));
 INSERT INTO `wallets` VALUES (2,3,3.33,0);
 CREATE TABLE "quests" (
@@ -29,6 +29,7 @@ INSERT INTO `persons` VALUES (0,'admin','admin','admin@admin.com','admin','admin
 INSERT INTO `persons` VALUES (1,'mentor','mentor','mentor@mentor.com','mentor','mentor','mentor');
 INSERT INTO `persons` VALUES (2,'student','student','student@student.com','student','student','student');
 INSERT INTO `persons` VALUES (3,'Adrian','Kacper','adrian@kacper.com','adi','adi','student');
+INSERT INTO `persons` VALUES (4,'nemo','nom','nemo','nemo','nemo','student');
 CREATE TABLE "levels" (
 	`levelId`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`name`	text,
@@ -52,3 +53,4 @@ CREATE TABLE "artifacts" (
 );
 INSERT INTO `artifacts` VALUES (0,'kaczuszka','kapielowa kaczuszka. jest zolta',10000000.0);
 COMMIT;
+BEGIN transaction;
