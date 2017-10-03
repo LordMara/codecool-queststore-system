@@ -2,35 +2,20 @@ package com.codecool.wot.model;
 
 public abstract class Account{
 
-    private static Integer lastID = 0;
     protected String name;
     protected String surname;
     protected String email;
-    protected String phone = null;
     protected String login;
     protected String password;
-    protected Integer ID;
+    protected String ID;
 
-    public Account(String name, String surname, String email, String login, String password, Integer ID) {
+    public Account(String name, String surname, String email, String login, String password, String ID) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.login = login;
         this.password = password;
         this.ID = ID;
-
-        if(lastID < ID) {
-            lastID = ID;
-        }
-    }
-
-    public Account(String name, String surname, String email, String login, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.login = login;
-        this.password = password;
-        this.ID = ++lastID;
     }
 
 
@@ -64,21 +49,13 @@ public abstract class Account{
         this.login = login;
     }
 
-    public String getPhone(){
-        return this.phone;
-    }
-
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-
     public String getPassword(){ return this.password; }
 
     public void setPassword(String password){
         this.password = password;
     }
 
-    public Integer getId(){
+    public String getId() {
         return this.ID;
     }
 
