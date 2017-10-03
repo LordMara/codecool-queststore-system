@@ -81,14 +81,19 @@ public class MentorController{
     private void createStudent() {
 
         if (classDAO.getObjectList().size() > 0) {
+
             String name = view.getStringInput("Enter student's name: ");
             String surname = view.getStringInput("Enter student's surname: ");
             String email = view.getStringInput("Enter student's email: ");
             String login = view.getStringInput("Enter student's login: ");
             String password = view.getStringInput("Enter student's password: ");
-            Integer classId = getClassByName().getId();
 
-            studentDAO.add(new Student(name, surname, email, login, password));
+            studentDAO.saveToDataBase(name, surname, email, login, password);
+
+            String ID = studentDAO.getId(login);
+            String classId = getClassByName().getId();
+
+            studentDAO.add(new Student(name, surname, email, login, password, ID, classId));
 
         } else{
             view.printMessage("Create class first ! ");
@@ -101,6 +106,7 @@ public class MentorController{
     }
 
     private void updateWholeStudent(Student student) {
+
         student.setName(view.getStringInput("Enter new student's name: "));
         student.setSurname(view.getStringInput("Enter new student's surname: "));
         student.setLogin(view.getStringInput("Enter new student's login: "));
@@ -111,7 +117,6 @@ public class MentorController{
     }
 
     private void showAllStudents() {
-
         view.showAll(studentDAO.getObjectList());
     }
 
@@ -121,7 +126,6 @@ public class MentorController{
         Student student = null;
 
         while (! found){
-
             try {
                 String login = view.getStringInput("Enter student's login :");
                 student = studentDAO.getByLogin(login);
@@ -137,7 +141,11 @@ public class MentorController{
     private void createClass() {
 
         String name = view.getStringInput("Enter class name :");
-        classDAO.add(new SchoolClass(name));
+
+        classDAO.addToDataBase(name);
+        String classID = classDAO.getId(name);
+
+        classDAO.add(new SchoolClass(name, classID));
     }
 
     private void editClass() {
@@ -167,16 +175,21 @@ public class MentorController{
 
     private void createQuest() {
 
-        ArrayList<Student> students;
         String name = view.getStringInput("Enter quest name : ");
         String description = view.getStringInput("Enter quest short description :");
         Float price = view.getFloatInput("Enter quest price :");
-        questDAO.add(new Quest(name, description, price));
+        questDAO.saveToDataBase(name, description, price);
+
+        String questID = questDAO.getId(name, description, price);
+
+        questDAO.add(new Quest(name, description, price, questID));
 
         view.printMessage("Feature in development");
     }
 
     private void createTeam() {
+
+
     }
 
 }
