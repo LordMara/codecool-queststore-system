@@ -1,8 +1,9 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.view.View;
 
-public class StudentController {
+public class StudentController implements ControllerInterface {
     public void startController() {
         View view = new View();
 
