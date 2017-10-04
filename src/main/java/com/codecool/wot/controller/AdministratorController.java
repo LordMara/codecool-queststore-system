@@ -90,6 +90,7 @@ public class AdministratorController{
 
         mentor.setName(view.getStringInput("Enter new mentor's name: "));
         mentor.setSurname(view.getStringInput("Enter new mentor's surname: "));
+        mentor.setEmail(view.getStringInput("Enter new mentor's email: "));
         mentor.setLogin(view.getStringInput("Enter new mentor's login: "));
         mentor.setPassword(view.getStringInput("Enter new mentor's password: "));
 
