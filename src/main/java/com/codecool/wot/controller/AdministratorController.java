@@ -114,9 +114,10 @@ public class AdministratorController{
 
         String name = view.getStringInput("Enter class name :");
 
-        classDAO.saveToDataBase(name);
+
         String classID = classDAO.getIDFromDB(name);
 
+        classDAO.saveToDataBase(name);
         classDAO.add(new SchoolClass(name, classID));
     }
 
