@@ -66,6 +66,7 @@ public class AdministratorController implements ControllerInterface {
         mentor.setSurname(view.getStringInput("Enter new mentor's surname: "));
         mentor.setLogin(view.getStringInput("Enter new mentor's login: "));
         mentor.setPassword(view.getStringInput("Enter new mentor's password: "));
+        mentor.setEmail(view.getStringInput("Enter new student's email: "));
 
         mentorDAO.updateMentor(mentor);
     }
