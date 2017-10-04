@@ -20,6 +20,9 @@ class AdminTest {
         assertNotNull(this.admin);
     }
 
-
-
+    @Test
+    public void testToString() {
+        assertEquals("Name : Jan  | Surname : Kowalski ", this.admin.toString());
+    }
+    
 }
