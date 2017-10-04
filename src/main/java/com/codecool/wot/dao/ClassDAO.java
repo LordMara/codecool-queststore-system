@@ -4,91 +4,44 @@ import com.codecool.wot.model.SchoolClass;
 
 import java.sql.*;
 
-public class ClassDAO extends AbstractDAO<SchoolClass> {
+public class ClassDAO extends AbstractDAO<SchoolClass, String> {
 
-    private Connection connection;
+    public ClassDAO(Connection connection) throws SQLException {
 
-    public ClassDAO(Connection connection) {
         this.connection = connection;
-        loadClasses();
+        String loadQuery = "SELECT * FROM classes";
+        load(loadQuery);
     }
 
-    @Override
-    public void add(SchoolClass object) {
-        super.add(object);
-        saveToDataBase(object);
-    }
+    public void loadObjectsToLocalList(ResultSet rs) throws SQLException{
 
-    private void loadClasses() {
+        while (rs.next()) {
 
-        try {
+            String classId = rs.getString("classId");
+            String name = rs.getString("name");
 
-            Statement stmt = connection.createStatement();
-
-            String query = "SELECT * FROM classes";
-
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-
-                Integer classId = rs.getInt("classId");
-                String name = rs.getString("name");
-
-                objectsList.add(new SchoolClass(classId, name));
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            objectsList.add(new SchoolClass(classId, name));
         }
+
     }
 
-    public void updateClass(SchoolClass schoolClass) {
+    public String updateQuery(SchoolClass schoolClass) {
+        return String.format("UPDATE classes SET name = '%s' WHERE classId = %s ;", schoolClass.getName(), schoolClass.getId());
+    }
 
-        try {
-            Statement stmt = connection.createStatement();
+    public boolean getByCondition(SchoolClass schoolClass, String name) {
+        return (schoolClass.getName().equals(name));
+    }
 
-            String query = String.format("UPDATE classes SET name = '%s' WHERE classId = %d ;", schoolClass.getName(), schoolClass.getId());
+    public String insertionQuery(String ... args) {
 
-            stmt.executeUpdate(query);
+        String values = String.format("('%s')",String.join("', '", args));
+        return "INSERT INTO classes (classId, name) VALUES " + values;
+    }
 
-            stmt.close();
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public String getIDFromDBQuery(String name) {
+        return "SELECT classId FROM classes WHERE name = " + String.format("'%s';", name);
     }
 
 
-    public SchoolClass getByName(String name) throws NullPointerException {
-
-        for (SchoolClass schoolClass : objectsList){
-            if (schoolClass.getName().equals(name)){
-                return schoolClass;
-            }
-        }
-        throw new NullPointerException();
-    }
-
-    private void saveToDataBase(SchoolClass schoolClass) {
-
-        try {
-
-            Statement stmt = connection.createStatement();
-
-            String values = String.format("(%d, %s)", schoolClass.getId(), schoolClass.getName());
-
-            String query = "INSERT INTO classes (classId, name) VALUES " + values;
-
-            stmt.executeUpdate(query);
-
-            stmt.close();
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

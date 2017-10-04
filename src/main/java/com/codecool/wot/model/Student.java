@@ -3,14 +3,14 @@ package com.codecool.wot.model;
 public class Student extends Account{
 
 
-     private Integer classId;
+    private String classId;
 //     private Integer teamId;
 
-    public Student(String name, String surname, String email, String login, String password) {
-        super(name, surname, email, login, password);
-    }
+//    public Student(String name, String surname, String email, String login, String password) {
+//        super(name, surname, email, login, password);
+//    }
 
-    public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
+    public Student(String name, String surname, String email, String login, String password, String ID, String classId) {
 
         super(name, surname, email, login, password, ID);
         this.classId = classId;
@@ -18,12 +18,11 @@ public class Student extends Account{
 
     }
 
-    public Integer getClassId() {
+    public String getClassId() {
         return this.classId;
     }
 
-
-    public void setClassId(Integer classId) {
+    public void setClassId(String classId) {
         this.classId = classId;
     }
 //

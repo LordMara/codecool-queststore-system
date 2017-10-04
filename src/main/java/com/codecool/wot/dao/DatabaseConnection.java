@@ -10,20 +10,22 @@ public class DatabaseConnection {
 
     private DatabaseConnection() {
 
-        try {
 
-            String url = "jdbc:sqlite:queststore";
+            String url = "jdbc:sqlite:src/main/resources/db/queststore.db";
+
             setConnection(url);
-
-        } catch ( SQLException e ) {
-            e.printStackTrace();
-        }
 
     }
 
-    private void setConnection(String url) throws SQLException {
+    private void setConnection(String url) {
 
-        this.connection = DriverManager.getConnection(url);
+        try {
+            this.connection = DriverManager.getConnection(url);
+            this.connection.setAutoCommit(false);
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

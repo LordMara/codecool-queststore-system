@@ -8,7 +8,5 @@ public interface DAO <T> {
 
     public void remove(T object);
 
-    public void setObjectList(ArrayList<T> newObjectsList);
-
     public ArrayList<T> getObjectList();
 }

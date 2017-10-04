@@ -3,45 +3,52 @@ package com.codecool.wot.dao;
 import com.codecool.wot.model.Admin;
 import java.sql.*;
 
-public class AdminDAO extends AbstractCodecoolerDAO<Admin> {
+public class AdminDAO extends AbstractDAO<Admin, String> {
 
-    private Connection connection;
 
-    public AdminDAO(Connection connection) {
+    public AdminDAO(Connection connection) throws SQLException {
         this.connection = connection;
-        loadAdmins(connection);
+        String loadQuery = "SELECT * FROM persons WHERE role ='administrator'";
+        load(loadQuery);
 
     }
 
-        private void loadAdmins(Connection connection) {
+    public void loadObjectsToLocalList(ResultSet rs) throws SQLException{
 
-            try {
-                connection.setAutoCommit(false);
-                Statement stmt = connection.createStatement();
+        while (rs.next()) {
 
-                String query = "SELECT * FROM persons WHERE role ='administrator'";
-
-                ResultSet rs = stmt.executeQuery(query);
-
-                while (rs.next()) {
-
-                    Integer Id = rs.getInt("personId");
-                    String name = rs.getString("name");
-                    String surname = rs.getString("surname");
-                    String email = rs.getString("email");
-                    String login = rs.getString("login");
-                    String password = rs.getString("password");
+            String Id = rs.getString("personId");
+            String name = rs.getString("name");
+            String surname = rs.getString("surname");
+            String email = rs.getString("email");
+            String login = rs.getString("login");
+            String password = rs.getString("password");
 
 
-                    objectsList.add(new Admin(name, surname, email, login, password, Id));
-                }
-
-                rs.close();
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            objectsList.add(new Admin(name, surname, email, login, password, Id));
         }
 
     }
+
+    public String updateQuery(Admin admin) {
+        return "";
+    }
+
+    public boolean getByCondition(Admin admin, String login) {
+        return admin.getLogin().equals(login);
+    }
+
+    public String insertionQuery(String ... args) {
+
+        String values = String.format("('%s', 'admin')",String.join("', '", args));
+        String query = "INSERT INTO persons (personId, name, surname, email, login, password, role) VALUES " + values;
+
+        return query;
+    }
+
+    public String getIDFromDBQuery(String login) {
+        return "SELECT personId FROM persons WHERE login = " + String.format("'%s';", login);
+    }
+
+}
 
