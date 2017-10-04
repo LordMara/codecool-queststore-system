@@ -26,7 +26,7 @@ public class ClassDAO extends AbstractDAO<SchoolClass, String> {
     }
 
     public String updateQuery(SchoolClass schoolClass) {
-        return String.format("UPDATE classes SET name = '%s' WHERE classId = %d ;", schoolClass.getName(), schoolClass.getId());
+        return String.format("UPDATE classes SET name = '%s' WHERE classId = %s ;", schoolClass.getName(), schoolClass.getId());
     }
 
     public boolean getByCondition(SchoolClass schoolClass, String name) {
