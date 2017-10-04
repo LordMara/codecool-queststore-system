@@ -1,114 +1,129 @@
 package com.codecool.wot.model;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
 
-    private Mentor mentor;
+    public static Stream<Account> userProvider() {
+        Mentor mentor = new Mentor("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
+        Student student = new Student("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
+        Admin admin = new Admin("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3");
+        return Stream.of(mentor, student, admin);
+    }
 
-    @BeforeEach
-    void initAccount() {
-        this.mentor = new Mentor("Jakub", "Janiszewski", "jj@cc.pl",
-                                 "Jaja", "jajaja", "3", "10");
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsAccountNotNull(Account account) {
+        assertNotNull(account);
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetIDWorking(Account account) {
+        assertEquals("3", account.getId());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetNameWorking(Account account) {
+        assertEquals("Jakub", account.getName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsSetNameWorking(Account account) {
+        account.setName("Kuba");
+        assertEquals("Kuba", account.getName());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetSurnameWorking(Account account) {
+        assertEquals("Janiszewski", account.getSurname());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsSetSurnameWorking(Account account) {
+        account.setSurname("Kos");
+        assertEquals("Kos", account.getSurname());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetEmailWorking(Account account) {
+        assertEquals("jj@cc.pl", account.getEmail());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsSetEmailWorking(Account account) {
+        account.setEmail("kk@cc.pl");
+        assertEquals("kk@cc.pl", account.getEmail());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetLoginWorking(Account account) {
+        assertEquals("Jaja", account.getLogin());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsSetLoginWorking(Account account) {
+        account.setLogin("Kuba");
+        assertEquals("Kuba", account.getLogin());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsGetPasswordWorking(Account account) {
+        assertEquals("jajaja", account.getPassword());
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    void testIsSetPasswordWorking(Account account) {
+        account.setPassword("janiszewski");
+        assertEquals("janiszewski", account.getPassword());
     }
 
     @Test
-    void testIsAccountNotNull() {
-        assertNotNull(this.mentor);
+    void testIsMentorGetSchoolClassWorking() {
+        Mentor mentor = new Mentor("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
+        assertNull(mentor.getSchoolClass());
     }
 
     @Test
-    void testIsGetIDWorking() {
-        assertEquals("3", this.mentor.getId());
+    void testIsStudentGetSchoolClassWorking() {
+        Student student = new Student("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
+        assertNull(student.getSchoolClass());
     }
 
     @Test
-    void testIsGetSchoolClassWorking() {
-        assertNull(this.mentor.getSchoolClass());
-    }
-
-    @Test
-    void testIsToStringWorking() {
+    void testIsMentorToStringWorking() {
+        Mentor mentor = new Mentor("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
         assertEquals("ID: 3, name: Jakub, surname: Janiszewski, email: jj@cc.pl, login: Jaja",
-                     this.mentor.toString());
+                mentor.toString());
     }
 
-    @Nested
-    class NameFieldTests {
-
-        @Test
-        void testIsGetNameWorking() {
-            assertEquals("Jakub", mentor.getName());
-        }
-
-        @Test
-        void testIsSetNameWorking() {
-            mentor.setName("Kuba");
-            assertEquals("Kuba", mentor.getName());
-        }
-    }
-
-    @Nested
-    class SurnameFieldTests {
-
-        @Test
-        void testIsGetSurnameWorking() {
-            assertEquals("Janiszewski", mentor.getSurname());
-        }
-
-        @Test
-        void testIsSetSurnameWorking() {
-            mentor.setSurname("Kos");
-            assertEquals("Kos", mentor.getSurname());
-        }
-    }
-
-    @Nested
-    class EmailFieldTests {
-
-        @Test
-        void testIsGetEmailWorking() {
-            assertEquals("jj@cc.pl", mentor.getEmail());
-        }
-
-        @Test
-        void testIsSetEmailWorking() {
-            mentor.setEmail("kk@cc.pl");
-            assertEquals("kk@cc.pl", mentor.getEmail());
-        }
-    }
-
-    @Nested
-    class LoginFieldTests {
-
-        @Test
-        void testIsGetLoginWorking() {
-            assertEquals("Jaja", mentor.getLogin());
-        }
-
-        @Test
-        void testIsSetLoginWorking() {
-            mentor.setLogin("Kuba");
-            assertEquals("Kuba", mentor.getLogin());
-        }
-    }
-
-    @Nested
-    class PasswordFieldTests {
-
-        @Test
-        void testIsGetPasswordWorking() {
-            assertEquals("jajaja", mentor.getPassword());
-        }
-
-        @Test
-        void testIsSetPasswordWorking() {
-            mentor.setPassword("janiszewski");
-            assertEquals("janiszewski", mentor.getPassword());
-        }
+    @Test
+    void testIsStudentToStringWorking() {
+        Student student = new Student("Jakub", "Janiszewski", "jj@cc.pl",
+                "Jaja", "jajaja", "3", "10");
+        assertEquals("ID: 3, name: Jakub, surname: Janiszewski, email: jj@cc.pl, login: Jaja",
+                student.toString());
     }
 }
