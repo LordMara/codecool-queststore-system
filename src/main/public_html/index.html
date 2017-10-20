@@ -3,40 +3,35 @@
     <head>
         <meta charset="utf-8">
         <title>Codecool Shop - Login</title>
-        <link rel="stylesheet" href="#">
-         <script src="https://www.w3schools.com/lib/w3.js"></script> 
+        <link rel="stylesheet" href="layouts/main.css">
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
     </head>
 
     <body>
 
-        <header>
+        <header class="container">
+            <img src="assets/logo-white.png">
+            <div class="primary-header"></div>
         </header>
-
-        <div>
-            <form action="#" method="post">
-
-                <fieldset class="login">
-
-                    <input type="text" name="login" placeholder="Enter login" required>
-
-                    <input type="password" name="password" placeholder="Enter password" required>
-                    
-                        <label>
-                            City
-                          <select name="city" required>
-                            <option value="Cracow" selected>Cracow</option>
-                            <option value="Warsaw">Warsaw</option>
-                            <option value="Budapest">Budapest</option>
-                            <option value="Miskolc">Miskolc</option>
-                          </select>
-                        </label>
-
-
-                </fieldset>
-
-                <input type="submit" name="login" value="Login">
-
-            </form>
+        <div class="center-content">
+            <div class="login">
+                <form action="#" method="post">
+                    <fieldset>
+                        <input type="text" name="login" placeholder="Enter login" required>
+                        <input type="password" name="password" placeholder="Enter password" required>
+                            <label>
+                                City
+                              <select name="city" required>
+                                <option value="Cracow" selected>Cracow</option>
+                                <option value="Warsaw">Warsaw</option>
+                                <option value="Budapest">Budapest</option>
+                                <option value="Miskolc">Miskolc</option>
+                              </select>
+                            </label>
+                        <input class="button" type="submit" name="login" value="Login">
+                    </fieldset>
+                </form>
+            </div>
         </div>
 
         <footer>
@@ -46,4 +41,3 @@
     </body>
 
 </html>
-
