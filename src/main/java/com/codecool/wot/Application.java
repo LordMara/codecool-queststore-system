@@ -4,6 +4,8 @@ import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 import com.codecool.wot.controller.*;
 
+import java.sql.SQLException;
+
 class Application {
 
     public static void main(String[] args) {
@@ -16,39 +18,13 @@ class Application {
 
         CentralController controller = new CentralController();
 
-        controller.startController();
+        try {
+            controller.startController();
+        } catch (SQLException e) {
+            System.out.println("Problem with connection to database");
+            System.exit(0);
+        }
+
     }
 
 }
-
-//        final String MENTOR_CONTROLLER = "1";
-//        final String ADMIN_CONTROLLER = "2";
-//        final String EXIT = "0";
-//
-//        String choose = "";
-//        String[] menu = {"Mentor ", "Admin"};
-//        AdministratorController admin = new AdministratorController(controller);
-//        MentorController mentor = new MentorController(controller);
-//        View view = new View();
-//
-//        while (! choose.equals("0")){
-//
-//            view.showMenu("Menu",menu, "Bye bye");
-//            choose = view.getStringInput("");
-//
-//            switch (choose){
-//
-//                case MENTOR_CONTROLLER :
-//                    mentor.startController();
-//                    break;
-//
-//                case ADMIN_CONTROLLER :
-//                    admin.startController();
-//                    break;
-//
-//                case EXIT :
-//                    break;
-//            }
-//        }
-//    }
-

@@ -2,10 +2,11 @@ package com.codecool.wot.controller;
 
 
 import com.codecool.wot.dao.MentorDAO;
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
-public class AdministratorController{
+public class AdministratorController implements ControllerInterface {
 
     private View <Mentor> view;
     private MentorDAO mentorDAO;
@@ -65,25 +66,19 @@ public class AdministratorController{
         mentor.setSurname(view.getStringInput("Enter new mentor's surname: "));
         mentor.setLogin(view.getStringInput("Enter new mentor's login: "));
         mentor.setPassword(view.getStringInput("Enter new mentor's password: "));
+        mentor.setEmail(view.getStringInput("Enter new student's email: "));
 
         mentorDAO.updateMentor(mentor);
     }
 
     private Mentor getMentorByLogin() {
-
-        boolean found = false;
         Mentor mentor = null;
 
-        while (! found){
-
-            try {
-                String login = view.getStringInput("Enter mentor's login :");
-                mentor = mentorDAO.getByLogin(login);
-                found = true;
-            }
-            catch (NullPointerException e){
-                view.printMessage("NOT FOUND ! ");
-                found = false;
+        while (mentor == null) {
+            String login = view.getStringInput("Enter mentor's login :");
+            mentor = mentorDAO.getByLogin(login);
+            if (mentor == null) {
+                view.printMessage("NOT FOUND !");
             }
         }
         return mentor;

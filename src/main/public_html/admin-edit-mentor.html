@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mentor Editor</title>
+        <link rel="stylesheet" href="#">
+        <script src="https://www.w3schools.com/lib/w3.js"></script> 
+    </head>
+
+    <body>
+
+        <header>
+            <!-- logo.img -->
+            <div>
+                 <div w3-include-html="navigation_tools/admin_main_nav.html"></div>
+            <div>
+        </header>
+
+        <div>
+            <div>
+                <h3>Edit Mentor</h3>
+            </div>
+            <div>
+                <form>
+                    Mentor's name:
+                    <input type="text" name="questName" placeholder="Weronika" >
+                    Mentor's surname:
+                    <input type="text" name="mentorSurname" placeholder="Dąbrowska">
+                    Mentor's email:
+                    <input type="email" name="mentorEmail" placeholder="weronika.d@gmail.com" >
+                    Mentor's login:
+                    <input type="text" name="mentorLogin" placeholder="mentor">
+                    Mentor's password:
+                    <input type="password" name="mentorPassword" >
+                    Confirm password:
+                    <input type="password" name="mentorPassword" >
+                    <input type="submit" name="" value="save">
+                </form>
+            </div>
+        </div>
+
+        <footer>
+             <div w3-include-html="footer.html"></div>
+        </footer>
+        <script>w3.includeHTML();</script>
+
+    </body>
+</html>

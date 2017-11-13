@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Exp Lvl Creator</title>
+        <link rel="stylesheet" href="#">
+         <script src="https://www.w3schools.com/lib/w3.js"></script> 
+    </head>
+
+    <body>
+
+        <header>
+            <!-- logo.img -->
+            <div>
+                <div w3-include-html="navigation_tools/admin_main_nav.html"></div>
+            <div>
+        </header>
+
+        <div>
+            <div>
+                <h3>Create Exp Level !</h3>
+            </div>
+            <div>
+                <form>
+                    Level name:
+                    <input type="text" name="className" required>
+                    Treshold:
+                    <input type="number" name="treshold" min="0" required>
+                    <input type="submit" value="save">
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div w3-include-html="footer.html"></div>
+        </footer>
+        <script>w3.includeHTML();</script>
+    </body>
+
+</html>
