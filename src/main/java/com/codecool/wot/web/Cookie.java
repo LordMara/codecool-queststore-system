@@ -13,22 +13,17 @@ public class Cookie implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
 
-
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         HttpCookie cookie;
-//        boolean isNewSession;
-        if (cookieStr != null) {  // Cookie already exists
+
+        if (cookieStr != null) {
             cookie = HttpCookie.parse(cookieStr).get(0);
-//            isNewSession = false;
-        } else { // Create a new cookie
-            cookie = new HttpCookie("sessionId", UUID.randomUUID().toString()); // This isn't a good way to create sessionId. Find out better!
-//            isNewSession = true;
+
+        } else {
+            cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
+
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
         }
-
-//        response += "\n isNewSession: " + isNewSession;
-        response += "\n session id: " + cookie.getValue();
-
 
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
