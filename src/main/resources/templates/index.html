@@ -9,14 +9,21 @@
 </head>
 <body>
 <header class="container">
-    <img src="assets/logo-white.png">
-    <div class="primary-header"></div>
-</header>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        &copy; Copyright 2017 Codecoolshop
+    <img src="static/logo-white.png">
+    <div class="primary-header">
+        {% block header %}
         {% endblock %}
     </div>
+</header>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    {%block footer %}
+    <footer>
+        <p>&copy; CodeCool QuestStore</p>
+    </footer>
+    {% endblock %}
+
 </body>
 </html>
