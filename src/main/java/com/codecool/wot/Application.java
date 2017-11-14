@@ -3,7 +3,7 @@ package com.codecool.wot;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 import com.codecool.wot.controller.*;
-import com.codecool.wot.web.helpers.Static;
+import com.codecool.wot.web.Static;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -16,7 +16,7 @@ class Application {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         // set routes
-        server.createContext("/hello", new Hello());
+//        server.createContext("/hello", new Hello());
         server.createContext("/static", new Static());
         server.setExecutor(null); // creates a default executor
 
