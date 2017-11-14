@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <div class="login">
+        <form action="#" method="post">
+            <fieldset>
+                <input type="text" name="login" placeholder="Enter login" required>
+                <input type="password" name="password" placeholder="Enter password" required>
+                <label>
+                    City
+                    <select name="city" required>
+                        <option value="Cracow" selected>Cracow</option>
+                        <option value="Warsaw">Warsaw</option>
+                        <option value="Budapest">Budapest</option>
+                        <option value="Miskolc">Miskolc</option>
+                    </select>
+                </label>
+                <input class="button" type="submit" name="login" value="Login">
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}
