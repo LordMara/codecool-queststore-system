@@ -1,6 +1,7 @@
 package com.codecool.wot.controller;
 
 import com.codecool.wot.dao.*;
+import com.codecool.wot.interfaces.ControllerInterface;
 import com.codecool.wot.model.*;
 import com.codecool.wot.view.*;
 
@@ -8,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 
-public class MentorController{
+public class MentorController implements ControllerInterface {
 
     private View <Student> view;
 
@@ -27,7 +28,7 @@ public class MentorController{
         this.view = new View<>();
     }
 
-    public void startController(){
+    public void startController() {
 
         final String EXIT = "0";
         final String CREATE_STUDENT = "1";
@@ -116,20 +117,14 @@ public class MentorController{
     }
 
     private Student getStudentByLogin() {
-
-        boolean found = false;
         Student student = null;
 
-        while (! found){
-
-            try {
-                String login = view.getStringInput("Enter student's login :");
-                student = studentDAO.getByLogin(login);
-                found = true;
-            } catch (NullPointerException e){
+        while (student == null){
+            String login = view.getStringInput("Enter student's login :");
+            student = studentDAO.getByLogin(login);
+            if (student == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
-            }
+                }
         }
         return student;
     }
@@ -147,19 +142,14 @@ public class MentorController{
     }
 
     private SchoolClass getClassByName() {
-
-        boolean found = false;
         SchoolClass schoolClass = null;
 
-        while (! found){
+        while (schoolClass == null){
+            String name = view.getStringInput("Enter class name :");
+            schoolClass = classDAO.getByName(name);
 
-            try {
-                String name = view.getStringInput("Enter class name :");
-                schoolClass = classDAO.getByName(name);
-                found = true;
-            } catch (NullPointerException e){
+            if (schoolClass == null) {
                 view.printMessage("NOT FOUND ! ");
-                found = false;
             }
         }
         return schoolClass;

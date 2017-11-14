@@ -18,13 +18,14 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
     }
 
 
-    public T getByLogin(String login) throws NullPointerException{
+    public T getByLogin(String login) {
+        T person = null;
         for (T elem : objectsList){
             if (elem.getLogin().equals(login)){
-                return elem;
+                person = elem;
             }
         }
-        throw new NullPointerException();
+        return person;
     }
 
 

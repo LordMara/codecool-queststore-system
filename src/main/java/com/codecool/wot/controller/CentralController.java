@@ -1,59 +1,99 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.interfaces.ControllerInterface;
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Student;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.view.View;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class CentralController {
+    private View view;
+    private String login;
+    private String password;
 
-    public void startController() {
+    public CentralController() {
+        view = new View();
+    }
 
-        Connection connection = DatabaseConnection.getDBConnection().getConnection();
+    public void startController() throws SQLException {
 
-        ArtifactDAO arDAO = new ArtifactDAO();
-        QuestDAO qDAO = new QuestDAO();
-        ClassDAO cDAO = new ClassDAO(connection);
+        try (Connection connection = DatabaseConnection.getDBConnection().getConnection()){
 
-        AdminDAO aDAO = new AdminDAO(connection);
-        MentorDAO mDAO = new MentorDAO(connection);
-        StudentDAO sDAO = new StudentDAO(connection);
+            // close in one object
+            ArtifactDAO arDAO = new ArtifactDAO();
+            QuestDAO qDAO = new QuestDAO();
+            ClassDAO cDAO = new ClassDAO(connection);
 
-        View view = new View();
+            AdminDAO aDAO = new AdminDAO(connection);
+            MentorDAO mDAO = new MentorDAO(connection);
+            StudentDAO sDAO = new StudentDAO(connection);
+            // close in one object
 
-        String login = view.getStringInput("Enter login");
-        String password = view.getStringInput("Enter password");
+            setup();
 
-        try {
-            Admin admin = aDAO.getByLogin(login);
-            if (password.equals(admin.getPassword())) {
-                AdministratorController adminController = new AdministratorController(mDAO);
-                adminController.startController();
-            }
-        } catch (NullPointerException e1) {
+            Account user = validateUser(aDAO, mDAO, sDAO);
 
-            try {
-                Mentor mentor = mDAO.getByLogin(login);
-                if (password.equals(mentor.getPassword())) {
-                    MentorController mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
-                    mentorController.startController();
-                }
-            } catch (NullPointerException e2) {
-
-                try {
-                    Student student = sDAO.getByLogin(login);
-                    if (password.equals(student.getPassword())) {
-
-                        // add connection
-                        StudentController studentController = new StudentController();
-                        studentController.startController();
-                    }
-                } catch (NullPointerException e3) {
-                    view.printMessage("No such user");
-                }
+            if (!startProperController(user, arDAO, qDAO, cDAO, aDAO, mDAO, sDAO)) {
+                this.view.printMessage("No such user");
             }
         }
+    }
+
+    private Account validateUser(AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
+        Account user = null;
+
+        Admin admin = aDAO.getByLogin(this.login);
+        Mentor mentor = mDAO.getByLogin(this.login);
+        Student student = sDAO.getByLogin(this.login);
+
+        if (admin != null) {
+            if (this.password.equals(admin.getPassword())) {
+                user = admin;
+            }
+        }
+
+        if (mentor != null) {
+            if (this.password.equals(mentor.getPassword())) {
+                user = mentor;
+            }
+        }
+        if (student != null) {
+            if (this.password.equals(student.getPassword())) {
+                user = student;
+            }
+        }
+        return user;
+    }
+
+    private boolean startProperController(Account user, ArtifactDAO arDAO, QuestDAO qDAO,
+            ClassDAO cDAO, AdminDAO aDAO, MentorDAO mDAO, StudentDAO sDAO) {
+
+        boolean operationSuccessful = true;
+        if (user instanceof Admin) {
+            ControllerInterface adminController = new AdministratorController(mDAO);
+            adminController.startController();
+
+        } else if (user instanceof Mentor) {
+            ControllerInterface mentorController = new MentorController(cDAO, sDAO, mDAO, qDAO);
+            mentorController.startController();
+
+        } else if (user instanceof Student) {
+            // add connection
+            ControllerInterface studentController = new StudentController();
+            studentController.startController();
+
+        } else {
+            operationSuccessful = false;
+        }
+        return operationSuccessful;
+    }
+
+    private void setup() {
+        this.login = this.view.getStringInput("Enter login");
+        this.password = this.view.getStringInput("Enter password");
     }
 }
