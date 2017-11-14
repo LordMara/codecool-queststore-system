@@ -1,7 +1,19 @@
 {% extends "index.html" %}
 
+{% block head %}
+{{ parent() }}
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+{% endblock %}
+
+{% block header %}
+<div w3-include-html="static/admin_main_nav.html"></div>
 {% block title %}Login{% endblock %}
 
 {% block content %}
+<h3>Welcome {{ name }}  {{ surname }} ! </h3>
+{% endblock %}
 
+{% block footer %}
+{{ parent() }}
+<a href="#">home</a>
 {% endblock %}
