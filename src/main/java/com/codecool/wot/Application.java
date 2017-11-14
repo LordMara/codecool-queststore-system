@@ -1,5 +1,6 @@
 package com.codecool.wot;
 
+import com.codecool.wot.web.LoginHandler;
 import com.codecool.wot.web.Cookie;
 import com.codecool.wot.web.Static;
 import com.sun.net.httpserver.HttpServer;
@@ -12,6 +13,7 @@ class Application {
 
         // set routes
 //        server.createContext("/hello", new Hello());
+        server.createContext("/login", new LoginHandler());
         server.createContext("/static", new Static());
         server.createContext("/cookie", new Cookie());
         server.setExecutor(null); // creates a default executor
