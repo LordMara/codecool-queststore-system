@@ -1,14 +1,8 @@
 package com.codecool.wot;
 
-import com.codecool.wot.model.*;
-import com.codecool.wot.view.*;
-import com.codecool.wot.controller.*;
 import com.codecool.wot.web.Static;
 import com.sun.net.httpserver.HttpServer;
-
 import java.net.InetSocketAddress;
-import java.sql.SQLException;
-
 
 class Application {
     public static void main(String[] args) throws Exception {
