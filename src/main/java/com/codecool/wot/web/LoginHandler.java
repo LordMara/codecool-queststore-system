@@ -29,32 +29,33 @@ public class LoginHandler implements HttpHandler {
 
         if (cookieStr != null) {
             // ACTION
+            System.out.println("dupa");
         } else {
             login(httpExchange);
         }
-
-        Map<String, String> actionData = parseURI(uri.getPath());
-
-        for (String action : actionData.keySet()) {
-            if (action.equals()) {
-            }
-        }
+//
+//        Map<String, String> actionData = parseURI(uri.getPath());
+//
+//        for (String action : actionData.keySet()) {
+//            if (action.equals()) {
+//            }
+//        }
     }
 
-    private void index(HttpExchange httpExchange) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
-        JtwigModel model = JtwigModel.newModel();
-        String response = template.render(model);
-
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
+//    private void index(HttpExchange httpExchange) throws IOException {
+//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
+//        JtwigModel model = JtwigModel.newModel();
+//        String response = template.render(model);
+//
+//        httpExchange.sendResponseHeaders(200, response.length());
+//        OutputStream os = httpExchange.getResponseBody();
+//        os.write(response.getBytes());
+//        os.close();
+//    }
 
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String path = "";
+        String redirect = "";
 
         AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
         MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
@@ -76,21 +77,22 @@ public class LoginHandler implements HttpHandler {
 
             if (admin != null && admin.getPassword().equals(password)) {
                 cookie(httpExchange);
-                path = "";
+                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/admin\" />";
             }
 
             if (mentor != null && mentor.getPassword().equals(password)) {
                 cookie(httpExchange);
-                path = "";
+                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/mentor\" />";
             }
             if (student != null && student.getPassword().equals(password)) {
                 cookie(httpExchange);
-                path = "";
+                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/student\" />";
             }
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(path);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("redirect", redirect);
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.length());
@@ -104,18 +106,18 @@ public class LoginHandler implements HttpHandler {
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
     }
 
-    private Map<String, String> parseURI (String uri) {
-        HashMap<String, String> actionData = new HashMap<>();
-        String[] pairs = uri.split("/");
-
-        if (pairs.length == 3) {
-            actionData.put(pairs[1], pairs[2]);
-        } else {
-            actionData.put(pairs[1], "");
-        }
-
-        return actionData;
-    }
+//    private Map<String, String> parseURI (String uri) {
+//        HashMap<String, String> actionData = new HashMap<>();
+//        String[] pairs = uri.split("/");
+//
+//        if (pairs.length == 3) {
+//            actionData.put(pairs[1], pairs[2]);
+//        } else {
+//            actionData.put(pairs[1], "");
+//        }
+//
+//        return actionData;
+//    }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
         List<String> list = new ArrayList<>();
