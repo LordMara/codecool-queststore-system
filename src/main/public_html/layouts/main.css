@@ -46,9 +46,9 @@ table {
   border-spacing: 0;
 }
 /*
- ===========
+ ====================================================================
   RESET ENDS
- ===========
+ ====================================================================
  */
 
 body{
@@ -57,18 +57,12 @@ body{
     background-position: cover;
 }
 
-header img{
-    background-color: rgb(0, 71, 171, 0.3);
-    border-radius: 15px;
-    margin: 0 25%;
-    padding: 5px 5px;
-}
-
-.center-content{
+header {
+    order: 0;
+    width: 100%;
+    height: 30vh;
     display: flex;
-    justify-content: center;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    flex-direction: column;
 }
 
 .primary-header{
@@ -78,27 +72,81 @@ header img{
     height: 50px;
 }
 
-.login{
+.main-box {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+}
+.center-content{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.welcome h3{
+    font-size: 40px;
+    font-weight: 700;
+    color:#150101;
+}
+
+footer{
+    display: flex;
+    justify-content: center;
+    background: #2d3343;
+    padding: 10px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+}
+
+footer a{
+    color: white;
+}
+
+.label {
+    float: left;
     display: block;
-    width: 20%;
-    padding: 100px;
-    height: 150px;
-    background-color: rgb(0, 71, 171, 0.6);
+    color: rgba(0, 71, 171, 0.6);
+}
+
+
+/*==================================================================
+    LOGOWANIE   
+=====================================================================*/
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+    padding: 50px;
+    background-color: rgba(0, 71, 171, 0.6);
     border-radius: 15px;
-    /*justify-content: center;
-    align-items: center;*/
+    color: aliceblue;
 }
 
 .login fieldset{
+    display: flex;
+    flex-direction: column;
     margin: 5px 10px;
     text-align: center;
+    float: left;
 }
 
-.login input, .login label{
+.login input,
+
+.login label{
     display: block;
     margin-top: 10px;
     cursor: pointer;
 }
+
 .login select{
     display: block;
     margin: 10px 0 10px 70px;
@@ -106,22 +154,27 @@ header img{
 }
 
 label{
-    color: white;
+    color: aliceblue;
 }
 
 .button{
     margin-left: 88px;
 }
-
-
+/*-----------------------------------------------------------------
+                           NAVIGATION                         */
 .nav{
     width: 100%;
     padding: 10px 0;
     background-color: #2d3343;
     text-align: center;
-    border-top: 1px solid rgb(0, 71, 171);
-    border-bottom: 1px solid rgb(00,71,171);
 }
+
+.nav img {}
+
+.nav > ol > li {
+    background-color: #2d3343;
+}
+
 
 ol{
     padding: 0;
@@ -133,7 +186,7 @@ ol{
     display:inline-block;
 }
 ol a{
-    color: white;
+    color: aliceblue;
     text-decoration: none;
     display: block;
 }
@@ -177,23 +230,32 @@ ol > li > ul > li:hover{
 }
 
 .welcome{
-    padding: 194px;
+    padding-left: 100px;
+    padding-top: 100px;
 }
 
-.welcome h3{
-    font-size: 40px;
-    font-weight: 700;
-    color:#150101;
+/*
+====================================================================
+                               TABELE
+====================================================================
+*/
+table {
+    order: 1;
+    padding: 20px;
+    background-color: #2d3343;
+    border-radius: 3px;
+    color: cornflowerblue;
 }
 
-footer{
-    background: #2d3343;
+td > ul > li, td > ul > li > a, td > a, td {
     padding: 10px;
-    height: 30px;
-    text-align: center;
-    color: white;
+    text-decoration: none;
+    color: aliceblue;
+    
 }
 
-footer a{
-    color: white;
+th {
+    padding: 10px;
+    color: cornflowerblue;
 }
+/*===================================================================*/
