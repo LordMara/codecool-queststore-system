@@ -1,6 +1,9 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.AdminDAO;
+import com.codecool.wot.dao.DatabaseConnection;
+import com.codecool.wot.dao.MentorDAO;
+import com.codecool.wot.dao.StudentDAO;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Student;
@@ -54,6 +57,10 @@ public class LoginHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String path = "";
 
+        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
+        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
+        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
+
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -64,9 +71,9 @@ public class LoginHandler implements HttpHandler {
             String login = loginData.get(0);
             String password = loginData.get(1);
 
-            Admin admin = aDAO.getByLogin(login);
-            Mentor mentor = mDAO.getByLogin(login);
-            Student student = sDAO.getByLogin(login);
+            Admin admin = adminDAO.getByLogin(login);
+            Mentor mentor = mentorDAO.getByLogin(login);
+            Student student = studentDAO.getByLogin(login);
 
             if (admin != null && admin.getPassword().equals(password)) {
                 cookie(httpExchange);
