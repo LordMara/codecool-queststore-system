@@ -24,22 +24,21 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         URI uri = httpExchange.getRequestURI();
+
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+
+        if (cookieStr != null) {
+            // ACTION
+        } else {
+            login(httpExchange);
+        }
+
         Map<String, String> actionData = parseURI(uri.getPath());
 
         for (String action : actionData.keySet()) {
-            if (action.equals("login")) {
-                login(httpExchange);
+            if (action.equals()) {
             }
         }
-
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
-//        JtwigModel model = JtwigModel.newModel();
-//        String response = template.render(model);
-//
-//        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-//        OutputStream os = httpExchange.getResponseBody();
-//        os.write(response.getBytes());
-//        os.close();
     }
 
     private void index(HttpExchange httpExchange) throws IOException {
@@ -101,21 +100,8 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookie(HttpExchange httpExchange) throws IOException {
-        String response = "";
-
-        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-        HttpCookie cookie;
-
-        if (cookieStr != null) {
-            cookie = HttpCookie.parse(cookieStr).get(0);
-
-        } else {
-            cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
-
-            httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-        }
-
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
+        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
     }
 
     private Map<String, String> parseURI (String uri) {
