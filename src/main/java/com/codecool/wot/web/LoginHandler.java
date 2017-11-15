@@ -10,15 +10,11 @@ import org.jtwig.JtwigTemplate;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.net.URLDecoder;
+import java.util.*;
 
 public class LoginHandler implements HttpHandler {
 
@@ -30,8 +26,6 @@ public class LoginHandler implements HttpHandler {
         for (String action : actionData.keySet()) {
             if (action.equals("login")) {
                 login(httpExchange);
-            } else if (action.equals("edit")) {
-                edit(httpExchange, actionData.get(action));
             }
         }
 
@@ -48,7 +42,6 @@ public class LoginHandler implements HttpHandler {
     private void index(HttpExchange httpExchange) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("students", Student.getStudents());
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.length());
@@ -59,17 +52,17 @@ public class LoginHandler implements HttpHandler {
 
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
+        String path = "";
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
-            Map<String, String> loginData = parseLoginFormData(formData);
+            List<String> loginData = parseLoginFormData(formData);
 
-            String login = loginData.keySet().get(0);
-            String password = loginData.keySet().get(1);
-            String path = "";
+            String login = loginData.get(0);
+            String password = loginData.get(1);
 
             Admin admin = aDAO.getByLogin(login);
             Mentor mentor = mDAO.getByLogin(login);
@@ -120,7 +113,7 @@ public class LoginHandler implements HttpHandler {
 
     private Map<String, String> parseURI (String uri) {
         HashMap<String, String> actionData = new HashMap<>();
-        String[] pairs = formData.split("/");
+        String[] pairs = uri.split("/");
 
         if (pairs.length == 3) {
             actionData.put(pairs[1], pairs[2]);
@@ -131,20 +124,20 @@ public class LoginHandler implements HttpHandler {
         return actionData;
     }
 
-    private Map<String, String> parseLoginFormData(String formData) {
-        Map<String, String> map = new HashMap<>();
+    private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
+        List<String> list = new ArrayList<>();
         String login;
         String password;
         String[] pairs = formData.split("&");
 
         try {
-            login = decoder.decode(pairs[0].split("=")[1], "UTF-8");
-            password = decoder.decode(pairs[1].split("=")[1], "UTF-8");
-            map.put(login, password);
+            login = new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8");
+            password = new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8");
+            list.add(login);
+            list.add(password);
         } catch (ArrayIndexOutOfBoundsException e) {
-            return map;
+            e.printStackTrace();
         }
-
-
+        return list;
     }
 }
