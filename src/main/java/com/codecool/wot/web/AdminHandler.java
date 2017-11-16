@@ -1,7 +1,9 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
+import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
+import com.codecool.wot.tools.Tools;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -11,7 +13,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
-public class MentorHandler implements HttpHandler {
+
+public class AdminHandler implements HttpHandler {
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
@@ -20,15 +24,16 @@ public class MentorHandler implements HttpHandler {
             URI uri = httpExchange.getRequestURI();
             CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
             Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
-            MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-            Mentor mentor = mentorDAO.getById(userId);
+            AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
+            Admin admin = adminDAO.getById(userId);
 
-            if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
+            if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
+                ClassDAO classDAO = new ClassDAO(DatabaseConnection.getDBConnection().getConnection());
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
                 JtwigModel model = JtwigModel.newModel();
 
-                model.with("name", mentor.getName());
+                model.with("classes",classDAO.getObjectList());
+                model.with("name", admin.getName());
                 String response = template.render(model);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);
@@ -56,4 +61,6 @@ public class MentorHandler implements HttpHandler {
 
         return userIdFromURI;
     }
+
+
 }
