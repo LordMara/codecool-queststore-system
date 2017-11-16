@@ -14,7 +14,7 @@ class Application {
 //        server.createContext("/hello", new Hello());
         server.createContext("/", new LoginHandler());
         server.createContext("/static", new Static());
-        server.createContext("/admin", new Admin());
+        server.createContext("/admin", new AdminHandler());
         server.createContext("/mentor", new Mentor());
         server.createContext("/student", new Student());
 //        server.createContext("/cookie", new Cookie());
