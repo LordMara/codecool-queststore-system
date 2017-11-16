@@ -1,6 +1,10 @@
 {% extends "index.html" %}
 
+{% block head %}
 {% block title %}Login{% endblock %}
+{{ redirect }}
+{% endblock %}
+
 
 {% block content %}
     <div class="center-content">
@@ -24,5 +28,6 @@
         </div>
     </div>
 {% endblock %}
+
 
 
