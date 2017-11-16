@@ -7,11 +7,14 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 
 public class MentorHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        URI uri = httpExchange.getRequestURI();
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+
         CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
         Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
 
@@ -19,7 +22,7 @@ public class MentorHandler implements HttpHandler {
 
         Mentor mentor = mentorDAO.getById(userId);
 
-        if (mentor != null && mentor.getId().equals(userId)) {
+        if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
             String response = "Hello Mentor";
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
@@ -28,8 +31,6 @@ public class MentorHandler implements HttpHandler {
         } else {
             handleWrongUser(httpExchange);
         }
-
-
 
         String response = "Hello Mentor";
         httpExchange.sendResponseHeaders(200, response.length());
@@ -41,5 +42,13 @@ public class MentorHandler implements HttpHandler {
     private void handleWrongUser(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().set("Location", "/");
         httpExchange.sendResponseHeaders(302,-1);
+    }
+
+    private String parseURIToGetId(String uri) {
+        String userIdFromURI = "";
+        String[] pairs = uri.split("/");
+        userIdFromURI = pairs[2];
+
+        return userIdFromURI;
     }
 }
