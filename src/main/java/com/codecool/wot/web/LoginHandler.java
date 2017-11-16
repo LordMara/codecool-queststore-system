@@ -15,7 +15,6 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.*;
 import java.net.HttpCookie;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.util.*;
 
@@ -23,35 +22,15 @@ public class LoginHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        URI uri = httpExchange.getRequestURI();
-
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
         if (cookieStr != null) {
-            // ACTION
-            System.out.println("dupa");
+            System.out.println(cookieStr);
         } else {
             login(httpExchange);
         }
-//
-//        Map<String, String> actionData = parseURI(uri.getPath());
-//
-//        for (String action : actionData.keySet()) {
-//            if (action.equals()) {
-//            }
-//        }
     }
 
-//    private void index(HttpExchange httpExchange) throws IOException {
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
-//        JtwigModel model = JtwigModel.newModel();
-//        String response = template.render(model);
-//
-//        httpExchange.sendResponseHeaders(200, response.length());
-//        OutputStream os = httpExchange.getResponseBody();
-//        os.write(response.getBytes());
-//        os.close();
-//    }
 
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -77,16 +56,17 @@ public class LoginHandler implements HttpHandler {
 
             if (admin != null && admin.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/admin\" />";
+                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/admin/%s\" />", admin.getId());
             }
 
             if (mentor != null && mentor.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/mentor\" />";
+                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/mentor/%s\" />", mentor.getId());
             }
+
             if (student != null && student.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = "<meta http-equiv=\"refresh\" content=\"0; url=/student\" />";
+                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/student\" />", student.getId());
             }
         }
 
@@ -95,7 +75,7 @@ public class LoginHandler implements HttpHandler {
         model.with("redirect", redirect);
         String response = template.render(model);
 
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
@@ -105,19 +85,6 @@ public class LoginHandler implements HttpHandler {
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
     }
-
-//    private Map<String, String> parseURI (String uri) {
-//        HashMap<String, String> actionData = new HashMap<>();
-//        String[] pairs = uri.split("/");
-//
-//        if (pairs.length == 3) {
-//            actionData.put(pairs[1], pairs[2]);
-//        } else {
-//            actionData.put(pairs[1], "");
-//        }
-//
-//        return actionData;
-//    }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
         List<String> list = new ArrayList<>();
