@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    {% block head %}
+    <link rel="stylesheet" href="static/main.css">
+    <title>{% block title %}{% endblock %}</title>
+    {% block redirect %}{% endblock %}
+
+    {% endblock %}
+</head>
+<body>
+<header class="container">
+    <img src="static/logo-white.png">
+    <div class="primary-header">
+        {% block header %} {% endblock %}
+    </div>
+</header>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    {%block footer %}
+    <footer>
+        <p>&copy; CodeCool QuestStore</p>
+    </footer>
+    {% endblock %}
+
+</body>
+</html>

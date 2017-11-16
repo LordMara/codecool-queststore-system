@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block title %}Student{% endblock %}
+
+{% block header %}
+    <nav>
+        <div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Wallet</a></li>
+                <li><a href="#">Store</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<h3> Welcome {{name}} !! </h3>
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+<a href= "/student"> home </a>
+{% endblock %}
+
