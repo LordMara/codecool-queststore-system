@@ -1,9 +1,8 @@
 package com.codecool.wot.web;
 
-import com.codecool.wot.dao.AdminDAO;
-import com.codecool.wot.dao.ClassDAO;
-import com.codecool.wot.dao.DatabaseConnection;
+import com.codecool.wot.dao.*;
 import com.codecool.wot.model.Admin;
+import com.codecool.wot.model.Mentor;
 import com.codecool.wot.tools.Tools;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -12,16 +11,55 @@ import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
+import java.net.URI;
+
 
 public class AdminHandler implements HttpHandler {
-    private ClassDAO classDAO = new ClassDAO(DatabaseConnection.getDBConnection().getConnection());
-    private AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-    private Tools tools = new Tools();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
+        if (cookieStr != null) {
+            URI uri = httpExchange.getRequestURI();
+            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
+            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+            AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
+            Admin admin = adminDAO.getById(userId);
+
+            if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
+                ClassDAO classDAO = new ClassDAO(DatabaseConnection.getDBConnection().getConnection());
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
+                JtwigModel model = JtwigModel.newModel();
+
+                model.with("classes",classDAO.getObjectList());
+                model.with("name", admin.getName());
+                String response = template.render(model);
+
+                httpExchange.sendResponseHeaders(200, response.getBytes().length);
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } else {
+                handleWrongUser(httpExchange);
+            }
+        } else {
+            handleWrongUser(httpExchange);
+        }
+    }
+
+
+    private void handleWrongUser(HttpExchange httpExchange) throws IOException {
+        httpExchange.getResponseHeaders().set("Location", "/");
+        httpExchange.sendResponseHeaders(302,-1);
+    }
+
+    private String parseURIToGetId(String uri) {
+        String userIdFromURI = "";
+        String[] pairs = uri.split("/");
+        userIdFromURI = pairs[2];
+
+        return userIdFromURI;
     }
 
 

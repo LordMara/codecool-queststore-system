@@ -4,6 +4,8 @@ import com.codecool.wot.dao.*;
 import com.codecool.wot.model.Mentor;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,8 +24,14 @@ public class MentorHandler implements HttpHandler {
             Mentor mentor = mentorDAO.getById(userId);
 
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-                String response = String.format("Hello %s %s", mentor.getName(), mentor.getSurname());
-                httpExchange.sendResponseHeaders(200, response.length());
+
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
+                JtwigModel model = JtwigModel.newModel();
+
+                model.with("name", mentor.getName());
+                String response = template.render(model);
+
+                httpExchange.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = httpExchange.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
