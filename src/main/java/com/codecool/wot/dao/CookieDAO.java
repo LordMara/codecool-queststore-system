@@ -29,7 +29,7 @@ public class CookieDAO {
     }
     }
 
-    public Integer getIdBySessionId(String sessionId){
+    public Integer getByCoockie(String sessionId){
 
         try{
             String query = "SELECT userID FROM  cookies  WHERE cookie = ?";
