@@ -1,9 +1,6 @@
 package com.codecool.wot.web;
 
-import com.codecool.wot.dao.AdminDAO;
-import com.codecool.wot.dao.DatabaseConnection;
-import com.codecool.wot.dao.MentorDAO;
-import com.codecool.wot.dao.StudentDAO;
+import com.codecool.wot.dao.*;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Student;
@@ -25,6 +22,7 @@ public class LoginHandler implements HttpHandler {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
         if (cookieStr != null) {
+            cookieHandle(cookieStr, httpExchange);
             System.out.println(cookieStr);
         } else {
             login(httpExchange);
@@ -59,22 +57,17 @@ public class LoginHandler implements HttpHandler {
                 String uri = String.format("/admin/%s", admin.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
-            }
-
-            if (mentor != null && mentor.getPassword().equals(password)) {
+            } else if (mentor != null && mentor.getPassword().equals(password)) {
                 cookie(httpExchange);
                 String uri = String.format("/mentor/%s", mentor.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
-            }
-
-            if (student != null && student.getPassword().equals(password)) {
+            } else if (student != null && student.getPassword().equals(password)) {
                 cookie(httpExchange);
                 String uri = String.format("/student/%s", student.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
             }
-
         }
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
@@ -108,5 +101,32 @@ public class LoginHandler implements HttpHandler {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private void cookieHandle(String cookieStr, HttpExchange httpExchange) throws IOException {
+        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
+        Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+
+        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
+        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
+        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
+
+        Admin admin = adminDAO.getById(userId);
+        Mentor mentor = mentorDAO.getById(userId);
+        Student student = studentDAO.getById(userId);
+
+        if (admin != null) {
+            String uri = String.format("/admin/%s", userId);
+            httpExchange.getResponseHeaders().set("Location", uri);
+            httpExchange.sendResponseHeaders(302,-1);
+        } else if (mentor != null) {
+            String uri = String.format("/mentor/%s", userId);
+            httpExchange.getResponseHeaders().set("Location", uri);
+            httpExchange.sendResponseHeaders(302,-1);
+        } else if (student != null) {
+            String uri = String.format("/student/%s", userId);
+            httpExchange.getResponseHeaders().set("Location", uri);
+            httpExchange.sendResponseHeaders(302,-1);
+        }
     }
 }
