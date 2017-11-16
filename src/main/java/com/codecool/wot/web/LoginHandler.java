@@ -57,16 +57,12 @@ public class LoginHandler implements HttpHandler {
                 String uri = String.format("/admin/%s", admin.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
-            }
-
-            if (mentor != null && mentor.getPassword().equals(password)) {
+            } else if (mentor != null && mentor.getPassword().equals(password)) {
                 cookie(mentor.getId(),httpExchange);
                 String uri = String.format("/mentor/%s", mentor.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
-            }
-
-            if (student != null && student.getPassword().equals(password)) {
+            } else if (student != null && student.getPassword().equals(password)) {
                 cookie(student.getId(),httpExchange);
                 String uri = String.format("/student/%s", student.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
