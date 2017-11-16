@@ -23,7 +23,7 @@ public class MentorHandler implements HttpHandler {
         Mentor mentor = mentorDAO.getById(userId);
 
         if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-            String response = "Hello Mentor";
+            String response = String.format("Hello %s %s", mentor.getName(), mentor.getSurname());
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
