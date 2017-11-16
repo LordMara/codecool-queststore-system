@@ -15,7 +15,7 @@
                 <ul>
                     <li><a href="#">Create</a></li>
                    {% for class in classes %}
-                    <li><a href="/{{class.name}}"}}> class.name</a></li>
+                    <li><a href="/{{class.name}}"}}> {{class.name}} </a></li>
                     {% endfor %}
                 </ul></li>
             <li><a href="admin-exp-lvl-nav">Exp level</a>
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    <h3> Welcome {{name}} !! </h3>
+    <h3 > Welcome {{name}} !! </h3>
 {% endblock %}
 
 {% block footer %}
