@@ -34,7 +34,7 @@ public class LoginHandler implements HttpHandler {
 
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String redirect = "";
+        String redirect = "/";
 
         AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
         MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
@@ -56,18 +56,25 @@ public class LoginHandler implements HttpHandler {
 
             if (admin != null && admin.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/admin/%s\" />", admin.getId());
+                String uri = String.format("/admin/%s", admin.getId());
+                httpExchange.getResponseHeaders().set("Location", uri);
+                httpExchange.sendResponseHeaders(302,-1);
             }
 
             if (mentor != null && mentor.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/mentor/%s\" />", mentor.getId());
+                String uri = String.format("/mentor/%s", mentor.getId());
+                httpExchange.getResponseHeaders().set("Location", uri);
+                httpExchange.sendResponseHeaders(302,-1);
             }
 
             if (student != null && student.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/student/%s\" />", student.getId());
+                String uri = String.format("/student/%s", student.getId());
+                httpExchange.getResponseHeaders().set("Location", uri);
+                httpExchange.sendResponseHeaders(302,-1);
             }
+
         }
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
