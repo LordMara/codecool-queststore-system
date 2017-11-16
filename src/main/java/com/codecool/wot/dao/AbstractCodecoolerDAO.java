@@ -28,5 +28,15 @@ public abstract class AbstractCodecoolerDAO <T extends Account> extends Abstract
         return person;
     }
 
+    public T getById(Integer id) {
+        T person = null;
+        for (T elem : objectsList){
+            if (elem.getId().equals(id)){
+                person = elem;
+            }
+        }
+        return person;
+    }
+
 
 }
