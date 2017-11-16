@@ -10,26 +10,27 @@ public class CookieDAO {
         this.connection = connection;
     }
 
-    public void saveToDatabase(Integer userId, String cookie){
+    public void saveToDatabase(Integer userId, String cookie) {
 
-      try {
+        try {
 
-        String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(query);
+            String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(query);
 
-        stmt.setInt(1, userId);
-        stmt.setString(2, cookie);
+            stmt.setInt(1, userId);
+            stmt.setString(2, cookie);
 
-        stmt.executeUpdate();
-        stmt.close();
-        connection.commit();
+            stmt.executeUpdate();
+            stmt.close();
+            connection.commit();
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-    }
 
-    public Integer getByCoockie(String sessionId){
+    public Integer getUserIdBySessionId(String sessionId){
+        Integer userId = null;
 
         try{
             String query = "SELECT userID FROM  cookies  WHERE cookie = ?";
@@ -38,19 +39,15 @@ public class CookieDAO {
             stmt.setString(1, sessionId);
             ResultSet rs = stmt.executeQuery();
 
-            Integer userId = rs.getInt("userID");
+            userId = rs.getInt("userID");
 
             rs.close();
             stmt.close();
 
-            return userId;
-
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+
+        return userId;
     }
-
-
-
 }
