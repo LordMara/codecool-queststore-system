@@ -84,6 +84,7 @@ public class LoginHandler implements HttpHandler {
     private void cookie(Integer userId ,HttpExchange httpExchange) throws IOException {
         CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
+        cookie.setMaxAge(-1);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
         cookieDAO.saveToDatabase(userId, cookie.toString());
     }

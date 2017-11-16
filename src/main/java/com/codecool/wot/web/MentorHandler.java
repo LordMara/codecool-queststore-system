@@ -4,8 +4,6 @@ import com.codecool.wot.dao.*;
 import com.codecool.wot.model.Mentor;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,30 +12,29 @@ import java.net.URI;
 public class MentorHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        URI uri = httpExchange.getRequestURI();
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-        Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+        if (cookieStr != null) {
+            URI uri = httpExchange.getRequestURI();
+            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
+            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+            MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
+            Mentor mentor = mentorDAO.getById(userId);
 
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-
-        Mentor mentor = mentorDAO.getById(userId);
-
-        if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
-            JtwigModel model = JtwigModel.newModel();
-            model.with("name", mentor.getName());
-
-            String response = template.render(model);
-            httpExchange.sendResponseHeaders(200, response.getBytes().length);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
+                String response = String.format("Hello %s %s", mentor.getName(), mentor.getSurname());
+                httpExchange.sendResponseHeaders(200, response.length());
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } else {
+                handleWrongUser(httpExchange);
+            }
         } else {
             handleWrongUser(httpExchange);
         }
     }
+
 
     private void handleWrongUser(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().set("Location", "/");
