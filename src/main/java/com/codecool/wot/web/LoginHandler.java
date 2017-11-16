@@ -1,9 +1,6 @@
 package com.codecool.wot.web;
 
-import com.codecool.wot.dao.AdminDAO;
-import com.codecool.wot.dao.DatabaseConnection;
-import com.codecool.wot.dao.MentorDAO;
-import com.codecool.wot.dao.StudentDAO;
+import com.codecool.wot.dao.*;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Student;
@@ -55,21 +52,21 @@ public class LoginHandler implements HttpHandler {
             Student student = studentDAO.getByLogin(login);
 
             if (admin != null && admin.getPassword().equals(password)) {
-                cookie(httpExchange);
+                cookie(admin.getId(),httpExchange);
                 String uri = String.format("/admin/%s", admin.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
             }
 
             if (mentor != null && mentor.getPassword().equals(password)) {
-                cookie(httpExchange);
+                cookie(mentor.getId(),httpExchange);
                 String uri = String.format("/mentor/%s", mentor.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
             }
 
             if (student != null && student.getPassword().equals(password)) {
-                cookie(httpExchange);
+                cookie(student.getId(),httpExchange);
                 String uri = String.format("/student/%s", student.getId());
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
@@ -88,9 +85,11 @@ public class LoginHandler implements HttpHandler {
         os.close();
     }
 
-    private void cookie(HttpExchange httpExchange) throws IOException {
+    private void cookie(Integer userId ,HttpExchange httpExchange) throws IOException {
+        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
+        cookieDAO.saveToDatabase(userId, cookie.toString());
     }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
@@ -109,4 +108,5 @@ public class LoginHandler implements HttpHandler {
         }
         return list;
     }
+
 }
