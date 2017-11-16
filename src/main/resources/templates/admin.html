@@ -15,10 +15,10 @@
                 <ul>
                     <li><a href="#">Create</a></li>
                    {% for class in classes %}
-                    <li><a href="/{{class.name}}"}}> class.name</a></li>
+                    <li><a href="/{{class.name}}"}}> {{class.name}} </a></li>
                     {% endfor %}
                 </ul></li>
-            <li><a href="admin-exp-lvl-nav">Exp level</a>
+            <li><a href="adminHandler-exp-lvl-nav">Exp level</a>
                 <ul>
                     <li><a href="#">Create</a></li>
                     <li><a href="#">Show all</a></li>
@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-    <h3> Welcome {{name}} !! </h3>
+    <h3> Welcome {{admin.name}} !! </h3>
 {% endblock %}
 
 {% block footer %}
