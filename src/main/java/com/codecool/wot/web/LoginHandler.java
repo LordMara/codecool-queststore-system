@@ -66,7 +66,7 @@ public class LoginHandler implements HttpHandler {
 
             if (student != null && student.getPassword().equals(password)) {
                 cookie(httpExchange);
-                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/student\" />", student.getId());
+                redirect = String.format("<meta http-equiv=\"refresh\" content=\"0; url=/student/%s\" />", student.getId());
             }
         }
 
