@@ -12,32 +12,29 @@ import java.net.URI;
 public class MentorHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        URI uri = httpExchange.getRequestURI();
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-        Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+        if (cookieStr != null) {
+            URI uri = httpExchange.getRequestURI();
+            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
+            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+            MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
+            Mentor mentor = mentorDAO.getById(userId);
 
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-
-        Mentor mentor = mentorDAO.getById(userId);
-
-        if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-            String response = "Hello Mentor";
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
+                String response = String.format("Hello %s %s", mentor.getName(), mentor.getSurname());
+                httpExchange.sendResponseHeaders(200, response.length());
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } else {
+                handleWrongUser(httpExchange);
+            }
         } else {
             handleWrongUser(httpExchange);
         }
-
-        String response = "Hello Mentor";
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
     }
+
 
     private void handleWrongUser(HttpExchange httpExchange) throws IOException {
         httpExchange.getResponseHeaders().set("Location", "/");
