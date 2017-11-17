@@ -186,12 +186,18 @@ ol > li > ul > li:hover{
     color:#150101;
 }
 
-footer{
+footer {
+    display: flex;
+    justify-content: center;
     background: #2d3343;
-    padding: 10px;
-    height: 30px;
+    height: 40px;
     text-align: center;
     color: white;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
 }
 
 footer a{

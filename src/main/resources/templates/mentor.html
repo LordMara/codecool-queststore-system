@@ -3,7 +3,7 @@
 {% block title %}Mentor{% endblock %}
 
 {% block header %}
-    <nav>
+    <nav class="nav">
         <div>
             <ol>
                 <li><a href="#">Home</a></li>
@@ -34,9 +34,4 @@
 
 {% block content %}
 <h3 class="welcome center-content" > Welcome {{name}} !! </h3>
-{% endblock %}
-
-{% block footer %}
-{{ parent() }}
-<a href= "/mentor"> home </a>
 {% endblock %}
