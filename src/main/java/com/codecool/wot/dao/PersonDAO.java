@@ -10,11 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PersonDAO {
+    private static final PersonDAO INSTANCE = new PersonDAO();
+
     private List<Account> persons;
 
-    public PersonDAO() {
+    private PersonDAO() {
         persons = new LinkedList<>();
         loadPersons();
+    }
+
+    public static PersonDAO getInstance() {
+        return INSTANCE;
     }
 
     private void loadPersons() {
@@ -33,9 +39,7 @@ public class PersonDAO {
                 Integer classId = result.getInt("classId");
 
                 if (role.equals("administrator")) {
-                    System.out.println("before admin");
                     persons.add(new Admin(name, surname, email, login, password, Id));
-                    System.out.println("after admin");
                 } else if (role.equals("mentor")) {
                     persons.add(new Mentor(name, surname, email, login, password, Id, classId));
                 } else if (role.equals("student")) {
