@@ -22,8 +22,7 @@ public class AdminHandler implements HttpHandler {
             URI uri = httpExchange.getRequestURI();
             CookieDAO cookieDAO = new CookieDAO();
             Integer userId = cookieDAO.getUserId(cookieStr);
-            PersonDAO personDAO = new PersonDAO();
-            Admin admin = (Admin)personDAO.getPerson(userId);
+            Admin admin = (Admin)PersonDAO.getInstance().getPerson(userId);
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
