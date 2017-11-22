@@ -18,8 +18,7 @@ public class StudentHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO();
-            Integer userId = cookieDAO.getUserId(cookieStr);
+            Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
             Student student = (Student)PersonDAO.getInstance().getPerson(userId);
 
             if (student != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
