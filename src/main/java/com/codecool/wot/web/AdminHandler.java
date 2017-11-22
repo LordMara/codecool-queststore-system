@@ -1,9 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.tools.Tools;
+import com.codecool.wot.model.Account;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -22,17 +20,15 @@ public class AdminHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
-            AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-            Admin admin = adminDAO.getById(userId);
+            CookieDAO cookieDAO = new CookieDAO();
+            Integer userId = cookieDAO.getUserId(cookieStr);
+            PersonDAO personDAO = new PersonDAO();
+            Account admin = personDAO.getPerson(userId);
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-                ClassDAO classDAO = new ClassDAO(DatabaseConnection.getDBConnection().getConnection());
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
                 JtwigModel model = JtwigModel.newModel();
 
-                model.with("classes",classDAO.getObjectList());
                 model.with("name", admin.getName());
                 String response = template.render(model);
 
