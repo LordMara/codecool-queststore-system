@@ -3,6 +3,12 @@ package com.codecool.wot.dao;
 import java.sql.*;
 
 public class CookieDAO {
+    private static final CookieDAO INSTANCE = new CookieDAO();
+
+    public static CookieDAO getInstance() {
+        return INSTANCE;
+    }
+
     public void saveToDatabase(Integer userId, String cookie) {
 
         try (Connection con = DatabaseConnection.getConnection();
