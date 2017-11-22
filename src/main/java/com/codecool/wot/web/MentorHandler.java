@@ -1,7 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Mentor;
+import com.codecool.wot.model.Account;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -18,10 +18,10 @@ public class MentorHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
-            MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-            Mentor mentor = mentorDAO.getById(userId);
+            CookieDAO cookieDAO = new CookieDAO();
+            Integer userId = cookieDAO.getUserId(cookieStr);
+            PersonDAO personDAO = new PersonDAO();
+            Account mentor = personDAO.getPerson(userId);
 
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
 
