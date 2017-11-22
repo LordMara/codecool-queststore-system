@@ -10,8 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PersonDAO {
-    private List<Account> persons = new LinkedList<>();
+    private List<Account> persons;
 
+    public PersonDAO() {
+        persons = new LinkedList<>();
+        loadPersons();
+    }
 
     private void loadPersons() {
         try (Connection con = DatabaseConnection.getConnection();
@@ -25,11 +29,13 @@ public class PersonDAO {
                 String email = result.getString("email");
                 String login = result.getString("login");
                 String password = result.getString("password");
-                Integer classId = result.getInt("classId");
                 String role = result.getString("role");
+                Integer classId = result.getInt("classId");
 
                 if (role.equals("administrator")) {
+                    System.out.println("before admin");
                     persons.add(new Admin(name, surname, email, login, password, Id));
+                    System.out.println("after admin");
                 } else if (role.equals("mentor")) {
                     persons.add(new Mentor(name, surname, email, login, password, Id, classId));
                 } else if (role.equals("student")) {
@@ -43,8 +49,28 @@ public class PersonDAO {
         }
     }
 
+    public Account getPerson(String login, String password) {
+        Account person = null;
+        for (Account candidate : this.persons){
+            if (candidate.getLogin().equals(login) && candidate.getPassword().equals(password)){
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    public Account getPerson(Integer id) {
+        Account person = null;
+        for (Account candidate : this.persons){
+            if (candidate.getId().equals(id)){
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
     private PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-        String query = "SELECT * FROM persons JOIN persons_classes ON persons_classes.personId = persons.personId;";
+        String query = "SELECT * FROM persons LEFT JOIN persons_classes ON persons_classes.personId = persons.personId;";
         PreparedStatement ps = con.prepareStatement(query);
 
         return ps;
