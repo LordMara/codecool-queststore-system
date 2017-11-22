@@ -20,8 +20,7 @@ public class AdminHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO();
-            Integer userId = cookieDAO.getUserId(cookieStr);
+            Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
             Admin admin = (Admin)PersonDAO.getInstance().getPerson(userId);
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
