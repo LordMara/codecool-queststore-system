@@ -1,7 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -21,7 +21,7 @@ public class StudentHandler implements HttpHandler {
             CookieDAO cookieDAO = new CookieDAO();
             Integer userId = cookieDAO.getUserId(cookieStr);
             PersonDAO personDAO = new PersonDAO();
-            Account student = personDAO.getPerson(userId);
+            Student student = (Student)personDAO.getPerson(userId);
 
             if (student != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student.html");
