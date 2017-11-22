@@ -1,7 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Admin;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -23,7 +23,7 @@ public class AdminHandler implements HttpHandler {
             CookieDAO cookieDAO = new CookieDAO();
             Integer userId = cookieDAO.getUserId(cookieStr);
             PersonDAO personDAO = new PersonDAO();
-            Account admin = personDAO.getPerson(userId);
+            Admin admin = (Admin)personDAO.getPerson(userId);
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
