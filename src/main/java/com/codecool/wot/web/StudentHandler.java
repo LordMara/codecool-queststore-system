@@ -20,8 +20,7 @@ public class StudentHandler implements HttpHandler {
             URI uri = httpExchange.getRequestURI();
             CookieDAO cookieDAO = new CookieDAO();
             Integer userId = cookieDAO.getUserId(cookieStr);
-            PersonDAO personDAO = new PersonDAO();
-            Student student = (Student)personDAO.getPerson(userId);
+            Student student = (Student)PersonDAO.getInstance().getPerson(userId);
 
             if (student != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student.html");
