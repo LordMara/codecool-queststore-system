@@ -24,9 +24,7 @@ public class LoginHandler implements HttpHandler {
 
         if (cookieStr != null) {
             cookieHandle(cookieStr, httpExchange);
-            System.out.println(cookieStr);
         } else {
-            System.out.println("begning");
             login(httpExchange);
         }
     }
@@ -35,8 +33,6 @@ public class LoginHandler implements HttpHandler {
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         String redirect = "/";
-
-        PersonDAO personDAO = new PersonDAO();
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -48,12 +44,9 @@ public class LoginHandler implements HttpHandler {
             String login = loginData.get(0);
             String password = loginData.get(1);
 
-            Account person = personDAO.getPerson(login, password);
-            System.out.println("person");
+            Account person = PersonDAO.getInstance().getPerson(login, password);
 
-            System.out.println(personDAO.getPerson("admin", "admin"));
             if (person != null) {
-                System.out.println("not null");
                 Integer personId = person.getId();
 
                 if (person instanceof Admin) {
@@ -118,8 +111,7 @@ public class LoginHandler implements HttpHandler {
         CookieDAO cookieDAO = new CookieDAO();
         Integer userId = cookieDAO.getUserId(cookieStr);
 
-        PersonDAO personDAO = new PersonDAO();
-        Account person = personDAO.getPerson(userId);
+        Account person = PersonDAO.getInstance().getPerson(userId);
 
         if (person != null) {
             String uri = "";
