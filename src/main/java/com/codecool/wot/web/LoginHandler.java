@@ -1,6 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Student;
@@ -25,6 +26,7 @@ public class LoginHandler implements HttpHandler {
             cookieHandle(cookieStr, httpExchange);
             System.out.println(cookieStr);
         } else {
+            System.out.println("begning");
             login(httpExchange);
         }
     }
@@ -34,9 +36,7 @@ public class LoginHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String redirect = "/";
 
-        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
+        PersonDAO personDAO = new PersonDAO();
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -48,25 +48,33 @@ public class LoginHandler implements HttpHandler {
             String login = loginData.get(0);
             String password = loginData.get(1);
 
-            Admin admin = adminDAO.getByLogin(login);
-            Mentor mentor = mentorDAO.getByLogin(login);
-            Student student = studentDAO.getByLogin(login);
+            Account person = personDAO.getPerson(login, password);
+            System.out.println("person");
 
-            if (admin != null && admin.getPassword().equals(password)) {
-                cookie(admin.getId(),httpExchange);
-                String uri = String.format("/admin/%s", admin.getId());
-                httpExchange.getResponseHeaders().set("Location", uri);
-                httpExchange.sendResponseHeaders(302,-1);
-            } else if (mentor != null && mentor.getPassword().equals(password)) {
-                cookie(mentor.getId(),httpExchange);
-                String uri = String.format("/mentor/%s", mentor.getId());
-                httpExchange.getResponseHeaders().set("Location", uri);
-                httpExchange.sendResponseHeaders(302,-1);
-            } else if (student != null && student.getPassword().equals(password)) {
-                cookie(student.getId(),httpExchange);
-                String uri = String.format("/student/%s", student.getId());
-                httpExchange.getResponseHeaders().set("Location", uri);
-                httpExchange.sendResponseHeaders(302,-1);
+            System.out.println(personDAO.getPerson("admin", "admin"));
+            if (person != null) {
+                System.out.println("not null");
+                Integer personId = person.getId();
+
+                if (person instanceof Admin) {
+                    cookie(personId, httpExchange);
+                    String uri = String.format("/admin/%s", personId);
+                    System.out.println(uri);
+                    httpExchange.getResponseHeaders().set("Location", uri);
+                    httpExchange.sendResponseHeaders(302,-1);
+                } else if (person instanceof Mentor) {
+                    cookie(personId ,httpExchange);
+                    String uri = String.format("/mentor/%s", personId);
+                    System.out.println(uri);
+                    httpExchange.getResponseHeaders().set("Location", uri);
+                    httpExchange.sendResponseHeaders(302,-1);
+                } else if (person instanceof Student) {
+                    cookie(personId, httpExchange);
+                    String uri = String.format("/student/%s", personId);
+                    System.out.println(uri);
+                    httpExchange.getResponseHeaders().set("Location", uri);
+                    httpExchange.sendResponseHeaders(302,-1);
+                }
             }
         }
 
@@ -82,7 +90,7 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookie(Integer userId ,HttpExchange httpExchange) throws IOException {
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
+        CookieDAO cookieDAO = new CookieDAO();
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         cookie.setMaxAge(-1);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
@@ -107,29 +115,24 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookieHandle(String cookieStr, HttpExchange httpExchange) throws IOException {
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-        Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+        CookieDAO cookieDAO = new CookieDAO();
+        Integer userId = cookieDAO.getUserId(cookieStr);
 
-        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
+        PersonDAO personDAO = new PersonDAO();
+        Account person = personDAO.getPerson(userId);
 
-        Admin admin = adminDAO.getById(userId);
-        Mentor mentor = mentorDAO.getById(userId);
-        Student student = studentDAO.getById(userId);
+        if (person != null) {
+            String uri = "";
+            if (person instanceof Admin) {
+                uri = String.format("/admin/%s", userId);
+            } else if (person instanceof Mentor) {
+                uri = String.format("/mentor/%s", userId);
+            } else if (person instanceof Student) {
+                uri = String.format("/student/%s", userId);
+            }
 
-        if (admin != null) {
-            String uri = String.format("/admin/%s", userId);
             httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
-        } else if (mentor != null) {
-            String uri = String.format("/mentor/%s", userId);
-            httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
-        } else if (student != null) {
-            String uri = String.format("/student/%s", userId);
-            httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
+            httpExchange.sendResponseHeaders(302, -1);
         }
     }
 }
