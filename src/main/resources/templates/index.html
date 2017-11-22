@@ -17,11 +17,12 @@
         {% block content %}{% endblock %}
     </div>
 
-    {%block footer %}
     <footer>
-        <p>&copy; CodeCool QuestStore</p>
+        <p>&copy; CodeCool QuestStore </p>
+        {%block footer %}
+        <br>
+        {% endblock %}
     </footer>
-    {% endblock %}
 
 </body>
 </html>

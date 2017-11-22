@@ -3,24 +3,20 @@
 {% block title %}Student{% endblock %}
 
 {% block header %}
-    <nav>
+    <nav class="nav">
         <div>
-            <ul>
+            <ol>
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Wallet</a></li>
                 <li><a href="#">Store</a></li>
                 <li><a href="#">Logout</a></li>
-            </ul>
+            </ol>
         </div>
     </nav>
 {% endblock %}
 
 {% block content %}
-<h3 > Welcome {{name}} !! </h3>
+<h3 class="welcome center-content"> Welcome {{name}} !! </h3>
 {% endblock %}
 
-{% block footer %}
-{{ parent() }}
-<a href= "/student"> home </a>
-{% endblock %}
 
