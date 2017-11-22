@@ -107,8 +107,7 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookieHandle(String cookieStr, HttpExchange httpExchange) throws IOException {
-        CookieDAO cookieDAO = new CookieDAO();
-        Integer userId = cookieDAO.getUserId(cookieStr);
+        Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
 
         Account person = PersonDAO.getInstance().getPerson(userId);
 
