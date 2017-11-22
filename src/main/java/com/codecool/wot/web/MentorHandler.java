@@ -18,8 +18,7 @@ public class MentorHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO();
-            Integer userId = cookieDAO.getUserId(cookieStr);
+            Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
             Mentor mentor = (Mentor)PersonDAO.getInstance().getPerson(userId);
 
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
