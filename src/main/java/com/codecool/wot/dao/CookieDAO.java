@@ -5,6 +5,10 @@ import java.sql.*;
 public class CookieDAO {
     private static final CookieDAO INSTANCE = new CookieDAO();
 
+    private CookieDAO() {
+
+    }
+
     public static CookieDAO getInstance() {
         return INSTANCE;
     }
