@@ -48,26 +48,20 @@ public class LoginHandler implements HttpHandler {
 
             if (person != null) {
                 Integer personId = person.getId();
+                String uri = "/";
 
                 if (person instanceof Admin) {
                     cookie(personId, httpExchange);
-                    String uri = String.format("/admin/%s", personId);
-                    System.out.println(uri);
-                    httpExchange.getResponseHeaders().set("Location", uri);
-                    httpExchange.sendResponseHeaders(302,-1);
+                    uri = String.format("/admin/%s", personId);
                 } else if (person instanceof Mentor) {
                     cookie(personId ,httpExchange);
-                    String uri = String.format("/mentor/%s", personId);
-                    System.out.println(uri);
-                    httpExchange.getResponseHeaders().set("Location", uri);
-                    httpExchange.sendResponseHeaders(302,-1);
+                    uri = String.format("/mentor/%s", personId);
                 } else if (person instanceof Student) {
                     cookie(personId, httpExchange);
-                    String uri = String.format("/student/%s", personId);
-                    System.out.println(uri);
-                    httpExchange.getResponseHeaders().set("Location", uri);
-                    httpExchange.sendResponseHeaders(302,-1);
+                    uri = String.format("/student/%s", personId);
                 }
+                httpExchange.getResponseHeaders().set("Location", uri);
+                httpExchange.sendResponseHeaders(302,-1);
             }
         }
 
