@@ -2,7 +2,6 @@ package com.codecool.wot;
 
 import com.codecool.wot.dao.DatabaseMigration;
 import com.codecool.wot.web.*;
-//import com.codecool.wot.web.Cookie;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 
@@ -19,6 +18,7 @@ class Application {
         server.createContext("/admin", new AdminHandler());
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
+        server.createContext("/logout", new LogoutHandler());
         server.setExecutor(null); // creates a default executor
 
         // start listening
