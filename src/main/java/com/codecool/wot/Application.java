@@ -2,7 +2,6 @@ package com.codecool.wot;
 
 import com.codecool.wot.dao.DatabaseMigration;
 import com.codecool.wot.web.*;
-//import com.codecool.wot.web.Cookie;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 
@@ -14,13 +13,12 @@ class Application {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         // set routes
-//        server.createContext("/hello", new Hello());
         server.createContext("/", new LoginHandler());
         server.createContext("/static", new Static());
         server.createContext("/admin", new AdminHandler());
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
-//        server.createContext("/cookie", new Cookie());
+        server.createContext("/logout", new LogoutHandler());
         server.setExecutor(null); // creates a default executor
 
         // start listening

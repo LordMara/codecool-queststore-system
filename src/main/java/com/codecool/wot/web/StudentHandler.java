@@ -1,7 +1,6 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -19,13 +18,10 @@ public class StudentHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-            Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
-            StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
-            Student student = studentDAO.getById(userId);
+            Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
+            Student student = (Student)PersonDAO.getInstance().getPerson(userId);
 
             if (student != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-                ClassDAO classDAO = new ClassDAO(DatabaseConnection.getDBConnection().getConnection());
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student.html");
                 JtwigModel model = JtwigModel.newModel();
 

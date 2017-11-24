@@ -3,51 +3,85 @@ package com.codecool.wot.dao;
 import java.sql.*;
 
 public class CookieDAO {
+    private static final CookieDAO INSTANCE = new CookieDAO();
 
-    private Connection connection;
+    private CookieDAO() {
 
-    public CookieDAO(Connection connection) {
-        this.connection = connection;
     }
 
-    public void saveToDatabase(Integer userId, String cookie) {
+    public static CookieDAO getInstance() {
+        return INSTANCE;
+    }
 
-        try {
+    public void saveToDatabase(Integer userId, String sessionId) {
 
-            String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(query);
-
-            stmt.setInt(1, userId);
-            stmt.setString(2, cookie);
-
-            stmt.executeUpdate();
-            stmt.close();
-            connection.commit();
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createPreparedStatement(con, userId, sessionId)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Integer getUserIdBySessionId(String sessionId){
+    public void deleteFromDatabase(String sessionId) {
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, sessionId)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Integer getUserId(String sessionId){
         Integer userId = null;
 
-        try{
-            String query = "SELECT userID FROM  cookies  WHERE cookie = ?";
-            PreparedStatement stmt = connection.prepareStatement(query);
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createPreparedStatement(con, sessionId);
+             ResultSet result = ps.executeQuery()) {
 
-            stmt.setString(1, sessionId);
-            ResultSet rs = stmt.executeQuery();
-
-            userId = rs.getInt("userID");
-
-            rs.close();
-            stmt.close();
+            while (result.next()) {
+                userId = result.getInt("userID");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return userId;
+    }
+
+    private PreparedStatement createPreparedStatement(Connection con, Integer userId, String sessionId) throws SQLException {
+        String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, userId);
+        ps.setString(2, sessionId);
+
+        return ps;
+    }
+
+    private PreparedStatement createPreparedStatement(Connection con, String sessionId) throws SQLException {
+        String query = "SELECT userID FROM  cookies  WHERE cookie = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, sessionId);
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, String sessionId) throws SQLException {
+        String query = "DELETE FROM  cookies  WHERE cookie = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, sessionId);
+
+        return ps;
     }
 }
