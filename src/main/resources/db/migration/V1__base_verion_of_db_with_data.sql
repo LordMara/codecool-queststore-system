@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `persons` (
 	`password`	text,
 	`role`	text CHECK(role = 'student' or role = 'mentor' or role = 'administrator')
 );
-INSERT INTO `persons` VALUES (0,'admin','Łekawski','admin@admin.com','admin','admin','administrator'),
+INSERT INTO `persons` VALUES (0,'Konrad','Łekawski','admin@admin.com','admin','admin','administrator'),
  (1,'Marcin','Ogorzałek','mentor@mentor.com','mentor','mentor','mentor'),
  (2,'Dabrowska','student','student@student.com','student','student','student'),
  (3,'Kamil','Konior','adrian@kacper.com','student1','student1','student'),
