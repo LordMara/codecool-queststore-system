@@ -1,28 +1,28 @@
 package com.codecool.wot.model;
 
-import java.util.ArrayList;
-
-import com.codecool.wot.dao.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SchoolClass {
-
-    private static Integer lastID = 0;
-    private Integer Id;
+    private static Integer lastId = 1;
+    private Integer id;
     private String name;
-    private ArrayList<Student> students;
-    private ArrayList<Mentor> mentors;
+    private List<Account> persons;
 
-    public SchoolClass(Integer Id, String name) {
-        this.Id = Id;
+    public SchoolClass(Integer id, String name) {
+        this.id = id;
         this.name = name;
+        this.persons = new LinkedList<>();
+
+        if(lastId < id) {
+            lastId = id;
+        }
     }
 
     public SchoolClass(String name) {
-
-        this.students = new ArrayList <> ();
-        this.mentors = new ArrayList <> ();
+        this.id = ++lastId;
         this.name = name;
-        generateID();
+        this.persons = new LinkedList<>();
     }
 
     public String getName() {
@@ -33,27 +33,19 @@ public class SchoolClass {
         this.name = name;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
+    public List<Account> getPersons() {
+        return this.persons;
     }
 
-    public ArrayList<Mentor> getMentors() {
-        return mentors;
+    public void removePerson(Account person) {
+        this.persons.remove(person);
     }
 
-    public void assignStudent(Student student) {
-        this.students.add(student);
-    }
-
-    public void assignMentor(Mentor mentor) {
-        this.mentors.add(mentor);
-    }
-
-    private void generateID() {
-        this.Id = ++SchoolClass.lastID;
+    public void assignPerson(Account person) {
+        this.persons.add(person);
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 }

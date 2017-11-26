@@ -15,17 +15,80 @@ public class PersonDAO {
     private List<Account> persons;
 
     private PersonDAO() {
-        persons = new LinkedList<>();
-        loadPersons();
+        this.persons = new LinkedList<>();
+        loadPersonsFromDatabase();
     }
 
     public static PersonDAO getInstance() {
         return INSTANCE;
     }
 
-    private void loadPersons() {
+    public List<Account> read() {
+        return this.persons;
+    }
+
+    public void add(Account person) {
+        try {
+            addPersonToDatabase(person);
+            this.persons.add(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void update(Account person) {
+        try {
+            updatePersonInDatabase(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void remove(Account person) {
+        try {
+            deletePersonFromDatabase(person);
+            this.persons.remove(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public Account getPerson(String login, String password) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getLogin().equals(login) && candidate.getPassword().equals(password)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    public Account getPerson(Integer id) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getId().equals(id)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    public Account getPersonByFullName(String name, String surname) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getName().equals(name) && candidate.getSurname().equals(surname)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    private void loadPersonsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createPreparedStatement(con);
+             PreparedStatement ps = createSelectPreparedStatement(con);
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
@@ -53,31 +116,86 @@ public class PersonDAO {
         }
     }
 
-    public Account getPerson(String login, String password) {
-        Account person = null;
-        for (Account candidate : this.persons){
-            if (candidate.getLogin().equals(login) && candidate.getPassword().equals(password)){
-                person = candidate;
-            }
+    private void addPersonToDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
         }
-        return person;
     }
 
-    public Account getPerson(Integer id) {
-        Account person = null;
-        for (Account candidate : this.persons){
-            if (candidate.getId().equals(id)){
-                person = candidate;
-            }
+    private void deletePersonFromDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
         }
-        return person;
     }
 
-    private PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+    private void updatePersonInDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM persons LEFT JOIN persons_classes ON persons_classes.personId = persons.personId;";
         PreparedStatement ps = con.prepareStatement(query);
 
         return ps;
     }
-}
 
+    private PreparedStatement createAddPreparedStatement(Connection con, Account person) throws SQLException {
+        String role = "";
+        String query = "INSERT INTO persons (name, surname, email,  phone, login, password, role)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+        if (person instanceof Mentor) {
+            role = "mentor";
+        } else if (person instanceof Student) {
+            role = "student";
+        }
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, person.getName());
+        ps.setString(2, person.getSurname());
+        ps.setString(3, person.getEmail());
+        ps.setString(4, person.getPhone());
+        ps.setString(5, person.getLogin());
+        ps.setString(6, person.getPassword());
+        ps.setString(7, role);
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Account person) throws SQLException {
+        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  phone = ?, login = ?, password = ?" +
+                " WHERE personId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, person.getName());
+        ps.setString(2, person.getSurname());
+        ps.setString(3, person.getEmail());
+        ps.setString(4, person.getPhone());
+        ps.setString(5, person.getLogin());
+        ps.setString(6, person.getPassword());
+        ps.setInt(7, person.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Account person) throws SQLException {
+        String query = "DELETE FROM persons WHERE personId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, person.getId());
+
+        return ps;
+    }
+}
