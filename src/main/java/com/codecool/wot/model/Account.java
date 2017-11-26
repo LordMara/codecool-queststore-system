@@ -81,10 +81,6 @@ public abstract class Account{
         return this.id;
     }
 
-    public SchoolClass getSchoolClass(){
-        return null;
-    }
-
     public String toString() {
         return String.format("ID=%d, name=%s, surname=%s, email=%s, login=%s, password=%s",
                 id, name, surname, email, login, password);
