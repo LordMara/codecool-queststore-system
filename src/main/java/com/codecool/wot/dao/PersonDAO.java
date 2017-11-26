@@ -30,7 +30,7 @@ public class PersonDAO {
     public void add(Account person) {
         try {
             addPersonToDatabase(person);
-            persons.add(person);
+            this.persons.add(person);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -49,7 +49,7 @@ public class PersonDAO {
     public void remove(Account person) {
         try {
             deletePersonFromDatabase(person);
-            persons.remove(person);
+            this.persons.remove(person);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
