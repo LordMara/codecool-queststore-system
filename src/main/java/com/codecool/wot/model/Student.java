@@ -1,8 +1,9 @@
 package com.codecool.wot.model;
 
 import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.interfaces.Codecooler;
 
-public class Student extends Account{
+public class Student extends Account implements Codecooler {
 
 
      private SchoolClass schoolClass;
@@ -26,10 +27,12 @@ public class Student extends Account{
         return schoolClass;
     }
 
+    @Override
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
 
+    @Override
     public void setSchoolClass() {
         this.schoolClass = null;
     }
