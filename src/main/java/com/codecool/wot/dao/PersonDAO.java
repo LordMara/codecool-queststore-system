@@ -73,6 +73,10 @@ public class PersonDAO {
         return person;
     }
 
+    public List<Account> read() {
+        return persons;
+    }
+
     public void add(Account person) throws SQLException {
         persons.add(person);
         addPersonToDatabase(person);
