@@ -1,7 +1,7 @@
 package com.codecool.wot.dao;
 
+import com.codecool.wot.interfaces.Codecooler;
 import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.SchoolClass;
 import com.codecool.wot.model.Student;
 
@@ -160,15 +160,10 @@ public class ClassDAO {
 
     private void deleteAllPersonsFromClassInMemory(SchoolClass schoolClass) {
         for (Account person: PersonDAO.getInstance().read()) {
-            if (person instanceof Mentor) {
-                Mentor mentor = (Mentor) person;
-                if (mentor.getSchoolClass().equals(schoolClass)) {
-                    mentor.setSchoolClass();
-                }
-            } else if (person instanceof Student) {
-                Student student = (Student) person;
-                if (student.getSchoolClass().equals(schoolClass)) {
-                    student.setSchoolClass();
+            if (person instanceof Codecooler) {
+                Codecooler codecooler = (Codecooler) person;
+                if (codecooler.getSchoolClass().equals(schoolClass)) {
+                    codecooler.setSchoolClass();
                 }
             }
         }
