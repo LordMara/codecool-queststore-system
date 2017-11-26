@@ -47,6 +47,8 @@ public class PersonDAO {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+
+            persons.remove(person);
         }
     }
 
