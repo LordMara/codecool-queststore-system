@@ -177,7 +177,6 @@ public class PersonDAO {
     private PreparedStatement createUpdatePreparedStatement(Connection con, Account person) throws SQLException {
         String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  phone = ?, login = ?, password = ?" +
                 " WHERE personId = ?;";
-
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, person.getName());
@@ -193,7 +192,6 @@ public class PersonDAO {
 
     private PreparedStatement createDeletePreparedStatement(Connection con, Account person) throws SQLException {
         String query = "DELETE FROM persons WHERE personId = ?;";
-
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, person.getId());
