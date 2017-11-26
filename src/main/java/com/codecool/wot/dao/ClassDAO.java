@@ -25,6 +25,10 @@ public class ClassDAO {
         return INSTANCE;
     }
 
+    public List<SchoolClass> read() {
+        return this.classes;
+    }
+
     public void add(SchoolClass schoolClass) {
         try {
             addClassToDatabase(schoolClass);
@@ -38,6 +42,17 @@ public class ClassDAO {
     public void update(SchoolClass schoolClass) {
         try {
             updateClassInDatabase(schoolClass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void remove(SchoolClass schoolClass) {
+        try {
+            deleteAllPersonsFromClassInDatabase(schoolClass);
+            deleteClassFromDatabase(schoolClass);
+            this.classes.remove(schoolClass);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -129,18 +144,36 @@ public class ClassDAO {
         }
     }
 
-    private void addPersonToClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
+    private void updateClassInDatabase(SchoolClass schoolClass) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createAddPersonPreparedStatement(con, schoolClass, person)) {
+             PreparedStatement ps = createUpdatePreparedStatement(con, schoolClass)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
         }
     }
 
-    private void updateClassInDatabase(SchoolClass schoolClass) throws SQLException {
+    private void deleteClassFromDatabase(SchoolClass schoolClass) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createUpdatePreparedStatement(con, schoolClass)) {
+             PreparedStatement ps = createDeletePreparedStatement(con, schoolClass)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void deleteAllPersonsFromClassInDatabase(SchoolClass schoolClass) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeleteAllPersonsPreparedStatement(con, schoolClass)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void addPersonToClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPersonPreparedStatement(con, schoolClass, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
@@ -186,6 +219,26 @@ public class ClassDAO {
 
         ps.setString(1, schoolClass.getName());
         ps.setInt(2, schoolClass.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, SchoolClass schoolClass) throws SQLException {
+        String query = "DELETE FROM classes WHERE classId = ?;";
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, schoolClass.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeleteAllPersonsPreparedStatement(Connection con, SchoolClass schoolClass) throws SQLException {
+        String query = "DELETE FROM persons_classes WHERE classId = ?;";
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, schoolClass.getId());
 
         return ps;
     }
