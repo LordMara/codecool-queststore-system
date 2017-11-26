@@ -41,6 +41,15 @@ public class PersonDAO {
         }
     }
 
+    public void remove(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     public Account getPerson(String login, String password) {
         Account person = null;
         for (Account candidate : this.persons) {
@@ -155,6 +164,16 @@ public class PersonDAO {
         ps.setString(5, person.getLogin());
         ps.setString(6, person.getPassword());
         ps.setInt(7, person.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Account person) throws SQLException {
+        String query = "DELETE FROM persons WHERE personId = ?;";
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, person.getId());
 
         return ps;
     }
