@@ -30,6 +30,10 @@ public class Student extends Account{
         this.schoolClass = schoolClass;
     }
 
+    public void setSchoolClass() {
+        this.schoolClass = null;
+    }
+
 //
 //    public Integer getTeamId() {
 //        return teamId;

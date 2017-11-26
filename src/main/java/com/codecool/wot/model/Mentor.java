@@ -24,4 +24,8 @@ public class Mentor extends Account{
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
+
+    public void setSchoolClass() {
+        this.schoolClass = null;
+    }
 }
