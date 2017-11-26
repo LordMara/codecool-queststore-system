@@ -15,7 +15,7 @@ public class PersonDAO {
     private List<Account> persons;
 
     private PersonDAO() {
-        persons = new LinkedList<>();
+        this.persons = new LinkedList<>();
         loadPersonsFromDatabase();
     }
 
@@ -24,24 +24,32 @@ public class PersonDAO {
     }
 
     public List<Account> read() {
-        return persons;
+        return this.persons;
     }
 
-    public void add(Account person) throws SQLException {
-        persons.add(person);
-        addPersonToDatabase(person);
+    public void add(Account person) {
+        try {
+            persons.add(person);
+            addPersonToDatabase(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
-    public void update(Account person) throws SQLException {
+    public void update(Account person) {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 
-    public void remove(Account person) throws SQLException {
+    public void remove(Account person) {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createDeletePreparedStatement(con, person)) {
             con.setAutoCommit(false);
@@ -49,6 +57,9 @@ public class PersonDAO {
             con.commit();
 
             persons.remove(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 
