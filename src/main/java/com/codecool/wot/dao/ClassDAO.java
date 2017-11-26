@@ -18,7 +18,6 @@ public class ClassDAO {
     private ClassDAO() {
         this.classes = new LinkedList<>();
         loadClassesFromDatabase();
-        loadPersonsToClasses();
     }
 
     public static ClassDAO getInstance() {
@@ -89,6 +88,10 @@ public class ClassDAO {
         }
     }
 
+    public void addPersonToMemory(SchoolClass schoolClass, Account person) {
+        schoolClass.assignPerson(person);
+    }
+
     public void removePerson(SchoolClass schoolClass, Account person) {
         try {
             removePersonFromClassInDatabase(schoolClass, person);
@@ -109,25 +112,6 @@ public class ClassDAO {
                 String name = result.getString("name");
 
                 classes.add(new SchoolClass(classId, name));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
-    }
-
-    private void loadPersonsToClasses() {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createSelectPersonsPreparedStatement(con);
-             ResultSet result = ps.executeQuery()) {
-
-            while (result.next()) {
-                Integer classId = result.getInt("classId");
-                Integer personId = result.getInt("personId");
-
-                SchoolClass schoolClass = getClass(classId);
-                Account person = PersonDAO.getInstance().getPerson(personId);
-                schoolClass.assignPerson(person);
             }
         } catch (SQLException e) {
             e.printStackTrace();
