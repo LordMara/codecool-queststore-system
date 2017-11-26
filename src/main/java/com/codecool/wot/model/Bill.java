@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Bill {
-    private final DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+    private final DateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
     private Account person;
     private Quest quest;
     private Boolean status;
@@ -65,12 +65,12 @@ public class Bill {
     }
 
     private void parseDate(String stringDate) throws ParseException {
-        Date date = this.formatter.parse(stringDate);
+        Date date = this.FORMATTER.parse(stringDate);
         this.achieveDate = date;
     }
 
     public String parseDate() {
-        return this.formatter.format(this.achieveDate);
+        return this.FORMATTER.format(this.achieveDate);
     }
 
     private void parseStatus(String statusString) {
