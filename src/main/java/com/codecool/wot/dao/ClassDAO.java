@@ -55,6 +55,16 @@ public class ClassDAO {
         }
     }
 
+    public void removePerson(SchoolClass schoolClass, Account person) {
+        try {
+            removePersonFromClassInDatabase(schoolClass, person);
+            schoolClass.removePerson(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     private void loadClassesFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -91,6 +101,24 @@ public class ClassDAO {
         }
     }
 
+    private void addPersonToClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPersonPreparedStatement(con, schoolClass, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void removePersonFromClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePersonPreparedStatement(con, schoolClass, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM classes;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -105,19 +133,18 @@ public class ClassDAO {
         return ps;
     }
 
-    private void addPersonToClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createAddPersonPreparedStatement(con, schoolClass, person)) {
-            con.setAutoCommit(false);
-            ps.executeUpdate();
-            con.commit();
-        }
+    private PreparedStatement createAddPersonPreparedStatement(Connection con, SchoolClass schoolClass, Account person) throws SQLException {
+        String query = "INSERT INTO persons_classes (personId, classId) VALUES (?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, person.getId());
+        ps.setInt(2, schoolClass.getId());
+
+        return ps;
     }
 
-    private PreparedStatement createAddPersonPreparedStatement(Connection con, SchoolClass schoolClass, Account person) throws SQLException {
-        String role = "";
-        String query = "INSERT INTO persons_classes (personId, classId) VALUES (?, ?);";
-
+    private PreparedStatement createDeletePersonPreparedStatement(Connection con, SchoolClass schoolClass, Account person) throws SQLException {
+        String query = "DELETE FROM persons_classes WHERE personId = ? AND classId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, person.getId());
