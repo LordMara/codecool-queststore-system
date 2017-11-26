@@ -37,6 +37,15 @@ public class QuestDAO {
         }
     }
 
+    public void update(Quest quest) {
+        try {
+            updateQuestInDatabase(quest);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Quest getQuest(Integer questId) {
         Quest quest = null;
         for (Quest candidate : this.quests) {
@@ -85,6 +94,15 @@ public class QuestDAO {
         }
     }
 
+    private void updateQuestInDatabase(Quest quest) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, quest)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM quests;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -99,6 +117,18 @@ public class QuestDAO {
         ps.setString(1, quest.getName());
         ps.setString(2, quest.getDescription());
         ps.setDouble(3, quest.getPrice());
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Quest quest) throws SQLException {
+        String query = "UPDATE quests SET name = ?, description = ?, price = ? WHERE questId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, quest.getName());
+        ps.setString(2, quest.getDescription());
+        ps.setDouble(3, quest.getPrice());
+        ps.setInt(4, quest.getId());
 
         return ps;
     }
