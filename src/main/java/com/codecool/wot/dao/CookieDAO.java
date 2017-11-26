@@ -22,14 +22,9 @@ public class CookieDAO {
 
     public void add(Cookie cookie) {
         if (getCookie(cookie.getSessionId()) == null) {
-            try (Connection con = DatabaseConnection.getConnection();
-                 PreparedStatement ps = createAddPreparedStatement(con, cookie)) {
-                con.setAutoCommit(false);
-                ps.executeUpdate();
-                con.commit();
-
+            try {
+                addCookieToDatabase(cookie);
                 cookies.add(cookie);
-
             } catch (SQLException e) {
                 e.printStackTrace();
                 System.exit(0);
@@ -38,12 +33,8 @@ public class CookieDAO {
     }
 
     public void remove(Cookie cookie) {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createDeletePreparedStatement(con, cookie)) {
-            con.setAutoCommit(false);
-            ps.executeUpdate();
-            con.commit();
-
+        try {
+            deleteCookieFromDatabase(cookie);
             cookies.remove(cookie);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,10 +63,27 @@ public class CookieDAO {
 
                 cookies.add(new Cookie(userId, sessionId));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        }
+    }
+
+    private void addCookieToDatabase(Cookie cookie) throws SQLException{
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, cookie)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void deleteCookieFromDatabase(Cookie cookie) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, cookie)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
         }
     }
 

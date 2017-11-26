@@ -29,8 +29,8 @@ public class PersonDAO {
 
     public void add(Account person) {
         try {
-            persons.add(person);
             addPersonToDatabase(person);
+            persons.add(person);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -38,11 +38,8 @@ public class PersonDAO {
     }
 
     public void update(Account person) {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
-            con.setAutoCommit(false);
-            ps.executeUpdate();
-            con.commit();
+        try {
+            updatePersonInDatabase(person);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -50,12 +47,8 @@ public class PersonDAO {
     }
 
     public void remove(Account person) {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
-            con.setAutoCommit(false);
-            ps.executeUpdate();
-            con.commit();
-
+        try {
+            deletePersonFromDatabase(person);
             persons.remove(person);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,6 +119,24 @@ public class PersonDAO {
     private void addPersonToDatabase(Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createAddPreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void deletePersonFromDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void updatePersonInDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
