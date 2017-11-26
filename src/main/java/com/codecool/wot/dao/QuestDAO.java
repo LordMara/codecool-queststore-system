@@ -46,6 +46,17 @@ public class QuestDAO {
         }
     }
 
+    public void remove(Quest quest) {
+        try {
+            // here must be call of BillDAO with remove position with this quest
+            deleteQuestFromDatabase(quest);
+            this.quests.remove(quest);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Quest getQuest(Integer questId) {
         Quest quest = null;
         for (Quest candidate : this.quests) {
@@ -103,6 +114,15 @@ public class QuestDAO {
         }
     }
 
+    private void deleteQuestFromDatabase(Quest quest) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, quest)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM quests;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -129,6 +149,15 @@ public class QuestDAO {
         ps.setString(2, quest.getDescription());
         ps.setDouble(3, quest.getPrice());
         ps.setInt(4, quest.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Quest quest) throws SQLException {
+        String query = "DELETE FROM quests WHERE questId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, quest.getId());
 
         return ps;
     }
