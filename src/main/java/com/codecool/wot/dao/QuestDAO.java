@@ -27,6 +27,16 @@ public class QuestDAO {
         return this.quests;
     }
 
+    public void add(Quest quest) {
+        try {
+            addQuestToDatabase(quest);
+            this.quests.add(quest);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Quest getQuest(Integer questId) {
         Quest quest = null;
         for (Quest candidate : this.quests) {
@@ -66,6 +76,15 @@ public class QuestDAO {
         }
     }
 
+    private void addQuestToDatabase(Quest quest) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, quest)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM quests;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -73,4 +92,14 @@ public class QuestDAO {
         return ps;
     }
 
+    private PreparedStatement createAddPreparedStatement(Connection con, Quest quest) throws SQLException {
+        String query = "INSERT INTO quests (name, description, price) VALUES (?, ?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, quest.getName());
+        ps.setString(2, quest.getDescription());
+        ps.setDouble(3, quest.getPrice());
+
+        return ps;
+    }
 }
