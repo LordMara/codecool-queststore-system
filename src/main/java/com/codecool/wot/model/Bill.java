@@ -1,5 +1,6 @@
 package com.codecool.wot.model;
 
+import com.codecool.wot.dao.PersonDAO;
 import com.codecool.wot.dao.QuestDAO;
 
 import java.text.DateFormat;
@@ -9,31 +10,31 @@ import java.util.Date;
 
 public class Bill {
     private final DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    private Integer personId;
+    private Account person;
     private Quest quest;
     private Boolean status;
     private Date achieveDate;
 
     public Bill(Integer personId, Integer questId, String stringDate) throws ParseException {
-        this.personId = personId;
+        this.person = PersonDAO.getInstance().getPerson(personId);
         this.quest = QuestDAO.getInstance().getQuest(questId);
         this.status = false;
         parseDate(stringDate);
     }
 
     public Bill(Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
-        this.personId = personId;
+        this.person = PersonDAO.getInstance().getPerson(personId);
         this.quest = QuestDAO.getInstance().getQuest(questId);
         parseDate(stringDate);
         parseStatus(statusString);
     }
 
-    public Integer getPersonId() {
-        return personId;
+    public Account getPerson() {
+        return person;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setPerson(Account person) {
+        this.person = person;
     }
 
     public Quest getQuest() {
