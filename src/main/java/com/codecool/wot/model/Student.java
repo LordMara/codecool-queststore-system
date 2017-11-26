@@ -1,9 +1,11 @@
 package com.codecool.wot.model;
 
+import com.codecool.wot.dao.ClassDAO;
+
 public class Student extends Account{
 
 
-     private Integer classId;
+     private SchoolClass schoolClass;
 //     private Integer teamId;
 
     public Student(String name, String surname, String email, String login, String password) {
@@ -13,19 +15,21 @@ public class Student extends Account{
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
 
         super(name, surname, email, login, password, ID);
-        this.classId = classId;
+        this.schoolClass = ClassDAO.getInstance().getClass(classId);
+        ClassDAO.getInstance().addPersonToMemory(this.schoolClass, this);
 //        this.teamId = teamId;
 
     }
 
-    public Integer getClassId() {
-        return this.classId;
+    @Override
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
+
 //
 //    public Integer getTeamId() {
 //        return teamId;
