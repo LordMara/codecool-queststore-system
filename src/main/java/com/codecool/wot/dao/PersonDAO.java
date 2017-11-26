@@ -152,7 +152,7 @@ public class PersonDAO {
 
     private PreparedStatement createAddPreparedStatement(Connection con, Account person) throws SQLException {
         String role = "";
-        String query = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role)" +
+        String query = "INSERT INTO persons (name, surname, email,  phone, login, password, role)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         if (person instanceof Mentor) {
@@ -163,14 +163,13 @@ public class PersonDAO {
 
         PreparedStatement ps = con.prepareStatement(query);
 
-        ps.setInt(1, person.getId());
-        ps.setString(2, person.getName());
-        ps.setString(3, person.getSurname());
-        ps.setString(4, person.getEmail());
-        ps.setString(5, person.getPhone());
-        ps.setString(6, person.getLogin());
-        ps.setString(7, person.getPassword());
-        ps.setString(8, role);
+        ps.setString(1, person.getName());
+        ps.setString(2, person.getSurname());
+        ps.setString(3, person.getEmail());
+        ps.setString(4, person.getPhone());
+        ps.setString(5, person.getLogin());
+        ps.setString(6, person.getPassword());
+        ps.setString(7, role);
 
         return ps;
     }
