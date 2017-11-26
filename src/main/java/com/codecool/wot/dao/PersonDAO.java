@@ -16,16 +16,16 @@ public class PersonDAO {
 
     private PersonDAO() {
         persons = new LinkedList<>();
-        loadPersons();
+        loadPersonsFromDatabase();
     }
 
     public static PersonDAO getInstance() {
         return INSTANCE;
     }
 
-    private void loadPersons() {
+    private void loadPersonsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createPreparedStatement(con);
+             PreparedStatement ps = createSelectPreparedStatement(con);
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
@@ -73,9 +73,48 @@ public class PersonDAO {
         return person;
     }
 
-    private PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+    public void add(Account person) throws SQLException {
+        persons.add(person);
+        addPersonToDatabase(person);
+    }
+
+    private void addPersonToDatabase(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM persons LEFT JOIN persons_classes ON persons_classes.personId = persons.personId;";
         PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
+    }
+
+    private PreparedStatement createAddPreparedStatement(Connection con, Account person) throws SQLException {
+        String role = "";
+        String query = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+        if (person instanceof Mentor) {
+            role = "mentor";
+        } else if (person instanceof Student) {
+            role = "student";
+        }
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, person.getId());
+        ps.setString(2, person.getName());
+        ps.setString(3, person.getSurname());
+        ps.setString(4, person.getEmail());
+        ps.setString(5, person.getPhone());
+        ps.setString(6, person.getLogin());
+        ps.setString(7, person.getPassword());
+        ps.setString(8, role);
 
         return ps;
     }
