@@ -35,6 +35,15 @@ public class ClassDAO {
         }
     }
 
+    public void update(SchoolClass schoolClass) {
+        try {
+            updateClassInDatabase(schoolClass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public SchoolClass getClass(Integer classId) {
         SchoolClass schoolClass = null;
         for (SchoolClass candidate : this.classes) {
@@ -129,6 +138,15 @@ public class ClassDAO {
         }
     }
 
+    private void updateClassInDatabase(SchoolClass schoolClass) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, schoolClass)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private void removePersonFromClassInDatabase(SchoolClass schoolClass, Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createDeletePersonPreparedStatement(con, schoolClass, person)) {
@@ -157,6 +175,17 @@ public class ClassDAO {
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, schoolClass.getName());
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, SchoolClass schoolClass) throws SQLException {
+        String query = "UPDATE classes SET name = ? WHERE classId = ?;";
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, schoolClass.getName());
+        ps.setInt(2, schoolClass.getId());
 
         return ps;
     }
