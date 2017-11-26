@@ -4,17 +4,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class SchoolClass {
-    private Integer Id;
+    private static Integer lastId = 1;
+    private Integer id;
     private String name;
     private List<Account> persons;
 
-    public SchoolClass(Integer Id, String name) {
-        this.Id = Id;
+    public SchoolClass(Integer id, String name) {
+        this.id = id;
         this.name = name;
         this.persons = new LinkedList<>();
+
+        if(lastId < id) {
+            lastId = id;
+        }
     }
 
     public SchoolClass(String name) {
+        this.id = ++lastId;
         this.name = name;
         this.persons = new LinkedList<>();
     }
@@ -40,6 +46,6 @@ public class SchoolClass {
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 }
