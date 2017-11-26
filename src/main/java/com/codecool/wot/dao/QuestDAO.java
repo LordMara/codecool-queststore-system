@@ -27,6 +27,26 @@ public class QuestDAO {
         return this.quests;
     }
 
+    public Quest getQuest(Integer questId) {
+        Quest quest = null;
+        for (Quest candidate : this.quests) {
+            if (candidate.getId().equals(questId)) {
+                quest = candidate;
+            }
+        }
+        return quest;
+    }
+
+    public Quest getQuest(String questName) {
+        Quest quest = null;
+        for (Quest candidate : this.quests) {
+            if (candidate.getName().equals(questName)) {
+                quest = candidate;
+            }
+        }
+        return quest;
+    }
+
     private void loadQuestsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
