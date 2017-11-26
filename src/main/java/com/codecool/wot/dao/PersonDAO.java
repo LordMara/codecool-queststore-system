@@ -48,6 +48,7 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
+            // add remove from class in db and memory;
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
