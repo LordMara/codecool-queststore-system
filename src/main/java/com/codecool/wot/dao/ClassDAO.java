@@ -1,7 +1,9 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.SchoolClass;
+import com.codecool.wot.model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,6 +51,7 @@ public class ClassDAO {
 
     public void remove(SchoolClass schoolClass) {
         try {
+            deleteAllPersonsFromClassInMemory(schoolClass);
             deleteAllPersonsFromClassInDatabase(schoolClass);
             deleteClassFromDatabase(schoolClass);
             this.classes.remove(schoolClass);
@@ -152,6 +155,22 @@ public class ClassDAO {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+        }
+    }
+
+    private void deleteAllPersonsFromClassInMemory(SchoolClass schoolClass) {
+        for (Account person: PersonDAO.getInstance().read()) {
+            if (person instanceof Mentor) {
+                Mentor mentor = (Mentor) person;
+                if (mentor.getSchoolClass().equals(schoolClass)) {
+                    mentor.setSchoolClass();
+                }
+            } else if (person instanceof Student) {
+                Student student = (Student) person;
+                if (student.getSchoolClass().equals(schoolClass)) {
+                    student.setSchoolClass();
+                }
+            }
         }
     }
 
