@@ -13,10 +13,10 @@ public class CookieDAO {
         return INSTANCE;
     }
 
-    public void saveToDatabase(Integer userId, String cookie) {
+    public void add(Integer userId, String cookie) {
 
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createPreparedStatement(con, userId, cookie)) {
+             PreparedStatement ps = createAddPreparedStatement(con, userId, cookie)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
@@ -30,7 +30,7 @@ public class CookieDAO {
         Integer userId = null;
 
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createPreparedStatement(con, sessionId);
+             PreparedStatement ps = createSelectPreparedStatement(con, sessionId);
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
@@ -44,7 +44,7 @@ public class CookieDAO {
         return userId;
     }
 
-    private PreparedStatement createPreparedStatement(Connection con, Integer userId, String cookie) throws SQLException {
+    private PreparedStatement createAddPreparedStatement(Connection con, Integer userId, String cookie) throws SQLException {
         String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
@@ -54,7 +54,7 @@ public class CookieDAO {
         return ps;
     }
 
-    private PreparedStatement createPreparedStatement(Connection con, String sessionId) throws SQLException {
+    private PreparedStatement createSelectPreparedStatement(Connection con, String sessionId) throws SQLException {
         String query = "SELECT userID FROM  cookies  WHERE cookie = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 

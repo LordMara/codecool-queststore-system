@@ -80,7 +80,7 @@ public class LoginHandler implements HttpHandler {
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         cookie.setMaxAge(-1);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-        CookieDAO.getInstance().saveToDatabase(userId, cookie.toString());
+        CookieDAO.getInstance().add(userId, cookie.toString());
     }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
