@@ -1,94 +1,99 @@
 package com.codecool.wot.dao;
 
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.SchoolClass;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
-public class ClassDAO extends AbstractDAO<SchoolClass> {
+public class ClassDAO {
+    private static final ClassDAO INSTANCE = new ClassDAO();
 
-    private Connection connection;
+    private List<SchoolClass> classes;
 
-    public ClassDAO(Connection connection) {
-        this.connection = connection;
-        loadClasses();
+    private ClassDAO() {
+        this.classes = new LinkedList<>();
+        loadClassesFromDatabase();
+        loadPersonsToClasses();
     }
 
-    @Override
-    public void add(SchoolClass object) {
-        super.add(object);
-        saveToDataBase(object);
+    public static ClassDAO getInstance() {
+        return INSTANCE;
     }
 
-    private void loadClasses() {
-
-        try {
-
-            Statement stmt = connection.createStatement();
-
-            String query = "SELECT * FROM classes";
-
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-
-                Integer classId = rs.getInt("classId");
-                String name = rs.getString("name");
-
-                objectsList.add(new SchoolClass(classId, name));
-            }
-
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateClass(SchoolClass schoolClass) {
-
-        try {
-            Statement stmt = connection.createStatement();
-
-            String query = String.format("UPDATE classes SET name = '%s' WHERE classId = %d ;", schoolClass.getName(), schoolClass.getId());
-
-            stmt.executeUpdate(query);
-
-            stmt.close();
-            connection.commit();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public SchoolClass getByName(String name) {
+    public SchoolClass getClass(Integer classId) {
         SchoolClass schoolClass = null;
-        for (SchoolClass elem : objectsList){
-            if (elem.getName().equals(name)){
-                schoolClass = elem;
+        for (SchoolClass candidate : this.classes) {
+            if (candidate.getId().equals(classId)) {
+                schoolClass = candidate;
             }
         }
         return schoolClass;
     }
 
-    private void saveToDataBase(SchoolClass schoolClass) {
+    public SchoolClass getClass(String className) {
+        SchoolClass schoolClass = null;
+        for (SchoolClass candidate : this.classes) {
+            if (candidate.getName().equals(className)) {
+                schoolClass = candidate;
+            }
+        }
+        return schoolClass;
+    }
 
-        try {
+    private void loadClassesFromDatabase() {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createSelectPreparedStatement(con);
+             ResultSet result = ps.executeQuery()) {
 
-            Statement stmt = connection.createStatement();
+            while (result.next()) {
+                Integer classId = result.getInt("classId");
+                String name = result.getString("name");
 
-            String values = String.format("(%d, '%s')", schoolClass.getId(), schoolClass.getName());
-
-            String query = "INSERT INTO classes (classId, name) VALUES " + values;
-
-            stmt.executeUpdate(query);
-
-            stmt.close();
-            connection.commit();
+                classes.add(new SchoolClass(classId, name));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(0);
         }
+    }
+
+    private void loadPersonsToClasses() {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createSelectPersonsPreparedStatement(con);
+             ResultSet result = ps.executeQuery()) {
+
+            while (result.next()) {
+                Integer classId = result.getInt("classId");
+                Integer personId = result.getInt("personId");
+
+                SchoolClass schoolClass = getClass(classId);
+                Account person = PersonDAO.getInstance().getPerson(personId);
+                schoolClass.assignPerson(person);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
+        String query = "SELECT * FROM classes;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
+    }
+
+    private PreparedStatement createSelectPersonsPreparedStatement(Connection con) throws SQLException {
+        String query = "SELECT * FROM persons_classes;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
     }
 }
