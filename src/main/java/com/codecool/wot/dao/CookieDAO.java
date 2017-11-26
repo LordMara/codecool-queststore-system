@@ -13,10 +13,9 @@ public class CookieDAO {
         return INSTANCE;
     }
 
-    public void add(Integer userId, String cookie) {
-
+    public void add(Integer userId, String sessionId) {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createPreparedStatement(con, userId, sessionId)) {
+             PreparedStatement ps = createAddPreparedStatement(con, userId, sessionId)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
@@ -57,7 +56,7 @@ public class CookieDAO {
         return userId;
     }
 
-    private PreparedStatement createAddPreparedStatement(Connection con, Integer userId, String cookie) throws SQLException {
+    private PreparedStatement createAddPreparedStatement(Connection con, Integer userId, String sessionId) throws SQLException {
         String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
