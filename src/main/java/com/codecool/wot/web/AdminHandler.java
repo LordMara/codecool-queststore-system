@@ -28,6 +28,7 @@ public class AdminHandler implements HttpHandler {
                 JtwigModel model = JtwigModel.newModel();
 
                 model.with("name", admin.getName());
+                model.with("classes", ClassDAO.getInstance().read());
                 String response = template.render(model);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);
