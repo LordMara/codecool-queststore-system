@@ -23,6 +23,54 @@ public class PersonDAO {
         return INSTANCE;
     }
 
+    public List<Account> read() {
+        return persons;
+    }
+
+    public void add(Account person) throws SQLException {
+        persons.add(person);
+        addPersonToDatabase(person);
+    }
+
+    public void update(Account person) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    public Account getPerson(String login, String password) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getLogin().equals(login) && candidate.getPassword().equals(password)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    public Account getPerson(Integer id) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getId().equals(id)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
+    public Account getPersonByFullName(String name, String surname) {
+        Account person = null;
+        for (Account candidate : this.persons) {
+            if (candidate.getName().equals(name) && candidate.getSurname().equals(surname)) {
+                person = candidate;
+            }
+        }
+        return person;
+    }
+
     private void loadPersonsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -51,35 +99,6 @@ public class PersonDAO {
             e.printStackTrace();
             System.exit(0);
         }
-    }
-
-    public Account getPerson(String login, String password) {
-        Account person = null;
-        for (Account candidate : this.persons){
-            if (candidate.getLogin().equals(login) && candidate.getPassword().equals(password)){
-                person = candidate;
-            }
-        }
-        return person;
-    }
-
-    public Account getPerson(Integer id) {
-        Account person = null;
-        for (Account candidate : this.persons){
-            if (candidate.getId().equals(id)){
-                person = candidate;
-            }
-        }
-        return person;
-    }
-
-    public List<Account> read() {
-        return persons;
-    }
-
-    public void add(Account person) throws SQLException {
-        persons.add(person);
-        addPersonToDatabase(person);
     }
 
     private void addPersonToDatabase(Account person) throws SQLException {
@@ -122,5 +141,21 @@ public class PersonDAO {
 
         return ps;
     }
-}
 
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Account person) throws SQLException {
+        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  phone = ?, login = ?, password = ?" +
+                " WHERE personId = ?;";
+
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, person.getName());
+        ps.setString(2, person.getSurname());
+        ps.setString(3, person.getEmail());
+        ps.setString(4, person.getPhone());
+        ps.setString(5, person.getLogin());
+        ps.setString(6, person.getPassword());
+        ps.setInt(7, person.getId());
+
+        return ps;
+    }
+}
