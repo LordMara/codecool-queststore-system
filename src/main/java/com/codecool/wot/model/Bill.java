@@ -18,14 +18,14 @@ public class Bill {
         this.personId = personId;
         this.quest = QuestDAO.getInstance().getQuest(questId);
         this.status = false;
-        this.achieveDate = parseDate(stringDate);
+        parseDate(stringDate);
     }
 
-    public Bill(Integer personId, Integer questId, Boolean status, Date achieveDate) {
+    public Bill(Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
         this.personId = personId;
         this.quest = QuestDAO.getInstance().getQuest(questId);
-        this.status = status;
-        this.achieveDate = achieveDate;
+        parseDate(stringDate);
+        parseStatus(statusString);
     }
 
     public Integer getPersonId() {
@@ -63,12 +63,30 @@ public class Bill {
         this.achieveDate = achieveDate;
     }
 
-    public Date parseDate(String stringDate) throws ParseException {
+    private void parseDate(String stringDate) throws ParseException {
         Date date = this.formatter.parse(stringDate);
-        return date;
+        this.achieveDate = date;
     }
 
     public String parseDate() {
         return this.formatter.format(this.achieveDate);
+    }
+
+    private void parseStatus(String statusString) {
+        if (statusString.equals("unpaid")) {
+            this.status = false;
+        } else if (statusString.equals("paid")) {
+            this.status = true;
+        }
+    }
+
+    public String parseStatus() {
+        String statusString = null;
+        if (this.status.equals(false)) {
+            statusString = "unpaid";
+        } else if (this.status.equals(true)) {
+            statusString = "paid";
+        }
+        return statusString;
     }
 }
