@@ -20,7 +20,7 @@ public class AdminHandler implements HttpHandler {
 
         if (cookieStr != null) {
             URI uri = httpExchange.getRequestURI();
-            Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
+            Integer userId = CookieDAO.getInstance().getCookie(cookieStr).getUserId();
             Admin admin = (Admin)PersonDAO.getInstance().getPerson(userId);
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
@@ -28,6 +28,7 @@ public class AdminHandler implements HttpHandler {
                 JtwigModel model = JtwigModel.newModel();
 
                 model.with("name", admin.getName());
+                model.with("classes", ClassDAO.getInstance().read());
                 String response = template.render(model);
 
                 httpExchange.sendResponseHeaders(200, response.getBytes().length);

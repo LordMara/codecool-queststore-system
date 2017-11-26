@@ -1,5 +1,6 @@
-package com.codecool.wot.dao;
+package com.codecool.wot.dao.archive;
 
+import com.codecool.wot.dao.AbstractCodecoolerDAO;
 import com.codecool.wot.model.Admin;
 import java.sql.*;
 
