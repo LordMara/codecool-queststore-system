@@ -16,7 +16,20 @@ public class CookieDAO {
     public void add(Integer userId, String cookie) {
 
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createAddPreparedStatement(con, userId, cookie)) {
+             PreparedStatement ps = createPreparedStatement(con, userId, sessionId)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteFromDatabase(String sessionId) {
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, sessionId)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
@@ -49,13 +62,22 @@ public class CookieDAO {
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, userId);
-        ps.setString(2, cookie);
+        ps.setString(2, sessionId);
 
         return ps;
     }
 
     private PreparedStatement createSelectPreparedStatement(Connection con, String sessionId) throws SQLException {
         String query = "SELECT userID FROM  cookies  WHERE cookie = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, sessionId);
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, String sessionId) throws SQLException {
+        String query = "DELETE FROM  cookies  WHERE cookie = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, sessionId);
