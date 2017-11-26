@@ -1,5 +1,6 @@
-package com.codecool.wot.dao;
+package com.codecool.wot.dao.archive;
 
+import com.codecool.wot.dao.AbstractCodecoolerDAO;
 import com.codecool.wot.model.Mentor;
 
 import java.sql.*;
@@ -63,7 +64,7 @@ public class MentorDAO extends AbstractCodecoolerDAO<Mentor> {
 
 
 
-            String values2 = String.format("('%d', '%d');", mentor.getId(), mentor.getClassId());
+            String values2 = String.format("('%d', '%d');", mentor.getId(), mentor.getSchoolClass().getId());
 
             String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
 

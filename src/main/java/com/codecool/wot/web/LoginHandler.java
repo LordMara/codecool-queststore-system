@@ -1,10 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Student;
+import com.codecool.wot.model.*;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -80,7 +77,7 @@ public class LoginHandler implements HttpHandler {
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         cookie.setMaxAge(-1);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-        CookieDAO.getInstance().saveToDatabase(userId, cookie.toString());
+        CookieDAO.getInstance().add(new Cookie(userId, cookie.toString()));
     }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
@@ -101,7 +98,7 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookieHandle(String cookieStr, HttpExchange httpExchange) throws IOException {
-        Integer userId = CookieDAO.getInstance().getUserId(cookieStr);
+        Integer userId = CookieDAO.getInstance().getCookie(cookieStr).getUserId();
 
         Account person = PersonDAO.getInstance().getPerson(userId);
 
