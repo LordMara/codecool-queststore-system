@@ -38,6 +38,15 @@ public class BillDAO {
         }
     }
 
+    public void update(Bill bill) {
+        try {
+            updateBillInDatabase(bill);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     private void loadBillsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -48,8 +57,9 @@ public class BillDAO {
                 String status = result.getString("status");
                 Integer questId = result.getInt("questId");
                 String achieveDate = result.getString("achieveDate");
+                Integer billId = result.getInt("billId");
 
-                this.bills.add(new Bill(personId, questId, status, achieveDate));
+                this.bills.add(new Bill(billId, personId, questId, status, achieveDate));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,6 +79,15 @@ public class BillDAO {
         }
     }
 
+    private void updateBillInDatabase(Bill bill) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, bill)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM bills;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -77,14 +96,29 @@ public class BillDAO {
     }
 
     private PreparedStatement createAddPreparedStatement(Connection con, Bill bill) throws SQLException {
-        String query = "INSERT INTO bills (personId, status, questId,  achieveDate)" +
-                " VALUES (?, ?, ?, ?);";
+        String query = "INSERT INTO bills (personId, status, questId,  achieve_date, billId)" +
+                " VALUES (?, ?, ?, ?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, bill.getPerson().getId());
         ps.setString(2, bill.parseStatus());
         ps.setInt(3, bill.getQuest().getId());
         ps.setString(4, bill.parseDate());
+        ps.setInt(5, bill.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Bill bill) throws SQLException {
+        String query = "UPDATE bills SET personId= ?, status = ?, questId = ?,  achieve_date = ?" +
+                " WHERE billId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, bill.getPerson().getId());
+        ps.setString(2, bill.parseStatus());
+        ps.setInt(3, bill.getQuest().getId());
+        ps.setString(4, bill.parseDate());
+        ps.setInt(5, bill.getId());
 
         return ps;
     }
