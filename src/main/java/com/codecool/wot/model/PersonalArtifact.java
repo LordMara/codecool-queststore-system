@@ -2,6 +2,7 @@ package com.codecool.wot.model;
 
 import com.codecool.wot.dao.ArtifactDAO;
 import com.codecool.wot.dao.PersonDAO;
+import com.codecool.wot.dao.WalletDAO;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,13 +18,13 @@ public class PersonalArtifact {
     private Boolean status;
     private Date purchaseDate;
 
-    public PersonalArtifact(Integer personId, Integer artifactId, String stringDate) throws ParseException {
+    public PersonalArtifact(Integer personId, Integer artifactId) throws ParseException {
         this.id = ++lastId;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.artifact = ArtifactDAO.getInstance().getArtifact(artifactId);
         this.status = false;
         this.purchaseDate  = new Date();
-        // call method that reduce ballance in user wallet
+        updateWallet();
     }
 
     public PersonalArtifact(Integer id, Integer personId, Integer artifactId, String statusString, String stringDate) throws ParseException {
@@ -109,5 +110,10 @@ public class PersonalArtifact {
             statusString = "used";
         }
         return statusString;
+    }
+
+    private void updateWallet() {
+        Wallet wallet = WalletDAO.getInstance().getWallet(this.person);
+        wallet.decreseMoney(this.artifact.getPrice());
     }
 }
