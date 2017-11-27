@@ -201,5 +201,7 @@ public class PersonDAO {
     private void removeFromAplication(Account person) {
         Codecooler codecooler = (Codecooler) person;
         ClassDAO.getInstance().removePerson(codecooler.getSchoolClass(), person);
+        // call BillDAO to remove all position with this Account
+        // call WalletDAO to remove wallet with this Account
     }
 }
