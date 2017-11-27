@@ -46,7 +46,7 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
-            removeFromAplication(person);
+            removeFromApplication(person);
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
@@ -198,7 +198,7 @@ public class PersonDAO {
         return ps;
     }
 
-    private void removeFromAplication(Account person) {
+    private void removeFromApplication(Account person) {
         ClassDAO.getInstance().removePerson(person);
         // call BillDAO to remove all position with this Account
         // call WalletDAO to remove wallet with this Account
