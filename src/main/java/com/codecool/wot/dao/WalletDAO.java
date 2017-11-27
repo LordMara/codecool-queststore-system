@@ -47,6 +47,16 @@ public class WalletDAO {
         }
     }
 
+    public void remove(Wallet wallet) {
+        try {
+            deleteWalletFromDatabase(wallet);
+            this.wallets.remove(wallet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Wallet getWallet(Account person) {
         Wallet wallet = null;
         for (Wallet candidate : this.wallets) {
@@ -94,6 +104,15 @@ public class WalletDAO {
         }
     }
 
+    private void deleteWalletFromDatabase(Wallet wallet) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, wallet)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM wallets;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -121,6 +140,15 @@ public class WalletDAO {
         ps.setDouble(2, wallet.getBalance());
         ps.setInt(3, wallet.getLevel().getId());
         ps.setInt(4, wallet.getPerson().getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Wallet wallet) throws SQLException {
+        String query = "DELETE FROM wallets WHERE personId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, wallet.getPerson().getId());
 
         return ps;
     }
