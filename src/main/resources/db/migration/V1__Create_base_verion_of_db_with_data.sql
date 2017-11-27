@@ -96,7 +96,6 @@ CREATE TABLE IF NOT EXISTS `cookies` (
 	`session_id`	TEXT,
 	PRIMARY KEY(`session_id`)
 );
-INSERT INTO `cookies` VALUES (0,'sessionId="18416eb0-e456-4207-b078-eb00135ab632"');
 CREATE TABLE IF NOT EXISTS `bills` (
 	`personId`	int,
 	`status`	text CHECK(status = 'paid' or status = 'unpaid'),
