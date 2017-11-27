@@ -17,12 +17,19 @@ public class MentorHandler implements HttpHandler {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
 
         if (cookieStr != null) {
+
             URI uri = httpExchange.getRequestURI();
             Integer userId = CookieDAO.getInstance().getCookie(cookieStr).getUserId();
-            Mentor mentor = (Mentor)PersonDAO.getInstance().getPerson(userId);
+
+            Mentor mentor = null;
+            try {
+                mentor = (Mentor)PersonDAO.getInstance().getPerson(userId);
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
 
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-
+                System.out.println("dupa4");
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
                 JtwigModel model = JtwigModel.newModel();
 
