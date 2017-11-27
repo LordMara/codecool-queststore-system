@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `persons_artifacts` (
 	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`),
 	FOREIGN KEY(`artifactId`) REFERENCES `artifacts`(`artifactId`)
 );
-INSERT INTO `persons_artifacts` VALUES (1,2,1,NULL,NULL);
+INSERT INTO `persons_artifacts` VALUES (1,2,1,'used','27.10.2017 23:39:59');
 CREATE TABLE IF NOT EXISTS `wallets` (
 	`personId`	int,
 	`total_cc_earn`	REAL,
