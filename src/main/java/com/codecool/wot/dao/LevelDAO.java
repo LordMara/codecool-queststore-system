@@ -1,7 +1,6 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.model.Level;
-import com.codecool.wot.model.Wallet;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
