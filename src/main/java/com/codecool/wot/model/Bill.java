@@ -41,9 +41,14 @@ public class Bill {
         return quest;
     }
 
+    public void setQuest() {
+        this.quest = null;
+    }
+
     public void setQuest(Quest quest) {
         this.quest = quest;
     }
+
 
     public Boolean getStatus() {
         return status;
