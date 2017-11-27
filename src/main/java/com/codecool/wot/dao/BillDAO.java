@@ -91,6 +91,16 @@ public class BillDAO {
         return bill;
     }
 
+    public List<Bill> getBill(Account person) {
+        List<Bill> personalBillsList = new LinkedList<>();
+        for (Bill candidate : this.bills) {
+            if (candidate.getPerson().equals(person)) {
+                personalBillsList.add(candidate);
+            }
+        }
+        return personalBillsList;
+    }
+
     private void loadBillsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
