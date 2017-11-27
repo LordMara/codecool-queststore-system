@@ -1,5 +1,6 @@
 package com.codecool.wot.dao;
 
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Bill;
 import com.codecool.wot.model.Quest;
 
@@ -58,10 +59,21 @@ public class BillDAO {
         }
     }
 
-    public void changeAllQuestToNull(Quest quest) {
+    public void setAllQuestToNull(Quest quest) {
         try {
             changeQuestToNullInMemory(quest);
             changeQuestToNullInDatabase(quest);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void removeAllBills(Account person) {
+        try {
+            deleteBillsInMemory(person);
+            deleteBillsInInDatabase(person);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,6 +141,44 @@ public class BillDAO {
         }
     }
 
+
+    private void changeQuestToNullInMemory(Quest quest) {
+        for (Bill bill: this.bills) {
+            if (bill.getQuest().equals(quest)) {
+                bill.setQuest();
+            }
+        }
+    }
+
+    private void deleteBillsInMemory(Account person){
+        List<Bill> temp = new LinkedList<>();
+        for (Bill bill: this.bills) {
+            if (bill.getPerson().equals(person)) {
+                temp.add(bill);
+            }
+        }
+
+        this.bills.removeAll(temp);
+    }
+
+    private void changeQuestToNullInDatabase(Quest quest) throws  SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createNullAllPreparedStatement(con, quest)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private void deleteBillsInInDatabase(Account person) throws  SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeleteAllPreparedStatement(con, person)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM bills;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -173,23 +223,6 @@ public class BillDAO {
         return ps;
     }
 
-    private void changeQuestToNullInMemory(Quest quest) {
-        for (Bill bill: this.bills) {
-            if (bill.getQuest().equals(quest)) {
-                bill.setQuest();
-            }
-        }
-    }
-
-    private void changeQuestToNullInDatabase(Quest quest) throws  SQLException {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createNullAllPreparedStatement(con, quest)) {
-            con.setAutoCommit(false);
-            ps.executeUpdate();
-            con.commit();
-        }
-    }
-
     private PreparedStatement createNullAllPreparedStatement(Connection con, Quest quest) throws SQLException {
         String query = "UPDATE bills SET questId = NULL WHERE questId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -199,4 +232,12 @@ public class BillDAO {
         return ps;
     }
 
+    private PreparedStatement createDeleteAllPreparedStatement(Connection con, Account person) throws SQLException {
+        String query = "DELETE FROM bills WHERE personId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, person.getId());
+
+        return ps;
+    }
 }

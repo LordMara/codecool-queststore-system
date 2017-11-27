@@ -199,7 +199,7 @@ public class PersonDAO {
 
     private void removeFromApplication(Account person) {
         ClassDAO.getInstance().removePerson(person);
-        // call BillDAO to remove all position with this Account
+        BillDAO.getInstance().removeAllBills(person);
         // call WalletDAO to remove wallet with this Account
     }
 }
