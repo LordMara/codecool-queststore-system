@@ -28,6 +28,16 @@ public class WalletDAO {
         return this.wallets;
     }
 
+    public void add(Wallet wallet) {
+        try {
+            addWalletToDatabase(wallet);
+            this.wallets.add(wallet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Wallet getWallet(Account person) {
         Wallet wallet = null;
         for (Wallet candidate : this.wallets) {
@@ -57,9 +67,30 @@ public class WalletDAO {
         }
     }
 
+    private void addWalletToDatabase(Wallet wallet) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, wallet)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM wallets;";
         PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
+    }
+
+    private PreparedStatement createAddPreparedStatement(Connection con, Wallet wallet) throws SQLException {
+        String query = "INSERT INTO wallets (personId, total_cc_earn, ballance, levelId) VALUES (?, ?, ?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, wallet.getPerson().getId());
+        ps.setDouble(2, wallet.getTotalCoolcoinsEarn());
+        ps.setDouble(3, wallet.getBalance());
+        ps.setInt(1, wallet.getLevel().getId());
 
         return ps;
     }
