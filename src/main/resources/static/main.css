@@ -52,7 +52,7 @@ table {
  */
 
 body{
-    background-image: url("../assets/market-839574_1920.jpg");
+    background-image: url("market-839574_1920.jpg");
     width: 100%;
     background-position: cover;
 }
@@ -82,12 +82,6 @@ header {
     justify-content: center;
     margin-top: 5%;
     margin-bottom: 5%;
-}
-
-.welcome h3{
-    font-size: 40px;
-    font-weight: 700;
-    color:#150101;
 }
 
 footer{
@@ -232,9 +226,9 @@ ol > li > ul > li:hover{
     background-color: red;
 }
 
-.welcome{
-    padding-left: 100px;
-    padding-top: 100px;
+/*.welcome{*/
+    /*padding-left: 100px;*/
+    /*padding-top: 100px;*/
 }
 
 /*
@@ -262,3 +256,13 @@ th {
     color: cornflowerblue;
 }
 /*===================================================================*/
+
+.welcome {
+    font-size: 60px;
+    font-variant: small-caps;
+    order: 1;
+    padding: 20px;
+    background-color: #2d3343;
+    border-radius: 3px;
+    color: cornflowerblue;
+}
