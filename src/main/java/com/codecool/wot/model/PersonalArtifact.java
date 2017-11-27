@@ -56,6 +56,10 @@ public class PersonalArtifact {
         }
     }
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public Date getPurchaseDate() {
         return purchaseDate;
     }
