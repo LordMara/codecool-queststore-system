@@ -27,20 +27,10 @@ public class LevelDAO {
         return this.levels;
     }
 
-    private void loadPersonsFromDatabase() {
-        try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createSelectPreparedStatement(con);
-             ResultSet result = ps.executeQuery()) {
-
-            while (result.next()) {
-                Integer id = result.getInt("personId");
-                String name = result.getString("name");
-                String description = result.getString("description");
-                Double coolcoinValue = result.getDouble("coolcoins_value");
-
-                levels.add(new Level(id, name, description, coolcoinValue));
-            }
-
+    public void add(Level level) {
+        try {
+            addLevelToDatabase(level);
+            this.levels.add(level);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -67,10 +57,49 @@ public class LevelDAO {
         return level;
     }
 
+    private void loadPersonsFromDatabase() {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createSelectPreparedStatement(con);
+             ResultSet result = ps.executeQuery()) {
+
+            while (result.next()) {
+                Integer id = result.getInt("personId");
+                String name = result.getString("name");
+                String description = result.getString("description");
+                Double coolcoinValue = result.getDouble("coolcoins_value");
+
+                levels.add(new Level(id, name, description, coolcoinValue));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    private void addLevelToDatabase(Level level) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, level)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
 
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM levels;";
         PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
+    }
+
+    private PreparedStatement createAddPreparedStatement(Connection con, Level level) throws SQLException {
+        String query = "INSERT INTO levels (name, description, coolcoins_value) VALUES (?, ?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, level.getName());
+        ps.setString(2, level.getDescription());
+        ps.setDouble(3, level.getCoolcoinValue());
 
         return ps;
     }
