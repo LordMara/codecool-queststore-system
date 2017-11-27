@@ -48,7 +48,7 @@ public class QuestDAO {
 
     public void remove(Quest quest) {
         try {
-            // here must be call of BillDAO with null position with this quest
+            BillDAO.getInstance().changeQuestToNull(quest);
             deleteQuestFromDatabase(quest);
             this.quests.remove(quest);
         } catch (SQLException e) {
