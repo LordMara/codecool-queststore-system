@@ -46,6 +46,17 @@ public class ArtifactDAO {
         }
     }
 
+    public void remove(Artifact artifact) {
+        try {
+            // call of method to remove this artifact from personal artifacts
+            deleteArtifactFromDatabase(artifact);
+            this.artifacts.remove(artifact);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Artifact getArtifact(Integer id) {
         Artifact artifact = null;
         for (Artifact candidate : this.artifacts) {
@@ -104,6 +115,15 @@ public class ArtifactDAO {
         }
     }
 
+    private void deleteArtifactFromDatabase(Artifact artifact) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, artifact)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM artifacts;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -130,6 +150,15 @@ public class ArtifactDAO {
         ps.setString(2, artifact.getDescription());
         ps.setDouble(3, artifact.getPrice());
         ps.setInt(4, artifact.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Artifact artifact) throws SQLException {
+        String query = "DELETE FROM artifacts WHERE artifactId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, artifact.getId());
 
         return ps;
     }
