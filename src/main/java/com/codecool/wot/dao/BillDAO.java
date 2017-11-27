@@ -47,6 +47,16 @@ public class BillDAO {
         }
     }
 
+    public Bill getBill(Integer id) {
+        Bill bill = null;
+        for (Bill candidate : this.bills) {
+            if (candidate.getId().equals(id)) {
+                bill = candidate;
+            }
+        }
+        return bill;
+    }
+
     private void loadBillsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
