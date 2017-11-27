@@ -2,7 +2,6 @@ package com.codecool.wot.web;
 
 import com.codecool.wot.dao.CookieDAO;
 import com.codecool.wot.dao.PersonDAO;
-import com.codecool.wot.model.Account;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -23,7 +22,7 @@ public abstract class PersonHandler<T> implements HttpHandler {
             T user = (T)PersonDAO.getInstance().getPerson(userId);
 
             if (user != null && Integer.toString(userId).equals(getIdFromURI(uri.getPath()))) {
-                sendResponse();
+                sendResponse(httpExchange, user);
             } else {
                 handleWrongUser(httpExchange);
             }
@@ -45,5 +44,5 @@ public abstract class PersonHandler<T> implements HttpHandler {
         return userIdFromURI;
     }
 
-    protected abstract void sendResponse();
+    protected abstract void sendResponse(HttpExchange httpExchange, T user) throws IOException;
 }
