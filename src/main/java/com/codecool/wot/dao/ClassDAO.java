@@ -1,5 +1,6 @@
 package com.codecool.wot.dao;
 
+import com.codecool.wot.interfaces.Codecooler;
 import com.codecool.wot.model.Account;
 import com.codecool.wot.model.SchoolClass;
 
@@ -49,6 +50,7 @@ public class ClassDAO {
 
     public void remove(SchoolClass schoolClass) {
         try {
+            deleteAllPersonsFromClassInMemory(schoolClass);
             deleteAllPersonsFromClassInDatabase(schoolClass);
             deleteClassFromDatabase(schoolClass);
             this.classes.remove(schoolClass);
@@ -88,12 +90,10 @@ public class ClassDAO {
         }
     }
 
-    public void addPersonToMemory(SchoolClass schoolClass, Account person) {
-        schoolClass.assignPerson(person);
-    }
-
-    public void removePerson(SchoolClass schoolClass, Account person) {
+    public void removePerson(Account person) {
         try {
+            Codecooler codecooler = (Codecooler) person;
+            SchoolClass schoolClass = codecooler.getSchoolClass();
             removePersonFromClassInDatabase(schoolClass, person);
             schoolClass.removePerson(person);
         } catch (SQLException e) {
@@ -152,6 +152,17 @@ public class ClassDAO {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+        }
+    }
+
+    private void deleteAllPersonsFromClassInMemory(SchoolClass schoolClass) {
+        for (Account person: PersonDAO.getInstance().read()) {
+            if (person instanceof Codecooler) {
+                Codecooler codecooler = (Codecooler) person;
+                if (codecooler.getSchoolClass().equals(schoolClass)) {
+                    codecooler.setSchoolClass();
+                }
+            }
         }
     }
 

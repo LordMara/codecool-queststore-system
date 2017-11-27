@@ -1,24 +1,24 @@
 package com.codecool.wot.model;
 
-public class Artifact {
+public class Level {
     private static Integer lastId = 1;
     private Integer id;
     private String name;
     private String description;
-    private Double price;
+    private Double coolcoinValue;
 
-    public Artifact(String name, String description, Double price) {
+    public Level(String name, String description, Double coolcoinValue) {
         this.id = ++lastId;
         this.name = name;
         this.description = description;
-        this.price = price;
+        this.coolcoinValue = coolcoinValue;
     }
 
-    public Artifact(Integer id, String name, String description, Double price) {
+    public Level(Integer id, String name, String description, Double coolcoinValue) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.price = price;
+        this.coolcoinValue = coolcoinValue;
 
         if(lastId < id) {
             lastId = id;
@@ -49,11 +49,11 @@ public class Artifact {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getCoolcoinValue() {
+        return coolcoinValue;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setCoolcoinValue(Double coolcoinValue) {
+        this.coolcoinValue = coolcoinValue;
     }
 }
