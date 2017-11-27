@@ -46,6 +46,17 @@ public class LevelDAO {
         }
     }
 
+    public void remove(Level level) {
+        try {
+            // call of method to null value in users Wallets
+            deleteLevelFromDatabase(level);
+            this.levels.remove(level);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Level getLevel(Integer id) {
         Level level = null;
         for (Level candidate : this.levels) {
@@ -104,6 +115,15 @@ public class LevelDAO {
         }
     }
 
+    private void deleteLevelFromDatabase(Level level) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, level)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM levels;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -130,6 +150,15 @@ public class LevelDAO {
         ps.setString(2, level.getDescription());
         ps.setDouble(3, level.getCoolcoinValue());
         ps.setInt(4, level.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Level level) throws SQLException {
+        String query = "DELETE FROM levels WHERE levelId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, level.getId());
 
         return ps;
     }
