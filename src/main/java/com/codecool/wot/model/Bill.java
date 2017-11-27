@@ -69,13 +69,14 @@ public class Bill {
         this.achieveDate = achieveDate;
     }
 
-    private void parseDate(String stringDate) throws ParseException {
-        Date date = this.FORMATTER.parse(stringDate);
-        this.achieveDate = date;
-    }
 
     public String parseDate() {
         return this.FORMATTER.format(this.achieveDate);
+    }
+
+    private void parseDate(String stringDate) throws ParseException {
+        Date date = this.FORMATTER.parse(stringDate);
+        this.achieveDate = date;
     }
 
     private void parseStatus(String statusString) {
