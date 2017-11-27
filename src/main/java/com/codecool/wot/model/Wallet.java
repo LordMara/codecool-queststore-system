@@ -2,7 +2,6 @@ package com.codecool.wot.model;
 
 import com.codecool.wot.dao.LevelDAO;
 import com.codecool.wot.dao.PersonDAO;
-import com.codecool.wot.dao.WalletDAO;
 
 public class Wallet {
     private Account person;
