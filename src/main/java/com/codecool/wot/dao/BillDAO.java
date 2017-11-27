@@ -28,6 +28,16 @@ public class BillDAO {
         return this.bills;
     }
 
+    public void add(Bill bill) {
+        try {
+            addBillToDatabase(bill);
+            this.bills.add(bill);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     private void loadBillsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -50,9 +60,31 @@ public class BillDAO {
         }
     }
 
+    private void addBillToDatabase(Bill bill) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createAddPreparedStatement(con, bill)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM bills;";
         PreparedStatement ps = con.prepareStatement(query);
+
+        return ps;
+    }
+
+    private PreparedStatement createAddPreparedStatement(Connection con, Bill bill) throws SQLException {
+        String query = "INSERT INTO bills (personId, status, questId,  achieveDate)" +
+                " VALUES (?, ?, ?, ?);";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, bill.getPerson().getId());
+        ps.setString(2, bill.parseStatus());
+        ps.setInt(3, bill.getQuest().getId());
+        ps.setString(4, bill.parseDate());
 
         return ps;
     }
