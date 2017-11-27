@@ -1,9 +1,6 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Student;
+import com.codecool.wot.model.*;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -48,6 +45,7 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
+            removeFromApplication(person);
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
@@ -125,18 +123,18 @@ public class PersonDAO {
         }
     }
 
-    private void deletePersonFromDatabase(Account person) throws SQLException {
+    private void updatePersonInDatabase(Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
+             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
         }
     }
 
-    private void updatePersonInDatabase(Account person) throws SQLException {
+    private void deletePersonFromDatabase(Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
+             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
@@ -197,5 +195,11 @@ public class PersonDAO {
         ps.setInt(1, person.getId());
 
         return ps;
+    }
+
+    private void removeFromApplication(Account person) {
+        ClassDAO.getInstance().removePerson(person);
+        // call BillDAO to remove all position with this Account
+        // call WalletDAO to remove wallet with this Account
     }
 }

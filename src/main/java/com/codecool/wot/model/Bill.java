@@ -10,23 +10,39 @@ import java.util.Date;
 
 public class Bill {
     private final DateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
+    private static Integer lastId = 1;
+    private Integer id;
     private Account person;
     private Quest quest;
     private Boolean status;
     private Date achieveDate;
 
     public Bill(Integer personId, Integer questId, String stringDate) throws ParseException {
+        this.id = ++lastId;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.quest = QuestDAO.getInstance().getQuest(questId);
         this.status = false;
         parseDate(stringDate);
     }
 
-    public Bill(Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
+    public Bill(Integer id, Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
+        this.id = id;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.quest = QuestDAO.getInstance().getQuest(questId);
         parseDate(stringDate);
         parseStatus(statusString);
+
+        if(lastId < id) {
+            lastId = id;
+        }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Account getPerson() {
@@ -41,9 +57,14 @@ public class Bill {
         return quest;
     }
 
+    public void setQuest() {
+        this.quest = null;
+    }
+
     public void setQuest(Quest quest) {
         this.quest = quest;
     }
+
 
     public Boolean getStatus() {
         return status;
@@ -64,13 +85,14 @@ public class Bill {
         this.achieveDate = achieveDate;
     }
 
-    private void parseDate(String stringDate) throws ParseException {
-        Date date = this.FORMATTER.parse(stringDate);
-        this.achieveDate = date;
-    }
 
     public String parseDate() {
         return this.FORMATTER.format(this.achieveDate);
+    }
+
+    private void parseDate(String stringDate) throws ParseException {
+        Date date = this.FORMATTER.parse(stringDate);
+        this.achieveDate = date;
     }
 
     private void parseStatus(String statusString) {
