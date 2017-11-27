@@ -59,7 +59,7 @@ public class CookieDAO {
 
             while (result.next()) {
                 Integer userId = result.getInt("userID");
-                String sessionId = result.getString("cookie");
+                String sessionId = result.getString("session_id");
 
                 cookies.add(new Cookie(userId, sessionId));
             }
@@ -95,7 +95,7 @@ public class CookieDAO {
     }
 
     private PreparedStatement createAddPreparedStatement(Connection con, Cookie cookie) throws SQLException {
-        String query = "INSERT INTO cookies (userID, cookie) VALUES  (?, ?);";
+        String query = "INSERT INTO cookies (userID, session_id) VALUES  (?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, cookie.getUserId());
@@ -105,7 +105,7 @@ public class CookieDAO {
     }
 
     private PreparedStatement createDeletePreparedStatement(Connection con, Cookie cookie) throws SQLException {
-        String query = "DELETE FROM cookies WHERE cookie = ?;";
+        String query = "DELETE FROM cookies WHERE session_id = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, cookie.getSessionId());

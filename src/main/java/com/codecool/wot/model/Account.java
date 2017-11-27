@@ -81,7 +81,7 @@ public abstract class Account{
         return this.id;
     }
 
-    public SchoolClass getSchoolClass(){
+    public SchoolClass getSchoolClass() {
         return null;
     }
 
