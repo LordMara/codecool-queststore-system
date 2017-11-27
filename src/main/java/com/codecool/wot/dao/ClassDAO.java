@@ -3,7 +3,6 @@ package com.codecool.wot.dao;
 import com.codecool.wot.interfaces.Codecooler;
 import com.codecool.wot.model.Account;
 import com.codecool.wot.model.SchoolClass;
-import com.codecool.wot.model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -89,10 +88,6 @@ public class ClassDAO {
             e.printStackTrace();
             System.exit(0);
         }
-    }
-
-    public void addPersonToMemory(SchoolClass schoolClass, Account person) {
-        schoolClass.assignPerson(person);
     }
 
     public void removePerson(SchoolClass schoolClass, Account person) {
