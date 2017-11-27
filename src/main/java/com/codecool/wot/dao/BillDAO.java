@@ -197,7 +197,7 @@ public class BillDAO {
     }
 
     private PreparedStatement createAddPreparedStatement(Connection con, Bill bill) throws SQLException {
-        String query = "INSERT INTO bills (personId, status, questId,  achieve_date, billId)" +
+        String query = "INSERT INTO bills (personId, status, questId,  achieve_date)" +
                 " VALUES (?, ?, ?, ?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
@@ -205,7 +205,6 @@ public class BillDAO {
         ps.setString(2, bill.parseStatus());
         ps.setInt(3, bill.getQuest().getId());
         ps.setString(4, bill.parseDate());
-        ps.setInt(5, bill.getId());
 
         return ps;
     }
