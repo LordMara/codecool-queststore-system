@@ -48,7 +48,7 @@ public class LevelDAO {
 
     public void remove(Level level) {
         try {
-            // call of method to null value in users Wallets
+            WalletDAO.getInstance().setAllLevelsToNull(level);
             deleteLevelFromDatabase(level);
             this.levels.remove(level);
         } catch (SQLException e) {

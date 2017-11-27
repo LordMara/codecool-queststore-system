@@ -1,6 +1,7 @@
 package com.codecool.wot.model;
 
 import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.dao.WalletDAO;
 import com.codecool.wot.interfaces.Codecooler;
 
 public class Student extends Account implements Codecooler {
@@ -11,6 +12,8 @@ public class Student extends Account implements Codecooler {
 
     public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
+
+        WalletDAO.getInstance().add(new Wallet(this.id));
     }
 
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
