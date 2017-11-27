@@ -48,7 +48,7 @@ public class ArtifactDAO {
 
     public void remove(Artifact artifact) {
         try {
-            // call of method to remove this artifact from personal artifacts
+            PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(artifact);
             deleteArtifactFromDatabase(artifact);
             this.artifacts.remove(artifact);
         } catch (SQLException e) {
