@@ -49,6 +49,16 @@ public class PersonalArtifactDAO {
         }
     }
 
+    public void remove(PersonalArtifact personalArtifact) {
+        try {
+            deletePersonalArtifactsFromDatabase(personalArtifact);
+            this.personalArtifacts.remove(personalArtifact);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public PersonalArtifact getPersonalArtifact(Integer id) {
         PersonalArtifact personalArtifact = null;
         for (PersonalArtifact candidate : this.personalArtifacts) {
@@ -121,6 +131,15 @@ public class PersonalArtifactDAO {
         }
     }
 
+    private void deletePersonalArtifactsFromDatabase(PersonalArtifact personalArtifact) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, personalArtifact)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM persons_artifacts;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -151,6 +170,15 @@ public class PersonalArtifactDAO {
         ps.setString(3, personalArtifact.parseStatus());
         ps.setString(4, personalArtifact.parseDate());
         ps.setInt(5, personalArtifact.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, PersonalArtifact personalArtifact) throws SQLException {
+        String query = "DELETE FROM persons_artifacts WHERE personal_artifacts_id = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, personalArtifact.getId());
 
         return ps;
     }
