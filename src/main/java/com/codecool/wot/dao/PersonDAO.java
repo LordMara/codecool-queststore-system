@@ -45,7 +45,9 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
-            removeFromApplication(person);
+            if (person instanceof Student || person instanceof Mentor) {
+                removeFromApplication(person);
+            }
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
@@ -199,8 +201,16 @@ public class PersonDAO {
 
     private void removeFromApplication(Account person) {
         ClassDAO.getInstance().removePerson(person);
-        BillDAO.getInstance().removeAllBills(person);
-        PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);
-        // call WalletDAO to remove wallet with this Account
+        if (person instanceof Student) {
+            BillDAO.getInstance().removeAllBills(person);
+            PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);
+            removePersonWallet(person);
+        }
+
+    }
+
+    private void removePersonWallet(Account person) {
+        Wallet wallet = WalletDAO.getInstance().getWallet(person);
+        WalletDAO.getInstance().remove(wallet);
     }
 }
