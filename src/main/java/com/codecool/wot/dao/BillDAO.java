@@ -58,7 +58,7 @@ public class BillDAO {
         }
     }
 
-    public void changeQuestToNull(Quest quest) {
+    public void changeAllQuestToNull(Quest quest) {
         try {
             changeQuestToNullInMemory(quest);
             changeQuestToNullInDatabase(quest);
