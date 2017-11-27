@@ -17,7 +17,7 @@ public class Student extends Account implements Codecooler {
 
         super(name, surname, email, login, password, ID);
         this.schoolClass = ClassDAO.getInstance().getClass(classId);
-        ClassDAO.getInstance().addPersonToMemory(this.schoolClass, this);
+        this.schoolClass.assignPerson(this);
 //        this.teamId = teamId;
 
     }

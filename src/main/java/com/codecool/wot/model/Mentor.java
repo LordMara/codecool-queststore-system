@@ -14,7 +14,7 @@ public class Mentor extends Account implements Codecooler {
     public Mentor(String name, String surname, String email, String login, String password, Integer ID, Integer classId) {
         super(name, surname, email, login, password, ID);
         this.schoolClass = ClassDAO.getInstance().getClass(classId);
-        ClassDAO.getInstance().addPersonToMemory(this.schoolClass, this);
+        this.schoolClass.assignPerson(this);
     }
 
     @Override
