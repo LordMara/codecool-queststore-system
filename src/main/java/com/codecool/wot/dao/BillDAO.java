@@ -91,7 +91,7 @@ public class BillDAO {
         return bill;
     }
 
-    public List<Bill> getBill(Account person) {
+    public List<Bill> getBills(Account person) {
         List<Bill> personalBillsList = new LinkedList<>();
         for (Bill candidate : this.bills) {
             if (candidate.getPerson().equals(person)) {
