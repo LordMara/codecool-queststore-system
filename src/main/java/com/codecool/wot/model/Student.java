@@ -1,9 +1,12 @@
 package com.codecool.wot.model;
 
-public class Student extends Account{
+import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.interfaces.Codecooler;
+
+public class Student extends Account implements Codecooler {
 
 
-     private Integer classId;
+     private SchoolClass schoolClass;
 //     private Integer teamId;
 
     public Student(String name, String surname, String email, String login, String password) {
@@ -13,19 +16,27 @@ public class Student extends Account{
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
 
         super(name, surname, email, login, password, ID);
-        this.classId = classId;
+        this.schoolClass = ClassDAO.getInstance().getClass(classId);
+        this.schoolClass.assignPerson(this);
 //        this.teamId = teamId;
 
     }
 
-    public Integer getClassId() {
-        return this.classId;
+    @Override
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
+    @Override
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
+
+    @Override
+    public void setSchoolClass() {
+        this.schoolClass = null;
+    }
+
 //
 //    public Integer getTeamId() {
 //        return teamId;

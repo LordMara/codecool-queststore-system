@@ -1,9 +1,7 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Student;
+import com.codecool.wot.model.*;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -23,7 +21,6 @@ public class LoginHandler implements HttpHandler {
 
         if (cookieStr != null) {
             cookieHandle(cookieStr, httpExchange);
-            System.out.println(cookieStr);
         } else {
             login(httpExchange);
         }
@@ -33,10 +30,6 @@ public class LoginHandler implements HttpHandler {
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         String redirect = "/";
-
-        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -48,23 +41,22 @@ public class LoginHandler implements HttpHandler {
             String login = loginData.get(0);
             String password = loginData.get(1);
 
-            Admin admin = adminDAO.getByLogin(login);
-            Mentor mentor = mentorDAO.getByLogin(login);
-            Student student = studentDAO.getByLogin(login);
+            Account person = PersonDAO.getInstance().getPerson(login, password);
 
-            if (admin != null && admin.getPassword().equals(password)) {
-                cookie(admin.getId(),httpExchange);
-                String uri = String.format("/admin/%s", admin.getId());
-                httpExchange.getResponseHeaders().set("Location", uri);
-                httpExchange.sendResponseHeaders(302,-1);
-            } else if (mentor != null && mentor.getPassword().equals(password)) {
-                cookie(mentor.getId(),httpExchange);
-                String uri = String.format("/mentor/%s", mentor.getId());
-                httpExchange.getResponseHeaders().set("Location", uri);
-                httpExchange.sendResponseHeaders(302,-1);
-            } else if (student != null && student.getPassword().equals(password)) {
-                cookie(student.getId(),httpExchange);
-                String uri = String.format("/student/%s", student.getId());
+            if (person != null) {
+                Integer personId = person.getId();
+                String uri = "/";
+
+                if (person instanceof Admin) {
+                    cookie(personId, httpExchange);
+                    uri = String.format("/admin/%s", personId);
+                } else if (person instanceof Mentor) {
+                    cookie(personId ,httpExchange);
+                    uri = String.format("/mentor/%s", personId);
+                } else if (person instanceof Student) {
+                    cookie(personId, httpExchange);
+                    uri = String.format("/student/%s", personId);
+                }
                 httpExchange.getResponseHeaders().set("Location", uri);
                 httpExchange.sendResponseHeaders(302,-1);
             }
@@ -82,11 +74,10 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookie(Integer userId ,HttpExchange httpExchange) throws IOException {
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
         HttpCookie cookie = new HttpCookie("sessionId", UUID.randomUUID().toString());
         cookie.setMaxAge(-1);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-        cookieDAO.saveToDatabase(userId, cookie.toString());
+        CookieDAO.getInstance().add(new Cookie(userId, cookie.toString()));
     }
 
     private List<String> parseLoginFormData(String formData) throws UnsupportedEncodingException {
@@ -107,29 +98,22 @@ public class LoginHandler implements HttpHandler {
     }
 
     private void cookieHandle(String cookieStr, HttpExchange httpExchange) throws IOException {
-        CookieDAO cookieDAO = new CookieDAO(DatabaseConnection.getDBConnection().getConnection());
-        Integer userId = cookieDAO.getUserIdBySessionId(cookieStr);
+        Integer userId = CookieDAO.getInstance().getCookie(cookieStr).getUserId();
 
-        AdminDAO adminDAO = new AdminDAO(DatabaseConnection.getDBConnection().getConnection());
-        MentorDAO mentorDAO = new MentorDAO(DatabaseConnection.getDBConnection().getConnection());
-        StudentDAO studentDAO = new StudentDAO(DatabaseConnection.getDBConnection().getConnection());
+        Account person = PersonDAO.getInstance().getPerson(userId);
 
-        Admin admin = adminDAO.getById(userId);
-        Mentor mentor = mentorDAO.getById(userId);
-        Student student = studentDAO.getById(userId);
+        if (person != null) {
+            String uri = "";
+            if (person instanceof Admin) {
+                uri = String.format("/admin/%s", userId);
+            } else if (person instanceof Mentor) {
+                uri = String.format("/mentor/%s", userId);
+            } else if (person instanceof Student) {
+                uri = String.format("/student/%s", userId);
+            }
 
-        if (admin != null) {
-            String uri = String.format("/admin/%s", userId);
             httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
-        } else if (mentor != null) {
-            String uri = String.format("/mentor/%s", userId);
-            httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
-        } else if (student != null) {
-            String uri = String.format("/student/%s", userId);
-            httpExchange.getResponseHeaders().set("Location", uri);
-            httpExchange.sendResponseHeaders(302,-1);
+            httpExchange.sendResponseHeaders(302, -1);
         }
     }
 }

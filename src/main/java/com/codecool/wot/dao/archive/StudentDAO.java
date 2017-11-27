@@ -1,4 +1,5 @@
-package com.codecool.wot.dao;
+package com.codecool.wot.dao.archive;
+import com.codecool.wot.dao.AbstractCodecoolerDAO;
 import com.codecool.wot.model.Student;
 
 import java.sql.Connection;
@@ -7,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class StudentDAO extends AbstractCodecoolerDAO<Student>{
+public class StudentDAO extends AbstractCodecoolerDAO<Student> {
 
     private Connection connection;
 
@@ -63,7 +64,7 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student>{
             String values = String.format("(%d, '%s', '%s', '%s', '%s', '%s', '%s', 'student')", student.getId(), student.getName(), student.getSurname()
                     , student.getEmail(), student.getPhone(), student.getLogin(), student.getPassword());
 
-            String values2 = String.format("('%d', '%d')", student.getId(), student.getClassId());
+            String values2 = String.format("('%d', '%d')", student.getId(), student.getSchoolClass().getId());
 
             String query1 = "INSERT INTO persons (personId, name, surname, email,  phone, login, password, role) VALUES " + values;
 
