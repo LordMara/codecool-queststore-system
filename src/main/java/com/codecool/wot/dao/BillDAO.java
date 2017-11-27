@@ -47,6 +47,16 @@ public class BillDAO {
         }
     }
 
+    public void remove(Bill bill) {
+        try {
+            deleteBillFromDatabase(bill);
+            this.bills.remove(bill);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Bill getBill(Integer id) {
         Bill bill = null;
         for (Bill candidate : this.bills) {
@@ -98,6 +108,15 @@ public class BillDAO {
         }
     }
 
+    private void deleteBillFromDatabase(Bill bill) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createDeletePreparedStatement(con, bill)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM bills;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -132,4 +151,14 @@ public class BillDAO {
 
         return ps;
     }
+
+    private PreparedStatement createDeletePreparedStatement(Connection con, Bill bill) throws SQLException {
+        String query = "DELETE FROM bills WHERE billId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, bill.getId());
+
+        return ps;
+    }
+
 }
