@@ -200,7 +200,7 @@ public class PersonDAO {
     private void removeFromApplication(Account person) {
         ClassDAO.getInstance().removePerson(person);
         BillDAO.getInstance().removeAllBills(person);
-        // call PersonalArtifactDAO to remove personalArtifacts with this Account
+        PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);
         // call WalletDAO to remove wallet with this Account
     }
 }
