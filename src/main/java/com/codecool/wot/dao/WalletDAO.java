@@ -38,6 +38,15 @@ public class WalletDAO {
         }
     }
 
+    public void update(Wallet wallet) {
+        try {
+            updateWalletInDatabase(wallet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Wallet getWallet(Account person) {
         Wallet wallet = null;
         for (Wallet candidate : this.wallets) {
@@ -76,6 +85,15 @@ public class WalletDAO {
         }
     }
 
+    private void updateWalletInDatabase(Wallet wallet) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, wallet)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM wallets;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -91,6 +109,18 @@ public class WalletDAO {
         ps.setDouble(2, wallet.getTotalCoolcoinsEarn());
         ps.setDouble(3, wallet.getBalance());
         ps.setInt(1, wallet.getLevel().getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Wallet wallet) throws SQLException {
+        String query = "UPDATE wallets SET total_cc_earn = ?, ballance = ?, levelId = ? WHERE personId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setDouble(1, wallet.getTotalCoolcoinsEarn());
+        ps.setDouble(2, wallet.getBalance());
+        ps.setInt(3, wallet.getLevel().getId());
+        ps.setInt(4, wallet.getPerson().getId());
 
         return ps;
     }
