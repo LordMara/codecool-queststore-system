@@ -10,12 +10,15 @@ import java.util.Date;
 
 public class PersonalArtifact {
     private final DateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private static Integer lastId = 1;
+    private Integer id;
     private Account person;
     private Artifact artifact;
     private Boolean status;
     private Date purchaseDate;
 
     public PersonalArtifact(Integer personId, Integer artifactId, String stringDate) throws ParseException {
+        this.id = ++lastId;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.artifact = ArtifactDAO.getInstance().getArtifact(artifactId);
         this.status = false;
@@ -23,11 +26,24 @@ public class PersonalArtifact {
         // call method that reduce ballance in user wallet
     }
 
-    public PersonalArtifact(Integer personId, Integer artifactId, String statusString, String stringDate) throws ParseException {
+    public PersonalArtifact(Integer id, Integer personId, Integer artifactId, String statusString, String stringDate) throws ParseException {
+        this.id = id;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.artifact = ArtifactDAO.getInstance().getArtifact(artifactId);
         parseDate(stringDate);
         parseStatus(statusString);
+
+        if(lastId < id) {
+            lastId = id;
+        }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Account getPerson() {
