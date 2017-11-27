@@ -1,6 +1,7 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Level;
 import com.codecool.wot.model.Wallet;
 
 import java.sql.Connection;
@@ -51,6 +52,17 @@ public class WalletDAO {
         try {
             deleteWalletFromDatabase(wallet);
             this.wallets.remove(wallet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void setAllLevelsToNull(Level level) {
+        try {
+            changeLevelToNullInMemory(level);
+            changeLevelToNullInDatabase(level);
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -113,6 +125,23 @@ public class WalletDAO {
         }
     }
 
+    private void changeLevelToNullInMemory(Level level) {
+        for (Wallet wallet: this.wallets) {
+            if (wallet.getLevel().equals(wallet)) {
+                wallet.setLevel();
+            }
+        }
+    }
+
+    private void changeLevelToNullInDatabase(Level level) throws  SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createNullAllPreparedStatement(con, level)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM wallets;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -149,6 +178,15 @@ public class WalletDAO {
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, wallet.getPerson().getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createNullAllPreparedStatement(Connection con, Level level) throws SQLException {
+        String query = "UPDATE wallets SET levelId = NULL WHERE levelId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, level.getId());
 
         return ps;
     }
