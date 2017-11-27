@@ -29,7 +29,6 @@ public class MentorHandler implements HttpHandler {
             }
 
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-                System.out.println("dupa4");
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
                 JtwigModel model = JtwigModel.newModel();
 
