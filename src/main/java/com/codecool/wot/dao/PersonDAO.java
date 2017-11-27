@@ -1,9 +1,7 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Student;
+import com.codecool.wot.interfaces.Codecooler;
+import com.codecool.wot.model.*;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -48,7 +46,7 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
-            // add remove from class in db and memory;
+            removeFromAplication(person);
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
@@ -198,5 +196,10 @@ public class PersonDAO {
         ps.setInt(1, person.getId());
 
         return ps;
+    }
+
+    private void removeFromAplication(Account person) {
+        Codecooler codecooler = (Codecooler) person;
+        ClassDAO.getInstance().removePerson(codecooler.getSchoolClass(), person);
     }
 }
