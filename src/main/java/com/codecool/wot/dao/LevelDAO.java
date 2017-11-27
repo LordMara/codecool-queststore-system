@@ -47,6 +47,27 @@ public class LevelDAO {
         }
     }
 
+    public Level getLevel(Integer id) {
+        Level level = null;
+        for (Level candidate : this.levels) {
+            if (candidate.getId().equals(id)) {
+                level = candidate;
+            }
+        }
+        return level;
+    }
+
+    public Level getLevel(String name) {
+        Level level = null;
+        for (Level candidate : this.levels) {
+            if (candidate.getName().equals(name)) {
+                level = candidate;
+            }
+        }
+        return level;
+    }
+
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM levels;";
         PreparedStatement ps = con.prepareStatement(query);
