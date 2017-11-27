@@ -123,18 +123,18 @@ public class PersonDAO {
         }
     }
 
-    private void deletePersonFromDatabase(Account person) throws SQLException {
+    private void updatePersonInDatabase(Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
+             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
         }
     }
 
-    private void updatePersonInDatabase(Account person) throws SQLException {
+    private void deletePersonFromDatabase(Account person) throws SQLException {
         try (Connection con = DatabaseConnection.getConnection();
-             PreparedStatement ps = createUpdatePreparedStatement(con, person)) {
+             PreparedStatement ps = createDeletePreparedStatement(con, person)) {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
