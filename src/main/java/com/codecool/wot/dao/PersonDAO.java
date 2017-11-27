@@ -1,6 +1,5 @@
 package com.codecool.wot.dao;
 
-import com.codecool.wot.interfaces.Codecooler;
 import com.codecool.wot.model.*;
 
 import java.sql.*;
