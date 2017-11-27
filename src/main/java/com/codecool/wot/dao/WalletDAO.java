@@ -1,5 +1,6 @@
 package com.codecool.wot.dao;
 
+import com.codecool.wot.model.Account;
 import com.codecool.wot.model.Wallet;
 
 import java.sql.Connection;
@@ -25,6 +26,16 @@ public class WalletDAO {
 
     public List<Wallet> read() {
         return this.wallets;
+    }
+
+    public Wallet getWallet(Account person) {
+        Wallet wallet = null;
+        for (Wallet candidate : this.wallets) {
+            if (candidate.getPerson().equals(person)) {
+                wallet = candidate;
+            }
+        }
+        return wallet;
     }
 
     private void loadWalletsFromDatabase() {
