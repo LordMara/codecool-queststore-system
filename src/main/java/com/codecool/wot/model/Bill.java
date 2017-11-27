@@ -2,6 +2,7 @@ package com.codecool.wot.model;
 
 import com.codecool.wot.dao.PersonDAO;
 import com.codecool.wot.dao.QuestDAO;
+import com.codecool.wot.dao.WalletDAO;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -73,7 +74,7 @@ public class Bill {
     public void setStatus() {
         if (this.status.equals(false)) {
             this.status = true;
-            // change balance in plus in user wallet
+            updateWallet();
         }
     }
 
@@ -111,5 +112,10 @@ public class Bill {
             statusString = "paid";
         }
         return statusString;
+    }
+
+    private void updateWallet() {
+        Wallet wallet = WalletDAO.getInstance().getWallet(this.person);
+        wallet.increaseMoney(this.quest.getPrice());
     }
 }
