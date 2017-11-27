@@ -37,6 +37,15 @@ public class LevelDAO {
         }
     }
 
+    public void update(Level level) {
+        try {
+            updateLevelInDatabase(level);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Level getLevel(Integer id) {
         Level level = null;
         for (Level candidate : this.levels) {
@@ -86,6 +95,15 @@ public class LevelDAO {
         }
     }
 
+    private void updateLevelInDatabase(Level level) throws SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createUpdatePreparedStatement(con, level)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM levels;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -100,6 +118,18 @@ public class LevelDAO {
         ps.setString(1, level.getName());
         ps.setString(2, level.getDescription());
         ps.setDouble(3, level.getCoolcoinValue());
+
+        return ps;
+    }
+
+    private PreparedStatement createUpdatePreparedStatement(Connection con, Level level) throws SQLException {
+        String query = "UPDATE levels SET name = ?, description = ?, coolcoins_value = ? WHERE levelId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1, level.getName());
+        ps.setString(2, level.getDescription());
+        ps.setDouble(3, level.getCoolcoinValue());
+        ps.setInt(4, level.getId());
 
         return ps;
     }
