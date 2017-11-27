@@ -2,6 +2,7 @@ package com.codecool.wot.model;
 
 import com.codecool.wot.dao.LevelDAO;
 import com.codecool.wot.dao.PersonDAO;
+import com.codecool.wot.dao.WalletDAO;
 
 public class Wallet {
     private Account person;
@@ -62,9 +63,11 @@ public class Wallet {
     public void increaseMoney(Double ccEarn) {
         this.balance += ccEarn;
         this.totalCoolcoinsEarn += ccEarn;
+        WalletDAO.getInstance().update(this);
     }
 
     public void decreseMoney(Double ccSpend) {
         this.balance -= ccSpend;
+        WalletDAO.getInstance().update(this);
     }
 }
