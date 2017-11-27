@@ -44,5 +44,4 @@ public class AdminDAO extends AbstractCodecoolerDAO<Admin> {
             }
         }
 
-    }
-
+}
