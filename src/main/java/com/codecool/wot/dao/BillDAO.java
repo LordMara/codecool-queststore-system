@@ -1,6 +1,7 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.model.Bill;
+import com.codecool.wot.model.Quest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,6 +52,17 @@ public class BillDAO {
         try {
             deleteBillFromDatabase(bill);
             this.bills.remove(bill);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    public void changeQuestToNull(Quest quest) {
+        try {
+            changeQuestToNullInMemory(quest);
+            changeQuestToNullInDatabase(quest);
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -139,7 +151,7 @@ public class BillDAO {
     }
 
     private PreparedStatement createUpdatePreparedStatement(Connection con, Bill bill) throws SQLException {
-        String query = "UPDATE bills SET personId= ?, status = ?, questId = ?,  achieve_date = ?" +
+        String query = "UPDATE bills SET personId = ?, status = ?, questId = ?,  achieve_date = ?" +
                 " WHERE billId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
@@ -157,6 +169,32 @@ public class BillDAO {
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, bill.getId());
+
+        return ps;
+    }
+
+    private void changeQuestToNullInMemory(Quest quest) {
+        for (Bill bill: this.bills) {
+            if (bill.getQuest().equals(quest)) {
+                bill.setQuest();
+            }
+        }
+    }
+
+    private void changeQuestToNullInDatabase(Quest quest) throws  SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createNullAllPreparedStatement(con, quest)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
+    private PreparedStatement createNullAllPreparedStatement(Connection con, Quest quest) throws SQLException {
+        String query = "UPDATE bills SET questId = NULL WHERE questId = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, quest.getId());
 
         return ps;
     }
