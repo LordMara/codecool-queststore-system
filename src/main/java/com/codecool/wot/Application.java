@@ -16,8 +16,6 @@ class Application {
         server.createContext("/", new LoginHandler());
         server.createContext("/static", new Static());
         server.createContext("/admin", new AdminHandler());
-        server.createContext("/admin-show-mentors", new AdminShowMentorsHandler());
-        server.createContext("/admin-create-mentor", new AdminCreateMentorHandler());
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
         server.createContext("/logout", new LogoutHandler());
