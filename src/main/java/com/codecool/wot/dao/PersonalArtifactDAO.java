@@ -71,7 +71,7 @@ public class PersonalArtifactDAO {
 
     public List<PersonalArtifact> getPersonalArtifacts(Account person) {
         List<PersonalArtifact> personalArtifactsList = new LinkedList<>();
-        for (PersonalArtifact candidate : this.bills) {
+        for (PersonalArtifact candidate : this.personalArtifacts) {
             if (candidate.getPerson().equals(person)) {
                 personalArtifactsList.add(candidate);
             }
