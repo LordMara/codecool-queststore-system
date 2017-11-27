@@ -1,0 +1,28 @@
+{% extends "admin.html" %}
+
+{% block title %}Show mentors{% endblock %}
+
+{% block content %}
+    <div class="main-box">
+        <div class="center-content"><h3 class="label">Mentors</h3></div>
+
+        <div class="center-content">
+            <table>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                </tr>
+                {% for person in persons %}
+
+                        <td>{{ person.name }}</td>
+                        <td>{{ person.surname }}</td>
+                        <td>{{ person.email }}</td>
+                        <td><a href="admin-edit-mentor">Edit</a></td>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

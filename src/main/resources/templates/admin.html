@@ -5,11 +5,11 @@
 {% block header %}
     <nav class="nav">
         <ol>
-            <li><a href="#">Home</a></li>
+            <li><a href="./admin.html">Home</a></li>
             <li><a href="admin-mentor-nav">Mentor</a>
                 <ul>
-                    <li><a href="#">Create</a></li>
-                    <li><a href="#">Show all</a></li>
+                    <li><a href="/admin-create-mentor">Create</a></li>
+                    <li><a href="/admin-show-mentors">Show all</a></li>
                 </ul></li>
             <li><a href="admin-class-nav">Class</a>
                 <ul>
@@ -29,6 +29,6 @@
 {% endblock %}
 
 {% block content %}
-    <h3 class="welcome center-content"> Welcome {{name}} !! </h3>
+    <h3 class="center-content welcome"> Welcome {{name}} </h3>
 {% endblock %}
 

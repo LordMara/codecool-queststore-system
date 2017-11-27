@@ -100,4 +100,3 @@ public class StudentDAO extends AbstractCodecoolerDAO<Student> {
     }
 
 }
-
