@@ -90,8 +90,10 @@ public class ClassDAO {
         }
     }
 
-    public void removePerson(SchoolClass schoolClass, Account person) {
+    public void removePerson(Account person) {
         try {
+            Codecooler codecooler = (Codecooler) person;
+            SchoolClass schoolClass = codecooler.getSchoolClass();
             removePersonFromClassInDatabase(schoolClass, person);
             schoolClass.removePerson(person);
         } catch (SQLException e) {
