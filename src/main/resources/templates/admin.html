@@ -15,7 +15,7 @@
                 <ul>
                     <li><a href="/admin/{{admin.id}}/addClass">Create</a></li>
                    {% for class in classes %}
-                    <li><a href="/{{class.name}}"}}> {{class.name}} </a></li>
+                    <li><a href="/admin/{{admin.id}}/editClass/{{class.id}}"}}> {{class.name}} </a></li>
                     {% endfor %}
                 </ul></li>
             <li><a href="/admin/{{admin.id}}">Exp level</a>

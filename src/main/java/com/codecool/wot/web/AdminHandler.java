@@ -8,9 +8,12 @@ import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Level;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
 
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +63,7 @@ public class AdminHandler implements HttpHandler {
         return userIdFromURI;
     }
 
-    protected void sendResponse(HttpExchange httpExchange, Admin admin) throws IOException {
+    private void sendResponse(HttpExchange httpExchange, Admin admin) throws IOException {
         MentorCRUD mentorCRUD =  MentorCRUD.getInstance();
         ClassCRUD classCRUD = ClassCRUD.getInstance();
         LevelCRUD levelCRUD = LevelCRUD.getInstance();
@@ -85,7 +88,7 @@ public class AdminHandler implements HttpHandler {
             } else if (action.equals("levels")) {
                 levelCRUD.showLvl(httpExchange,admin);
             } else {
-                mentorCRUD.index(httpExchange, admin);
+                index(httpExchange, admin);
             }
         }
 
@@ -104,6 +107,21 @@ public class AdminHandler implements HttpHandler {
         }
 
         return actionData;
+    }
+
+    private void index(HttpExchange httpExchange, Admin admin) throws IOException {
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("admin", admin);
+        model.with("classes", ClassDAO.getInstance().read());
+        String response = template.render(model);
+
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
 }

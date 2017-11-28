@@ -3,41 +3,25 @@ package com.codecool.wot.controller;
 import com.codecool.wot.dao.ClassDAO;
 import com.codecool.wot.dao.PersonDAO;
 import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.Mentor;
+import com.codecool.wot.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URLDecoder;
-import java.util.stream.Stream;
 
-public class MentorCRUD {
+public class StudentCRUD {
 
-    private static final MentorCRUD INSTANCE = new MentorCRUD();
+    private static final StudentCRUD INSTANCE = new StudentCRUD();
 
-    public static MentorCRUD getInstance() {
+    public static StudentCRUD getInstance() {
         return INSTANCE;
     }
 
-    public void index(HttpExchange httpExchange, Admin admin) throws IOException {
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
-        JtwigModel model = JtwigModel.newModel();
-
-        model.with("admin", admin);
-        model.with("classes", ClassDAO.getInstance().read());
-        String response = template.render(model);
-
-        httpExchange.sendResponseHeaders(200, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
-
-    public void addMentor(HttpExchange httpExchange, Admin admin) throws IOException {
+    public void addStudent(HttpExchange httpExchange, Mentor mentor) throws IOException {
 
         String method = httpExchange.getRequestMethod();
 
@@ -47,13 +31,13 @@ public class MentorCRUD {
             String formData = br.readLine();
             PersonDAO.getInstance().add(parseFormData(formData));
 
-            String uriPath = String.format("/admin/%s/mentors",admin.getId().toString());
+            String uriPath = String.format("/mentor/%s/students",mentor.getId().toString());
 
             httpExchange.getResponseHeaders().set("Location", uriPath);
             httpExchange.sendResponseHeaders(302,-1);
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-create-mentor.html");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-create-student.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
@@ -64,7 +48,7 @@ public class MentorCRUD {
         os.close();
     }
 
-    public void editMentor(HttpExchange httpExchange, String id, Admin admin) throws IOException  {
+    public void editStudent(HttpExchange httpExchange, String id, Mentor mentor) throws IOException  {
 
         String method = httpExchange.getRequestMethod();
 
@@ -74,15 +58,15 @@ public class MentorCRUD {
             String formData = br.readLine();
             PersonDAO.getInstance().update(editFromForm(formData, id));
 
-            String uriPath = String.format("/admin/%s/mentors",admin.getId().toString());
+            String uriPath = String.format("/mentor/%s/students", mentor.getId().toString());
 
             httpExchange.getResponseHeaders().set("Location", uriPath);
             httpExchange.sendResponseHeaders(302,-1);
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/edit-mentor.html");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/edit-students.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("mentor", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
+        model.with("student", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
@@ -92,23 +76,22 @@ public class MentorCRUD {
         os.close();
     }
 
-    public void removeMentor(HttpExchange httpExchange, String id, Admin admin) throws IOException  {
+    public void removeStudent(HttpExchange httpExchange, String id, Mentor mentor) throws IOException  {
         PersonDAO dao = PersonDAO.getInstance();
-        Account mentor = dao.getPerson(Integer.valueOf(id));
-        dao.remove(mentor);
+        Account student = dao.getPerson(Integer.valueOf(id));
+        dao.remove(student);
 
-        String uriPath = String.format("/admin/%s/mentors",admin.getId().toString());
+        String uriPath = String.format("/admin/%s/mentors",mentor.getId().toString());
 
         httpExchange.getResponseHeaders().set("Location", uriPath);
         httpExchange.sendResponseHeaders(302,-1);
     }
 
-    public void showMentors(HttpExchange httpExchange, Admin admin) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-show-mentors.html");
+    public void showStudents(HttpExchange httpExchange, Mentor mentor) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-show-students.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("persons", PersonDAO.getInstance().getMentors());
-        model.with("admin", admin);
-        model.with("classes", ClassDAO.getInstance());
+        model.with("persons", PersonDAO.getInstance().getStudents());
+        model.with("mentor", mentor);
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
@@ -117,7 +100,7 @@ public class MentorCRUD {
         os.close();
     }
 
-    private Mentor parseFormData(String formData) {
+    private Student parseFormData(String formData) {
         String name;
         String surname;
         String email;
@@ -125,7 +108,6 @@ public class MentorCRUD {
         String password;
 
         String[] pairs = formData.split("&");
-        Stream.of(pairs).forEach(System.out::println);
 
         try {
             name = new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8");
@@ -139,26 +121,24 @@ public class MentorCRUD {
             e.printStackTrace();
             return null;
         }
-        System.out.println("przed konstruktorem");
-        return new Mentor(name, surname, email, login, password);
+        return new Student(name, surname, email, login, password);
     }
 
     private Account editFromForm(String formData, String id) {
         System.out.println(formData);
 
-        Account mentor = PersonDAO.getInstance().getPerson(Integer.valueOf(id));
+        Account student = PersonDAO.getInstance().getPerson(Integer.valueOf(id));
         String[] pairs = formData.split("&");
 
         try {
-            mentor.setName(new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8"));
-            mentor.setSurname(new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8"));
-            mentor.setEmail(new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8"));
-            mentor.setLogin(new URLDecoder().decode(pairs[3].split("=")[1], "UTF-8"));
-            mentor.setPassword(new URLDecoder().decode(pairs[4].split("=")[1], "UTF-8"));
+            student.setName(new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8"));
+            student.setSurname(new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8"));
+            student.setEmail(new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8"));
+            student.setLogin(new URLDecoder().decode(pairs[3].split("=")[1], "UTF-8"));
+            student.setPassword(new URLDecoder().decode(pairs[4].split("=")[1], "UTF-8"));
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             return null;
         }
-        return mentor;
+        return student;
     }
-
 }
