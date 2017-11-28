@@ -11,17 +11,17 @@
                     <li><a href="/admin/{{admin.id}}/addMentor">Create</a></li>
                     <li><a href="/admin/{{admin.id}}/mentors">Show all</a></li>
                 </ul></li>
-            <li><a href="admin-class-nav">Class</a>
+            <li><a href="/admin/{{admin.id}}">Class</a>
                 <ul>
-                    <li><a href="/admin-create-class">Create</a></li>
+                    <li><a href="/admin/{{admin.id}}/addClass">Create</a></li>
                    {% for class in classes %}
                     <li><a href="/{{class.name}}"}}> {{class.name}} </a></li>
                     {% endfor %}
                 </ul></li>
-            <li><a href="admin-exp-lvl-nav">Exp level</a>
+            <li><a href="/admin/{{admin.id}}">Exp level</a>
                 <ul>
-                    <li><a href="/admin-create-lvl">Create</a></li>
-                    <li><a href="/admin-show-lvls">Show all</a></li>
+                    <li><a href="/admin/{{admin.id}}/addLevel">Create</a></li>
+                    <li><a href="/admin/{{admin.id}}/levels">Show all</a></li>
                 </ul></li>
             <li><a href="/logout">Logout</a></li>
         </ol>

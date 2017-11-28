@@ -1,8 +1,11 @@
 package com.codecool.wot.web;
 
+import com.codecool.wot.controller.ClassCRUD;
+import com.codecool.wot.controller.LevelCRUD;
 import com.codecool.wot.dao.*;
 import com.codecool.wot.controller.MentorCRUD;
 import com.codecool.wot.model.Admin;
+import com.codecool.wot.model.Level;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -59,6 +62,8 @@ public class AdminHandler implements HttpHandler {
 
     protected void sendResponse(HttpExchange httpExchange, Admin admin) throws IOException {
         MentorCRUD mentorCRUD =  MentorCRUD.getInstance();
+        ClassCRUD classCRUD = ClassCRUD.getInstance();
+        LevelCRUD levelCRUD = LevelCRUD.getInstance();
 
         String uri = httpExchange.getRequestURI().toString();
         Map<String, String> actionData = parseURI(uri);
@@ -67,12 +72,18 @@ public class AdminHandler implements HttpHandler {
         for (String action : actionData.keySet()) {
             if (action.equals("addMentor")) {
                 mentorCRUD.addMentor(httpExchange, admin);
+            } else if (action.equals("addClass")) {
+                classCRUD.addClass(httpExchange, admin);
+            } else if (action.equals("addLevel")) {
+                levelCRUD.addLevel(httpExchange, admin);
             } else if (action.equals("editMentor")) {
                 mentorCRUD.editMentor(httpExchange, actionData.get(action), admin);
             } else if (action.equals("removeMentor")) {
                 mentorCRUD.removeMentor(httpExchange, actionData.get(action), admin);
             } else if (action.equals("mentors")) {
                 mentorCRUD.showMentors(httpExchange, admin);
+            } else if (action.equals("levels")) {
+                levelCRUD.showLvl(httpExchange,admin);
             } else {
                 mentorCRUD.index(httpExchange, admin);
             }
