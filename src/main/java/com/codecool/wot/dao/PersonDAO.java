@@ -28,6 +28,9 @@ public class PersonDAO {
         try {
             addPersonToDatabase(person);
             this.persons.add(person);
+            if (person instanceof Student) {
+                WalletDAO.getInstance().add(new Wallet(person.getId()));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
