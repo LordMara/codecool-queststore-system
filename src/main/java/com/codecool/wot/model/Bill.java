@@ -18,12 +18,12 @@ public class Bill {
     private Boolean status;
     private Date achieveDate;
 
-    public Bill(Integer personId, Integer questId, String stringDate) throws ParseException {
+    public Bill(Integer personId, Integer questId) throws ParseException {
         this.id = ++lastId;
         this.person = PersonDAO.getInstance().getPerson(personId);
         this.quest = QuestDAO.getInstance().getQuest(questId);
         this.status = false;
-        parseDate(stringDate);
+        this.achieveDate = new Date();
     }
 
     public Bill(Integer id, Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
