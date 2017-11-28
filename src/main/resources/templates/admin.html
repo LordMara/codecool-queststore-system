@@ -5,7 +5,7 @@
 {% block header %}
     <nav class="nav">
         <ol>
-            <li><a href="./admin.html">Home</a></li>
+            <li><a href="/admin">Home</a></li>
             <li><a href="admin-mentor-nav">Mentor</a>
                 <ul>
                     <li><a href="/admin-create-mentor">Create</a></li>
@@ -13,7 +13,7 @@
                 </ul></li>
             <li><a href="admin-class-nav">Class</a>
                 <ul>
-                    <li><a href="#">Create</a></li>
+                    <li><a href="/admin-create-class">Create</a></li>
                    {% for class in classes %}
                     <li><a href="/{{class.name}}"}}> {{class.name}} </a></li>
                     {% endfor %}
