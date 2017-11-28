@@ -63,12 +63,23 @@ public class Wallet {
     public void increaseMoney(Double ccEarn) {
         this.balance += ccEarn;
         this.totalCoolcoinsEarn += ccEarn;
-        // call of method to check if set level on higher
+        autoSetLevel();
         WalletDAO.getInstance().update(this);
     }
 
     public void decreseMoney(Double ccSpend) {
         this.balance -= ccSpend;
         WalletDAO.getInstance().update(this);
+    }
+
+    private void autoSetLevel() {
+        Level newLevel = this.level;
+        for (Level candidate: LevelDAO.getInstance().read()) {
+            if (this.level.getCoolcoinValue() <= candidate.getCoolcoinValue() && candidate.getCoolcoinValue() <= this.totalCoolcoinsEarn) {
+                newLevel = candidate;
+            }
+        }
+
+        this.level = newLevel;
     }
 }
