@@ -75,7 +75,7 @@ public class Wallet {
     private void autoSetLevel() {
         Level newLevel = this.level;
         for (Level candidate: LevelDAO.getInstance().read()) {
-            if (this.level.getCoolcoinValue() <= candidate.getCoolcoinValue() && candidate.getCoolcoinValue() <= this.totalCoolcoinsEarn) {
+            if (newLevel.getCoolcoinValue() <= candidate.getCoolcoinValue() && candidate.getCoolcoinValue() <= this.totalCoolcoinsEarn) {
                 newLevel = candidate;
             }
         }
