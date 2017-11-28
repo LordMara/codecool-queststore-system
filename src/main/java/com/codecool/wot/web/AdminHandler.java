@@ -48,7 +48,11 @@ public class AdminHandler implements HttpHandler {
     private String parseURIToGetId(String uri) {
         String userIdFromURI = "";
         String[] pairs = uri.split("/");
-        userIdFromURI = pairs[2];
+        try {
+            userIdFromURI = pairs[2];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
 
         return userIdFromURI;
     }
