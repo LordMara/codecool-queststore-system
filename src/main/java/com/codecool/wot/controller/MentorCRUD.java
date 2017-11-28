@@ -104,12 +104,13 @@ public class MentorCRUD {
     }
 
     public void showMentors(HttpExchange httpExchange, Admin admin) throws IOException {
+        System.out.println("w metodzie");
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-show-mentors.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("persons", PersonDAO.getInstance().read());
         String response = template.render(model);
 
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();

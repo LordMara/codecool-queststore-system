@@ -5,8 +5,8 @@
 {% block header %}
     <nav class="nav">
         <ol>
-            <li><a href="/admin">Home</a></li>
-            <li><a href="admin-mentor-nav">Mentor</a>
+            <li><a href="/admin/{{admin.id}}">Home</a></li>
+            <li><a href="/admin/{{admin.id}}">Mentor</a>
                 <ul>
                     <li><a href="/admin/{{admin.id}}/addMentor">Create</a></li>
                     <li><a href="/admin/{{admin.id}}/mentors">Show all</a></li>

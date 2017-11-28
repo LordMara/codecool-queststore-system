@@ -19,7 +19,7 @@
                         <td>{{ person.name }}</td>
                         <td>{{ person.surname }}</td>
                         <td>{{ person.email }}</td>
-                        <td><a href="/admin-edit-mentor">Edit</a></td>
+                        <td><a href="/admin/{{admin.id}}/editMentor/{{person.id}}">Edit</a></td>
                     </tr>
                 {% endfor %}
             </table>
