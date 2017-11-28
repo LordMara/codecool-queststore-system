@@ -16,7 +16,7 @@ public class LevelDAO {
 
     private LevelDAO() {
         this.levels = new LinkedList<>();
-        loadPersonsFromDatabase();
+        loadLevelsFromDatabase();
     }
 
     public static LevelDAO getInstance() {
@@ -77,13 +77,13 @@ public class LevelDAO {
         return level;
     }
 
-    private void loadPersonsFromDatabase() {
+    private void loadLevelsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
-                Integer id = result.getInt("personId");
+                Integer id = result.getInt("levelId");
                 String name = result.getString("name");
                 String description = result.getString("description");
                 Double coolcoinValue = result.getDouble("coolcoins_value");
