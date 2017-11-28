@@ -5,22 +5,18 @@ import com.codecool.wot.dao.WalletDAO;
 import com.codecool.wot.interfaces.Codecooler;
 
 public class Student extends Account implements Codecooler {
-
-
-     private SchoolClass schoolClass;
-//     private Integer teamId;
+    private SchoolClass schoolClass;
 
     public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
     }
 
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
-
         super(name, surname, email, login, password, ID);
-        this.schoolClass = ClassDAO.getInstance().getClass(classId);
-        this.schoolClass.assignPerson(this);
-//        this.teamId = teamId;
-
+        if (!classId.equals(0)) {
+            this.schoolClass = ClassDAO.getInstance().getClass(classId);
+            this.schoolClass.assignPerson(this);
+        }
     }
 
     @Override
@@ -37,14 +33,4 @@ public class Student extends Account implements Codecooler {
     public void setSchoolClass() {
         this.schoolClass = null;
     }
-
-//
-//    public Integer getTeamId() {
-//        return teamId;
-//    }
-//
-//    public void setTeamId(Integer teamId) {
-//        this.teamId = teamId;
-//    }
-
 }
