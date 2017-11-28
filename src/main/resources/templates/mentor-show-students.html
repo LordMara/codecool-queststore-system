@@ -1,0 +1,28 @@
+{% extends "mentor.html" %}
+
+{% block title %}Show students{% endblock %}
+
+{% block content %}
+
+    <div class="center-content"><h3 class="label">Students</h3></div>
+
+    <div class="center-content">
+        <table>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Edit</th>
+            </tr>
+            {% for person in persons %}
+            <tr>
+                <td>{{ person.name }}</td>
+                <td>{{ person.surname }}</td>
+                <td>{{ person.email }}</td>
+                <td><a href="/admin-edit-student">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

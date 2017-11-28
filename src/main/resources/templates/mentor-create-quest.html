@@ -1,0 +1,21 @@
+{% extends "mentor.html" %}
+
+{% block title %}Create quest{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h3 class="label">Create Quest</h3>
+</div>
+<div class="center-content">
+    <form class="login" method="post">
+        Quest's name:
+        <input type="text" name="questName" required>
+        Quest's description:
+        <input type="text" name="questDescription" required>
+        Quest's price:
+        <input type="number" name="questPrice" min="0" required>
+
+        <input type="submit" name="newCategory" value="save">
+    </form>
+</div>
+{% endblock %}
