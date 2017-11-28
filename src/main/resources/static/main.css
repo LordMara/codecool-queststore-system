@@ -74,8 +74,11 @@ header {
 
 .main-box {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     height: 70vh;
+
 }
 .center-content{
     display: flex;
@@ -154,12 +157,11 @@ label{
     color: aliceblue;
 }
 
-.button{
-    margin-left: 88px;
-}
+
 /*-----------------------------------------------------------------
                            NAVIGATION                         */
 .nav{
+    flex-wrap: wrap;
     width: 100%;
     padding: 10px 0;
     background-color: #2d3343;
@@ -248,12 +250,14 @@ td > ul > li, td > ul > li > a, td > a, td {
     padding: 10px;
     text-decoration: none;
     color: aliceblue;
+    background-color: #2d3343;
     
 }
 
 th {
     padding: 10px;
     color: cornflowerblue;
+    background-color: #2d3343;
 }
 /*===================================================================*/
 
