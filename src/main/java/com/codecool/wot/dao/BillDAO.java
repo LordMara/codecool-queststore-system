@@ -110,7 +110,7 @@ public class BillDAO {
                 Integer personId = result.getInt("personId");
                 String status = result.getString("status");
                 Integer questId = result.getInt("questId");
-                String achieveDate = result.getString("achieveDate");
+                String achieveDate = result.getString("achieve_date");
                 Integer billId = result.getInt("billId");
 
                 this.bills.add(new Bill(billId, personId, questId, status, achieveDate));
