@@ -1,11 +1,10 @@
 package com.codecool.wot.model;
 
-public abstract class Account{
+public abstract class Account {
     private static Integer lastId = 0;
     protected String name;
     protected String surname;
     protected String email;
-    protected String phone = null;
     protected String login;
     protected String password;
     protected Integer id;
@@ -71,10 +70,6 @@ public abstract class Account{
 
     public Integer getId(){
         return this.id;
-    }
-
-    public SchoolClass getSchoolClass() {
-        return null;
     }
 
     public String toString() {
