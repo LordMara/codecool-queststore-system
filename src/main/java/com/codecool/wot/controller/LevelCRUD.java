@@ -11,6 +11,7 @@ import org.jtwig.JtwigTemplate;
 import java.io.*;
 import java.net.URLDecoder;
 
+
 public class LevelCRUD {
 
     private static final LevelCRUD INSTANCE = new LevelCRUD();
@@ -63,19 +64,19 @@ public class LevelCRUD {
         String name;
         String description;
         String coolcoinValue;
-
         String[] pairs = formData.split("&");
-
         try {
             name = new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8");
-            description= new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8");
-            coolcoinValue = new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8");
+            coolcoinValue = new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8");
+            description= new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8");
+
 
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
         }
-        return new Level(name, description, Double.valueOf(coolcoinValue));
+        Level level= new Level(name, description, Double.valueOf(coolcoinValue));
+        return level ;
     }
 
 
