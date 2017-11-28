@@ -221,7 +221,9 @@ public class PersonDAO {
     }
 
     private void removeFromApplication(Account person) {
-        ClassDAO.getInstance().removePerson(person);
+        if (ClassDAO.getInstance().getClass(person) != null) {
+            ClassDAO.getInstance().removePerson(person);
+        }
         if (person instanceof Student) {
             BillDAO.getInstance().removeAllBills(person);
             PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);
