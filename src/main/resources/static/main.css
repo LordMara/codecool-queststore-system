@@ -76,6 +76,7 @@ header {
     display: flex;
     flex-direction: column;
     height: 70vh;
+    align-items: center;
 }
 .center-content{
     display: flex;
@@ -154,9 +155,7 @@ label{
     color: aliceblue;
 }
 
-.button{
-    margin-left: 88px;
-}
+
 /*-----------------------------------------------------------------
                            NAVIGATION                         */
 .nav{
