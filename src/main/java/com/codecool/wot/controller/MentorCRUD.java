@@ -94,8 +94,10 @@ public class MentorCRUD {
 
     public void removeMentor(HttpExchange httpExchange, String id, Admin admin) throws IOException  {
         PersonDAO dao = PersonDAO.getInstance();
+
         Account mentor = dao.getPerson(Integer.valueOf(id));
-        dao.remove(mentor);
+        dao.remove(mentor); //TODO
+
 
         String uriPath = String.format("/admin/%s/mentors",admin.getId().toString());
 
