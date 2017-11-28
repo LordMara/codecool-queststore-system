@@ -8,8 +8,8 @@
             <li><a href="/admin">Home</a></li>
             <li><a href="admin-mentor-nav">Mentor</a>
                 <ul>
-                    <li><a href="/admin-create-mentor">Create</a></li>
-                    <li><a href="/admin-show-mentors">Show all</a></li>
+                    <li><a href="/admin/{{admin.id}}/addMentor">Create</a></li>
+                    <li><a href="/admin/{{admin.id}}/mentors">Show all</a></li>
                 </ul></li>
             <li><a href="admin-class-nav">Class</a>
                 <ul>
@@ -29,6 +29,6 @@
 {% endblock %}
 
 {% block content %}
-    <h3 class="center-content welcome"> Welcome {{name}} </h3>
+    <h3 class="center-content welcome"> Welcome {{admin.name}} </h3>
 {% endblock %}
 

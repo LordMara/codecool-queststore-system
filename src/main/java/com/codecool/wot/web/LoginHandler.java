@@ -29,7 +29,6 @@ public class LoginHandler implements HttpHandler {
 
     private void login(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String redirect = "/";
 
         if (method.equals("POST")) {
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
@@ -64,7 +63,6 @@ public class LoginHandler implements HttpHandler {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login-page.html");
         JtwigModel model = JtwigModel.newModel();
-        model.with("redirect", redirect);
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);

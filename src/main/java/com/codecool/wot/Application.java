@@ -12,7 +12,7 @@ class Application {
         DatabaseMigration.migrateDatabase();
         preloadData();
         // create a server on port 8000
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(9000), 0);
 
         // set routes
         server.createContext("/", new LoginHandler());

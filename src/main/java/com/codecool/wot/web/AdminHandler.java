@@ -1,15 +1,16 @@
 package com.codecool.wot.web;
 
 import com.codecool.wot.dao.*;
+import com.codecool.wot.controller.MentorCRUD;
 import com.codecool.wot.model.Admin;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
-import java.io.OutputStream;
+
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AdminHandler implements HttpHandler {
@@ -29,17 +30,7 @@ public class AdminHandler implements HttpHandler {
 
 
             if (admin != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin.html");
-                JtwigModel model = JtwigModel.newModel();
-
-                model.with("name", admin.getName());
-                model.with("classes", ClassDAO.getInstance().read());
-                String response = template.render(model);
-
-                httpExchange.sendResponseHeaders(200, response.getBytes().length);
-                OutputStream os = httpExchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
+               sendResponse(httpExchange, admin);
             } else {
                 handleWrongUser(httpExchange);
             }
@@ -62,5 +53,42 @@ public class AdminHandler implements HttpHandler {
         return userIdFromURI;
     }
 
+    protected void sendResponse(HttpExchange httpExchange, Admin admin) throws IOException {
+        MentorCRUD mentorCRUD =  MentorCRUD.getInstance();
+
+        String uri = httpExchange.getRequestURI().toString();
+        Map<String, String> actionData = parseURI(uri);
+        System.out.println(uri);
+
+        for (String action : actionData.keySet()) {
+            if (action.equals("addMentor")) {
+                mentorCRUD.addMentor(httpExchange, admin);
+            } else if (action.equals("editMentor")) {
+                mentorCRUD.editMentor(httpExchange, actionData.get(action), admin);
+            } else if (action.equals("removeMentor")) {
+                mentorCRUD.removeMentor(httpExchange, actionData.get(action), admin);
+            } else if (action.equals("mentors")) {
+                mentorCRUD.showMentors(httpExchange, admin);
+            } else {
+                mentorCRUD.index(httpExchange, admin);
+            }
+        }
+
+    }
+
+    private Map<String, String> parseURI (String uri) {
+        Map<String, String> actionData = new HashMap<>();
+        String[] pairs = uri.split("/");
+
+        if (pairs.length == 5) {
+            actionData.put(pairs[3], pairs[4]);
+        } else if (pairs.length == 4) {
+            actionData.put(pairs[3], "");
+        } else {
+            actionData.put("", "");
+        }
+
+        return actionData;
+    }
 
 }
