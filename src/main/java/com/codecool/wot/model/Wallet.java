@@ -67,7 +67,7 @@ public class Wallet {
         WalletDAO.getInstance().update(this);
     }
 
-    public void decreseMoney(Double ccSpend) {
+    public void decreaseMoney(Double ccSpend) {
         this.balance -= ccSpend;
         WalletDAO.getInstance().update(this);
     }

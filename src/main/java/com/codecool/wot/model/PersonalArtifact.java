@@ -114,6 +114,6 @@ public class PersonalArtifact {
 
     private void updateWallet() {
         Wallet wallet = WalletDAO.getInstance().getWallet(this.person);
-        wallet.decreseMoney(this.artifact.getPrice());
+        wallet.decreaseMoney(this.artifact.getPrice());
     }
 }
