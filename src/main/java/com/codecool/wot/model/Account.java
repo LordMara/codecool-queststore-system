@@ -1,7 +1,7 @@
 package com.codecool.wot.model;
 
 public abstract class Account {
-    private static Integer lastId = 0;
+    protected static Integer lastId = 0;
     protected String name;
     protected String surname;
     protected String email;
