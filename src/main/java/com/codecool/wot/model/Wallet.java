@@ -63,6 +63,7 @@ public class Wallet {
     public void increaseMoney(Double ccEarn) {
         this.balance += ccEarn;
         this.totalCoolcoinsEarn += ccEarn;
+        // call of method to check if set level on higher
         WalletDAO.getInstance().update(this);
     }
 

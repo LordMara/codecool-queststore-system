@@ -12,8 +12,6 @@ public class Student extends Account implements Codecooler {
 
     public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
-
-        WalletDAO.getInstance().add(new Wallet(this.id));
     }
 
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {

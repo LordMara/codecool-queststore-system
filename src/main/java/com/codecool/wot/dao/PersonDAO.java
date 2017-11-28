@@ -28,6 +28,9 @@ public class PersonDAO {
         try {
             addPersonToDatabase(person);
             this.persons.add(person);
+            if (person instanceof Student) {
+                WalletDAO.getInstance().add(new Wallet(person.getId()));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -152,8 +155,8 @@ public class PersonDAO {
 
     private PreparedStatement createAddPreparedStatement(Connection con, Account person) throws SQLException {
         String role = "";
-        String query = "INSERT INTO persons (name, surname, email,  phone, login, password, role)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO persons (name, surname, email, login, password, role)" +
+                " VALUES (?, ?, ?, ?, ?, ?);";
 
         if (person instanceof Mentor) {
             role = "mentor";
@@ -166,26 +169,24 @@ public class PersonDAO {
         ps.setString(1, person.getName());
         ps.setString(2, person.getSurname());
         ps.setString(3, person.getEmail());
-        ps.setString(4, person.getPhone());
-        ps.setString(5, person.getLogin());
-        ps.setString(6, person.getPassword());
-        ps.setString(7, role);
+        ps.setString(4, person.getLogin());
+        ps.setString(5, person.getPassword());
+        ps.setString(6, role);
 
         return ps;
     }
 
     private PreparedStatement createUpdatePreparedStatement(Connection con, Account person) throws SQLException {
-        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  phone = ?, login = ?, password = ?" +
+        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  login = ?, password = ?" +
                 " WHERE personId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, person.getName());
         ps.setString(2, person.getSurname());
         ps.setString(3, person.getEmail());
-        ps.setString(4, person.getPhone());
-        ps.setString(5, person.getLogin());
-        ps.setString(6, person.getPassword());
-        ps.setInt(7, person.getId());
+        ps.setString(4, person.getLogin());
+        ps.setString(5, person.getPassword());
+        ps.setInt(6, person.getId());
 
         return ps;
     }
