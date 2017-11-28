@@ -156,7 +156,7 @@ public class WalletDAO {
         ps.setInt(1, wallet.getPerson().getId());
         ps.setDouble(2, wallet.getTotalCoolcoinsEarn());
         ps.setDouble(3, wallet.getBalance());
-        ps.setInt(1, wallet.getLevel().getId());
+        ps.setInt(4, wallet.getLevel().getId());
 
         return ps;
     }
