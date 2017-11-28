@@ -81,7 +81,7 @@ public class StudentCRUD {
         Account student = dao.getPerson(Integer.valueOf(id));
         dao.remove(student);
 
-        String uriPath = String.format("/admin/%s/mentors",mentor.getId().toString());
+        String uriPath = String.format("/mentor/%s/studentSurname",mentor.getId().toString());
 
         httpExchange.getResponseHeaders().set("Location", uriPath);
         httpExchange.sendResponseHeaders(302,-1);
