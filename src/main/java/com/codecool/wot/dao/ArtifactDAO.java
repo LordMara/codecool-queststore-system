@@ -83,7 +83,7 @@ public class ArtifactDAO {
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
-                Integer id = result.getInt("personId");
+                Integer id = result.getInt("artifactId");
                 String name = result.getString("name");
                 String description = result.getString("description");
                 Double price = result.getDouble("price");
