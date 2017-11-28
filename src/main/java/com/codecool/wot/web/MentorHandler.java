@@ -26,6 +26,7 @@ public class MentorHandler implements HttpHandler {
                 mentor = (Mentor)PersonDAO.getInstance().getPerson(userId);
             }
 
+            System.out.println(parseURIToGetId(uri.getPath()));
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor.html");
                 JtwigModel model = JtwigModel.newModel();
@@ -54,7 +55,12 @@ public class MentorHandler implements HttpHandler {
     private String parseURIToGetId(String uri) {
         String userIdFromURI = "";
         String[] pairs = uri.split("/");
-        userIdFromURI = pairs[2];
+        try {
+            userIdFromURI = pairs[2];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
 
         return userIdFromURI;
     }
