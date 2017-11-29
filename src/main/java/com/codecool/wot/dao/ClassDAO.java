@@ -2,7 +2,9 @@ package com.codecool.wot.dao;
 
 import com.codecool.wot.interfaces.Codecooler;
 import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.SchoolClass;
+import com.codecool.wot.model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,6 +114,48 @@ public class ClassDAO {
             e.printStackTrace();
             System.exit(0);
         }
+    }
+
+    public List<Account> getStudents(SchoolClass schoolClass) {
+        List<Account> students = new LinkedList<>();
+        for (Account candidate: schoolClass.getPersons()) {
+            if (candidate instanceof Student) {
+                students.add(candidate);
+            }
+        }
+        return students;
+    }
+
+    public List<Account> getStudents(Integer classId) {
+        List<Account> students = new LinkedList<>();
+        SchoolClass schoolClass = getClass(classId);
+        for (Account candidate: schoolClass.getPersons()) {
+            if (candidate instanceof Student) {
+                students.add(candidate);
+            }
+        }
+        return students;
+    }
+
+    public List<Account> getMentos(SchoolClass schoolClass) {
+        List<Account> mentors = new LinkedList<>();
+        for (Account candidate: schoolClass.getPersons()) {
+            if (candidate instanceof Mentor) {
+                mentors.add(candidate);
+            }
+        }
+        return mentors;
+    }
+
+    public List<Account> getMentos(Integer classId) {
+        List<Account> mentors = new LinkedList<>();
+        SchoolClass schoolClass = getClass(classId);
+        for (Account candidate: schoolClass.getPersons()) {
+            if (candidate instanceof Mentor) {
+                mentors.add(candidate);
+            }
+        }
+        return mentors;
     }
 
     private void loadClassesFromDatabase() {
