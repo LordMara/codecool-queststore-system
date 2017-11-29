@@ -27,5 +27,46 @@
         {% endfor %}
     </table>
 </div>
+<div class="two-columns">
+    <div class="center-content">
+        <!--moje artefakty-->
+        <h3 class="label">My artifacts</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>When Purchased</th>
+            </tr>
+            {% for artifact in personalArtifact %}
+            {% if ( person == artifact.person ) %}
+            <tr>
+                <td>{{ artifact.artifact.name }}</td>
+                <td>{{ artifact.status }}</td>
+                <td>{{ artifact.purchaseDate }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    <div class="center-content">
+        <h3 class="label">My quests</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>When Achieved</th>
+            </tr>
+            {% for bill in bills %}
+            {% if ( person == bill.person ) %}
+            <tr>
+                <td>{{ bill.quest.name }}</td>
+                <td>{{ bill.status }}</td>
+                <td>{{ bill.achieveDate }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
 
 {% endblock %}

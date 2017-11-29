@@ -82,7 +82,9 @@ header {
 }
 .center-content{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    justify-items: center;
     margin-top: 5%;
     margin-bottom: 5%;
 }
@@ -108,7 +110,7 @@ footer a{
 
 .label { 
     font-family: sans-serif;
-    display: block;
+    display: inline-block;
     font-size: 22px;
     font-weight: 700;
     color: red;
@@ -242,7 +244,7 @@ table {
     order: 1;
     padding: 20px;
     background-color: #2d3343;
-    border-radius: 3px;
+    border-radius: 5px;
     color: cornflowerblue;
 }
 
@@ -269,4 +271,10 @@ th {
     background-color: #2d3343;
     border-radius: 3px;
     color: cornflowerblue;
+}
+
+.two-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
