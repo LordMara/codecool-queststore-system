@@ -9,7 +9,6 @@
         <thead>
             <caption class="label" align="top">Wallet</caption>
             <tr>
-                <th>Name</th>
                 <th>Total</th>
                 <th>Balance</th>
                 <th>Level</th>
@@ -18,20 +17,19 @@
 
         {% for wallet in wallets %}
             {% if ( person == wallet.person ) %}
+
         <tr>
-            <td>{{ name }}</td>
             <td>{{ wallet.totalCoolcoinsEarn }}</td>
             <td>{{ wallet.balance }}</td>
             <td>{{ wallet.level.name }}</td>
         </tr>
-            {% endif %}
-        {% endfor %}
     </table>
 </div>
 <div class="two-columns">
     <div class="center-content side-table">
         <!--moje artefakty-->
         <table>
+
             <thead>
                 <caption class="label" align="top">My artifacts</caption>
                 <tr>
@@ -42,6 +40,7 @@
             </thead>
             {% for artifact in personalArtifact %}
             {% if ( person == artifact.person ) %}
+
             <tr>
                 <td>{{ artifact.artifact.name }}</td>
                 <td>{{ artifact.status }}</td>
