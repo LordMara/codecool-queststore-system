@@ -6,11 +6,12 @@
 
 <div class="center-content">
     <h3 class="label">Welcome in store</h3>
-    <h2>BALANCE : {{wallet.balance}}</h2>
+    <h2 class="label2">BALANCE : {{wallet.balance}}</h2>
 </div>
 <div class="two-columns">
     <div class="center-content">
         <table>
+            <thead>
             <caption class="label" align="top">Artifacts to buy </caption>
            <tr>
                 <th>Name</th>
@@ -18,31 +19,44 @@
                 <th>Price</th>
                 <th>Buy</th>
             </tr>
+            </thead>
             {% for artifact in artifacts %}
             <tr>
                 <td>{{ artifact.name }}</td>
                 <td>{{ artifact.description }}</td>
                 <td>{{ artifact.price }}</td>
+
                 <td><a href="/student/{{student.id}}/buyArtifact/{{artifact.id}}">BUY</a></td>
             </tr>
             {% endfor %}
         </table>
     </div>
     <div class="center-content">
-        <table>  <caption class="label" align="top">Available quests </caption>
+        <table>
+            <thead>
+
+  <caption class="label" align="top">Available quests </caption>
+
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Take</th>
             </tr>
+            </thead>
+
             {% for quest in quests %}
             <tr>
                 <td>{{ quest.name }}</td>
                 <td>{{ quest.description }}</td>
                 <td>{{ quest.price }}</td>
+                <td> <input type="checkbox"> </td>
             </tr>
             {% endfor %}
         </table>
     </div>
-</div>      
+</div>
+<div class="center-content">
+    <input type="submit" class="button" name="checkout" value="checkout">
+</div>
 {% endblock %}

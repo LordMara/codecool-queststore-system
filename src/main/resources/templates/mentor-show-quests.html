@@ -17,14 +17,14 @@
             </tr>
         </thead>
 
-            {% for quest in quests %}
-            <tr>
-                <td>{{ quest.name }}</td>
-                <td>{{ quest.description }}</td>
-                <td>{{ quest.price }}</td>
+        {% for quest in quests %}
+        <tr>
+            <td>{{ quest.name }}</td>
+            <td>{{ quest.description }}</td>
+            <td>{{ quest.price }}</td>
 
-            </tr>
-            {% endfor %}
+        </tr>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}
