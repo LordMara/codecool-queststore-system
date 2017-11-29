@@ -3,6 +3,7 @@ package com.codecool.wot.controller;
 import com.codecool.wot.dao.ArtifactDAO;
 import com.codecool.wot.model.Artifact;
 import com.codecool.wot.model.Mentor;
+import com.codecool.wot.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;

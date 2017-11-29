@@ -5,43 +5,33 @@
 {% block content %}
 
 <div class="center-content">
-    <table class="wallet">
-        <thead>
-            <caption class="label" align="top">Wallet</caption>
-            <tr>
-                <th>Name</th>
-                <th>Total</th>
-                <th>Balance</th>
-                <th>Level</th>
-            </tr>
-        </thead>
-
-        {% for wallet in wallets %}
-            {% if ( person == wallet.person ) %}
+    <h3 class="label">Wallet</h3>
+</div>
+<div class="center-content">
+    <table>
         <tr>
-            <td>{{ name }}</td>
+            <th>Total</th>
+            <th>Balance</th>
+            <th>Level</th>
+        </tr>
+        <tr>
             <td>{{ wallet.totalCoolcoinsEarn }}</td>
             <td>{{ wallet.balance }}</td>
             <td>{{ wallet.level.name }}</td>
         </tr>
-            {% endif %}
-        {% endfor %}
     </table>
 </div>
 <div class="two-columns">
     <div class="center-content side-table">
-        <!--moje artefakty-->
+        
         <table>
-            <thead>
-                <caption class="label" align="top">My artifacts</caption>
-                <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>When Purchased</th>
-                </tr>
-            </thead>
-            {% for artifact in personalArtifact %}
-            {% if ( person == artifact.person ) %}
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>When Purchased</th>
+            </tr>
+            {% for artifact in artifacts %}
+            {% if ( student == artifact.person ) %}
             <tr>
                 <td>{{ artifact.artifact.name }}</td>
                 <td>{{ artifact.status }}</td>

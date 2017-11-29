@@ -6,16 +6,29 @@
 
 <div class="center-content">
     <h3 class="label">Welcome in store</h3>
-    <!--ile mam piniazkow-->
+    <h2>BALANCE : {{wallet.balance}}</h2>
 </div>
 <div class="two-columns">
     <div class="center-content">
-
-        <!--artefakty do kupienia-->
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Buy</th>
+            </tr>
+            {% for artifact in artifacts %}
+            <tr>
+                <td>{{ artifact.name }}</td>
+                <td>{{ artifact.description }}</td>
+                <td>{{ artifact.price }}</td>
+                <td><a href="/student/{{student.id}}/buyArtifact/{artifact.id}}">BUY</a></td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
     <div class="center-content">
-
         <!--questy do zrobienia-->
     </div>
-</div>
+</div>      
 {% endblock %}
