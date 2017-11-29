@@ -80,13 +80,13 @@ public class MentorCRUD {
             httpExchange.sendResponseHeaders(302,-1);
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/edit-mentor.html");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-edit-mentor.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("mentor", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();

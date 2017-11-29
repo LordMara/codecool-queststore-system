@@ -10,21 +10,15 @@
 <div class="center-content">
     <table>
         <tr>
-            <th>Name</th>
             <th>Total</th>
             <th>Balance</th>
             <th>Level</th>
         </tr>
-        {% for wallet in wallets %}
-            {% if ( person == wallet.person ) %}
         <tr>
-            <td>{{ name }}</td>
             <td>{{ wallet.totalCoolcoinsEarn }}</td>
             <td>{{ wallet.balance }}</td>
             <td>{{ wallet.level.name }}</td>
         </tr>
-            {% endif %}
-        {% endfor %}
     </table>
 </div>
 <div class="two-columns">
@@ -37,8 +31,8 @@
                 <th>Status</th>
                 <th>When Purchased</th>
             </tr>
-            {% for artifact in personalArtifact %}
-            {% if ( person == artifact.person ) %}
+            {% for artifact in artifacts %}
+            {% if ( student == artifact.person ) %}
             <tr>
                 <td>{{ artifact.artifact.name }}</td>
                 <td>{{ artifact.status }}</td>
