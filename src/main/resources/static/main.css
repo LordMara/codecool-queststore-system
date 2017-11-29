@@ -256,9 +256,10 @@ table {
 
 }
 
-/*table thead {*/
-    /*position: fixed;*/
-/*}*/
+thead tr{
+    display: block;
+    position: relative;
+}
 
 
 table tbody, table thead
@@ -293,6 +294,10 @@ th {
     flex-direction: row;
     justify-content: center;
     width: 100vw;
+}
+
+.wallet {
+    height: auto;
 }
 
 /*===================================================================*/
