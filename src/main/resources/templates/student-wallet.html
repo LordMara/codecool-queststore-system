@@ -6,13 +6,16 @@
 
 <div class="center-content">
     <table>
-        <caption class="label" align="top">Wallet</caption>
-        <tr>
-            <th>Name</th>
-            <th>Total</th>
-            <th>Balance</th>
-            <th>Level</th>
-        </tr>
+        <thead>
+            <caption class="label" align="top">Wallet</caption>
+            <tr>
+                <th>Name</th>
+                <th>Total</th>
+                <th>Balance</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+
         {% for wallet in wallets %}
             {% if ( person == wallet.person ) %}
         <tr>
@@ -29,12 +32,14 @@
     <div class="center-content side-table">
         <!--moje artefakty-->
         <table>
-            <caption class="label" align="top">My artifacts</caption>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>When Purchased</th>
-            </tr>
+            <thead>
+                <caption class="label" align="top">My artifacts</caption>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>When Purchased</th>
+                </tr>
+            </thead>
             {% for artifact in personalArtifact %}
             {% if ( person == artifact.person ) %}
             <tr>
@@ -48,12 +53,15 @@
     </div>
     <div class="center-content side-table">
         <table>
-            <caption class="label" align="top">My quests</caption>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>When Achieved</th>
-            </tr>
+            <thead>
+                <caption class="label" align="top">My quests</caption>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>When Achieved</th>
+                </tr>
+            </thead>
+
             {% for bill in bills %}
             {% if ( person == bill.person ) %}
             <tr>

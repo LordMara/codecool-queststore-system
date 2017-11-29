@@ -7,11 +7,13 @@
 <div class="center-content">
     <table>
         <caption class="label" align="top">Exp Levels</caption>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Value</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+            </tr>
+        </thead>
         {% for level in levels %}
         <tr>
             <td>{{ level.name }}</td>

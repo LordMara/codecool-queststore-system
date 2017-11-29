@@ -8,20 +8,25 @@
 <!--</div>-->
 <div class="center-content">
     <table>
-        <caption class="label" align="top">Quests</caption>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-        </tr>
-        {% for quest in quests %}
-        <tr>
-            <td>{{ quest.name }}</td>
-            <td>{{ quest.description }}</td>
-            <td>{{ quest.price }}</td>
 
-        </tr>
-        {% endfor %}
+            <caption class="label" align="top">Quests</caption>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+
+            {% for quest in quests %}
+            <tr>
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.description }}</td>
+                <td>{{ quest.price }}</td>
+
+            </tr>
+            {% endfor %}
     </table>
 </div>
 {% endblock %}

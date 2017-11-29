@@ -9,13 +9,15 @@
     <div class="center-content">
         <table>
             <caption class="label" align="top">Students</caption>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
             {% for person in persons %}
             <tr>
                 <td>{{ person.name }}</td>

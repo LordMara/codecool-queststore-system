@@ -247,18 +247,32 @@ ol > li > ul > li:hover{
 
 table {
     display: block;
+    table-layout: fixed;
     padding: 20px;
     background-color: #2d3343;
     border-radius: 5px;
     color: cornflowerblue;
     height: 30vh;
-    overflow:auto;
+
 }
+
+/*table thead {*/
+    /*position: fixed;*/
+/*}*/
+
 
 table tbody, table thead
 {
     display: block;
+
 }
+
+
+table tbody {
+    height: 80%;
+    overflow-y: auto;
+}
+
 
 td > ul > li, td > ul > li > a, td > a, td {
     padding: 10px;
