@@ -240,15 +240,24 @@ ol > li > ul > li:hover{
                                TABELE
 ====================================================================
 */
+.side-table {
+    margin: 40px;
+    width: 40vw;
+}
+
 table {
-    order: 1;
-    margin: 20px;
+    display: block;
     padding: 20px;
     background-color: #2d3343;
     border-radius: 5px;
     color: cornflowerblue;
-    height: 30%;
-    overflow: auto;
+    height: 30vh;
+    overflow:auto;
+}
+
+table tbody, table thead
+{
+    display: block;
 }
 
 td > ul > li, td > ul > li > a, td > a, td {
@@ -264,6 +273,14 @@ th {
     color: cornflowerblue;
     background-color: #2d3343;
 }
+
+.two-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+}
+
 /*===================================================================*/
 
 .welcome {
@@ -274,10 +291,4 @@ th {
     background-color: #2d3343;
     border-radius: 3px;
     color: cornflowerblue;
-}
-
-.two-columns {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
