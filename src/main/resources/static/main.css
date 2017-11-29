@@ -242,10 +242,13 @@ ol > li > ul > li:hover{
 */
 table {
     order: 1;
+    margin: 20px;
     padding: 20px;
     background-color: #2d3343;
     border-radius: 5px;
     color: cornflowerblue;
+    height: 30%;
+    overflow: auto;
 }
 
 td > ul > li, td > ul > li > a, td > a, td {
