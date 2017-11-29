@@ -12,8 +12,8 @@
     <div class="center-content">
         <table>
             <thead>
-            <caption class="label" align="top">Artifacts</caption>
-            <tr>
+            <caption class="label" align="top">Artifacts to buy </caption>
+           <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -25,8 +25,8 @@
                 <td>{{ artifact.name }}</td>
                 <td>{{ artifact.description }}</td>
                 <td>{{ artifact.price }}</td>
-                <td><input type="checkbox"></td>
 
+                <td><a href="/student/{{student.id}}/buyArtifact/{{artifact.id}}">BUY</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -34,7 +34,9 @@
     <div class="center-content">
         <table>
             <thead>
-            <caption class="label" align="top">Quests</caption>
+
+  <caption class="label" align="top">Available quests </caption>
+
             <tr>
                 <th>Name</th>
                 <th>Description</th>
@@ -49,7 +51,6 @@
                 <td>{{ quest.description }}</td>
                 <td>{{ quest.price }}</td>
                 <td> <input type="checkbox"> </td>
-
             </tr>
             {% endfor %}
         </table>
