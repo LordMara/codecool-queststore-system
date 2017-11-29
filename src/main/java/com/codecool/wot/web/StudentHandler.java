@@ -11,6 +11,7 @@ import org.jtwig.JtwigTemplate;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +69,14 @@ public class StudentHandler implements HttpHandler {
                 storeCRUD.store(httpExchange, student);
             } else if (action.equals("wallet")) {
                 storeCRUD.wallet(httpExchange, student);
-            } else {
+            } else if (action.equals("buyArtifact")) {
+                try {
+                    storeCRUD.buyArfifact(httpExchange, actionData.get(action), student);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    index(httpExchange,student);
+                }
+            }else {
                 index(httpExchange, student);
             }
         }
