@@ -4,22 +4,22 @@
 
 {% block content %}
 <div class="center-content">
-    <h3 class="label">Edit Mentor: {{ id }}</h3>
+    <h3 class="label">Edit Mentor: {{ mentor.id }}</h3>
 </div>
 <div class="center-content">
     <form class="login" method="POST">
         Mentor's name:
-        <input type="text" name="mentorName" required>
+        <input type="text" name="mentorName" value="{{mentor.name}}" required>
         Mentor's surname:
-        <input type="text" name="mentorSurname" required>
+        <input type="text" name="mentorSurname" value="{{mentor.surname}}" required>
         Mentor's email:
-        <input type="email" name="mentorEmail" required>
+        <input type="email" name="mentorEmail" value="{{mentor.email}}" required>
         Mentor's login:
-        <input type="text" name="mentorLogin" required>
+        <input type="text" name="mentorLogin" value="{{mentor.login}}" required>
         Mentor's password:
-        <input type="password" name="mentorPassword" required>
+        <input type="password" name="mentorPassword" value="{{mentor.password}}" required>
         Confirm password:
-        <input type="password" name="mentorPassword" required>
+        <input type="password" name="mentorPassword" value="{{mentor.password}}" required>
         <input type="submit" name="newMentor" value="save">
     </form>
 </div>
