@@ -1,6 +1,7 @@
 package com.codecool.wot.dao;
 
 import com.codecool.wot.model.Quest;
+import com.codecool.wot.model.QuestCategory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,6 +58,17 @@ public class QuestDAO {
         }
     }
 
+    public void setAllQuestCategoryToNull(QuestCategory questCategory) {
+        try {
+            changeQuestCategoryToNullInMemory(questCategory);
+            changeQuestCategoryToNullInDatabase(questCategory);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     public Quest getQuest(Integer questId) {
         Quest quest = null;
         for (Quest candidate : this.quests) {
@@ -87,8 +99,9 @@ public class QuestDAO {
                 String name = result.getString("name");
                 String description = result.getString("description");
                 Double price = result.getDouble("price");
+                Integer questCategoryId = result.getInt("quest_category_id");
 
-                quests.add(new Quest(questId, name, description, price));
+                quests.add(new Quest(questId, name, description, price, questCategoryId));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,6 +136,23 @@ public class QuestDAO {
         }
     }
 
+    private void changeQuestCategoryToNullInMemory(QuestCategory questCategory) {
+        for (Quest quest: this.quests) {
+            if (quest.getQuestCategory().equals(questCategory)) {
+                quest.setQuestCategory();
+            }
+        }
+    }
+
+    private void changeQuestCategoryToNullInDatabase(QuestCategory questCategory) throws  SQLException {
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement ps = createNullAllPreparedStatement(con, questCategory)) {
+            con.setAutoCommit(false);
+            ps.executeUpdate();
+            con.commit();
+        }
+    }
+
     private PreparedStatement createSelectPreparedStatement(Connection con) throws SQLException {
         String query = "SELECT * FROM quests;";
         PreparedStatement ps = con.prepareStatement(query);
@@ -131,24 +161,26 @@ public class QuestDAO {
     }
 
     private PreparedStatement createAddPreparedStatement(Connection con, Quest quest) throws SQLException {
-        String query = "INSERT INTO quests (name, description, price) VALUES (?, ?, ?);";
+        String query = "INSERT INTO quests (name, description, price, quest_category_id) VALUES (?, ?, ?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, quest.getName());
         ps.setString(2, quest.getDescription());
         ps.setDouble(3, quest.getPrice());
+        ps.setInt(4, quest.getQuestCategory().getId());
 
         return ps;
     }
 
     private PreparedStatement createUpdatePreparedStatement(Connection con, Quest quest) throws SQLException {
-        String query = "UPDATE quests SET name = ?, description = ?, price = ? WHERE questId = ?;";
+        String query = "UPDATE quests SET name = ?, description = ?, price = ?, quest_category_id = ? WHERE questId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, quest.getName());
         ps.setString(2, quest.getDescription());
         ps.setDouble(3, quest.getPrice());
-        ps.setInt(4, quest.getId());
+        ps.setInt(4, quest.getQuestCategory().getId());
+        ps.setInt(5, quest.getId());
 
         return ps;
     }
@@ -158,6 +190,15 @@ public class QuestDAO {
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, quest.getId());
+
+        return ps;
+    }
+
+    private PreparedStatement createNullAllPreparedStatement(Connection con, QuestCategory questCategory) throws SQLException {
+        String query = "UPDATE quests SET quest_category_id = NULL WHERE quest_category_id = ?;";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setInt(1, questCategory.getId());
 
         return ps;
     }

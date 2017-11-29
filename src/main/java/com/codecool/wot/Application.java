@@ -31,6 +31,7 @@ class Application {
         PersonDAO.getInstance();
         CookieDAO.getInstance();
         ClassDAO.getInstance();
+        QuestCategoryDAO.getInstance();
         ArtifactDAO.getInstance();
         QuestDAO.getInstance();
         LevelDAO.getInstance();

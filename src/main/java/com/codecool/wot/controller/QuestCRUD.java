@@ -76,6 +76,7 @@ public class QuestCRUD {
             e.printStackTrace();
             return null;
         }
+        // add mechanism to set quest category
         return new Quest(name, description, Double.valueOf(price));
     }
 
