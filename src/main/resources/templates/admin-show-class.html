@@ -22,8 +22,8 @@
                 <td>{{ mentor.name }}</td>
                 <td>{{ mentor.surname }}</td>
                 <td>{{ mentor.email }}</td>
-                <td><a href="/admin/{{admin.id}}/editMentor/{{person.id}}">Edit</a></td>
-                <td><a href="/admin/{{admin.id}}/removeMentor/{{person.id}}">Delete</a></td>
+                <td><a href="/admin/{{admin.id}}/editMentor/{{mentor.id}}">Edit</a></td>
+                <td><a href="/admin/{{admin.id}}/removeMentor/{{mentor.id}}">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -46,8 +46,8 @@
                 <td>{{ student.name }}</td>
                 <td>{{ student.surname }}</td>
                 <td>{{ student.email }}</td>
-                <td><a href="/admin/{{admin.id}}/editStudent/{{person.id}}">Edit</a></td>
-                <td><a href="/admin/{{admin.id}}/removeStudent/{{person.id}}">Delete</a></td>
+                <td><a href="/admin/{{admin.id}}/editStudent/{{student.id}}">Edit</a></td>
+                <td><a href="/admin/{{admin.id}}/removeStudent/{{student.id}}">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
