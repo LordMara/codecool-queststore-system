@@ -6,24 +6,23 @@
     <nav class="nav">
         <div>
             <ol>
-                <li><a href="/mentor">Home</a></li>
+                <li><a href="/mentor/{{mentor.id}}">Home</a></li>
                 <li><a href="mentor-student-nav">Student</a>
                 <ul>
-                    <li><a href="/mentor-create-student">Create</a></li>
-                    <li><a href="/mentor-show-students">Show all</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/addStudent">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/students">Show all</a></li>
                 </ul>
             </li>
                 <li><a href="mentor-artifact-nav">Artifact</a>
                 <ul>
-                    <li><a href="/mentor-create-artifact">Create</a></li>
-                    <li><a href="/mentor-show-artifacts">Show all</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/addArtifact">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/artifacts">Show all</a></li>
                 </ul>
             </li>
                 <li><a href="mentor-quest-nav">Quest</a>
                 <ul>
-                    <li><a href="/mentor-create-quest">Create</a></li>
-                    <li><a href="/mentor-create-category">Create category</a></li>
-                    <li><a href="/mentor-show-quests">Show all</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/addQuest">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/quests">Show all</a></li>
                 </ul>
             </li>
                 <li><a href="/logout">Logout</a></li>
@@ -33,5 +32,5 @@
 {% endblock %}
 
 {% block content %}
-<h3 class="center-content welcome" > Welcome {{name}} </h3>
+<h3 class="center-content welcome" > Welcome {{mentor.name}} </h3>
 {% endblock %}

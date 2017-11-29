@@ -89,6 +89,26 @@ public class PersonDAO {
         return person;
     }
 
+    public List<Account> getStudents() {
+        List<Account> foundPersons = new LinkedList<>();
+        for (Account candidate : this.persons) {
+            if (candidate instanceof Student) {
+                foundPersons.add(candidate);
+            }
+        }
+        return foundPersons;
+    }
+
+    public List<Account> getMentors() {
+        List<Account> foundPersons = new LinkedList<>();
+        for (Account candidate : this.persons) {
+            if (candidate instanceof Mentor) {
+                foundPersons.add(candidate);
+            }
+        }
+        return foundPersons;
+    }
+
     private void loadPersonsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -201,7 +221,9 @@ public class PersonDAO {
     }
 
     private void removeFromApplication(Account person) {
-        ClassDAO.getInstance().removePerson(person);
+        if (ClassDAO.getInstance().getClass(person) != null) {
+            ClassDAO.getInstance().removePerson(person);
+        }
         if (person instanceof Student) {
             BillDAO.getInstance().removeAllBills(person);
             PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);

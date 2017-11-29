@@ -80,6 +80,18 @@ public class ClassDAO {
         return schoolClass;
     }
 
+    public SchoolClass getClass(Account person) {
+        SchoolClass schoolClass = null;
+        for (SchoolClass candidate : this.classes) {
+            for (Account member: candidate.getPersons()) {
+                if (member.equals(person)) {
+                    schoolClass = candidate;
+                }
+            }
+        }
+        return schoolClass;
+    }
+
     public void addPerson(SchoolClass schoolClass, Account person) {
         try {
             addPersonToClassInDatabase(schoolClass, person);
