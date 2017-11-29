@@ -3,24 +3,28 @@
 {% block title %}Show quests{% endblock %}
 
 {% block content %}
-<div class="center-content">
-    <h3 class="label">Quests</h3>
-</div>
+<!--<div class="center-content">-->
+    <!--<h3 class="label">Quests</h3>-->
+<!--</div>-->
 <div class="center-content">
     <table>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-        </tr>
-        {% for quest in quests %}
-        <tr>
-            <td>{{ quest.name }}</td>
-            <td>{{ quest.description }}</td>
-            <td>{{ quest.price }}</td>
+        <thead>
+            <caption class="label" align="top">Quests</caption>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
 
-        </tr>
-        {% endfor %}
+            {% for quest in quests %}
+            <tr>
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.description }}</td>
+                <td>{{ quest.price }}</td>
+
+            </tr>
+            {% endfor %}
     </table>
 </div>
 {% endblock %}

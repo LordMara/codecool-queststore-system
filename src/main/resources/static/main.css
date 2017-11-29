@@ -240,13 +240,40 @@ ol > li > ul > li:hover{
                                TABELE
 ====================================================================
 */
+.side-table {
+    margin: 40px;
+    width: 40vw;
+}
+
 table {
-    order: 1;
+    display: block;
+    table-layout: fixed;
     padding: 20px;
     background-color: #2d3343;
     border-radius: 5px;
     color: cornflowerblue;
+    height: 30vh;
+
 }
+
+thead tr{
+    display: block;
+    position: relative;
+}
+
+
+table tbody, table thead
+{
+    display: block;
+
+}
+
+
+table tbody {
+    height: 80%;
+    overflow-y: auto;
+}
+
 
 td > ul > li, td > ul > li > a, td > a, td {
     padding: 10px;
@@ -261,6 +288,18 @@ th {
     color: cornflowerblue;
     background-color: #2d3343;
 }
+
+.two-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+}
+
+.wallet {
+    height: auto;
+}
+
 /*===================================================================*/
 
 .welcome {
@@ -271,10 +310,4 @@ th {
     background-color: #2d3343;
     border-radius: 3px;
     color: cornflowerblue;
-}
-
-.two-columns {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
