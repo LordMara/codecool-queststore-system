@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="center-content">
+
     <table class="wallet">
         <thead>
             <caption class="label" align="top">Wallet</caption>
@@ -18,18 +19,19 @@
         {% for wallet in wallets %}
             {% if ( person == wallet.person ) %}
 
-        <tr>
-            <td>{{ wallet.totalCoolcoinsEarn }}</td>
-            <td>{{ wallet.balance }}</td>
-            <td>{{ wallet.level.name }}</td>
-        </tr>
+                <tr>
+                    <td>{{ wallet.totalCoolcoinsEarn }}</td>
+                    <td>{{ wallet.balance }}</td>
+                    <td>{{ wallet.level.name }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
     </table>
 </div>
+
 <div class="two-columns">
     <div class="center-content side-table">
-        <!--moje artefakty-->
         <table>
-
             <thead>
                 <caption class="label" align="top">My artifacts</caption>
                 <tr>
@@ -50,6 +52,7 @@
             {% endfor %}
         </table>
     </div>
+    
     <div class="center-content side-table">
         <table>
             <thead>
