@@ -45,7 +45,6 @@ public class MentorHandler implements HttpHandler {
         StudentCRUD studentCRUD = StudentCRUD.getInstance();
         ArtifactCRUD artifactCRUD = ArtifactCRUD.getInstance();
         QuestCRUD questCRUD = QuestCRUD.getInstance();
-        StoreCRUD storeCRUD = StoreCRUD.getInstance();
 
         String uri = httpExchange.getRequestURI().toString();
         Map<String, String> actionData = parseURI(uri);
@@ -70,8 +69,6 @@ public class MentorHandler implements HttpHandler {
                 questCRUD.addQuest(httpExchange, mentor);
             } else if (action.equals("quests")) {
                 questCRUD.showQuests(httpExchange, mentor);
-            } else if (action.equals("studentWallet")) {
-                storeCRUD.mentorWallet(httpExchange, actionData.get(action), mentor);
             }else index(httpExchange, mentor);
         }
 
