@@ -1,6 +1,7 @@
 package com.codecool.wot.controller;
 
 import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.dao.PersonDAO;
 import com.codecool.wot.model.Admin;
 import com.codecool.wot.model.SchoolClass;
 import com.sun.net.httpserver.HttpExchange;
@@ -42,6 +43,21 @@ public class ClassCRUD {
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
+    public void showClass(HttpExchange httpExchange, String classId, Admin admin) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-show-class.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("classes", ClassDAO.getInstance().read());
+        model.with("admin", admin);
+        model.with("students", ClassDAO.getInstance().getStudents(Integer.valueOf(classId)));
+        model.with("mentors", ClassDAO.getInstance().getMentos(Integer.valueOf(classId)));
+        String response = template.render(model);
+
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();

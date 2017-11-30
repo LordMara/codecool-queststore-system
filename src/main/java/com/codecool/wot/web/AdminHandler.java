@@ -87,6 +87,8 @@ public class AdminHandler implements HttpHandler {
                 mentorCRUD.showMentors(httpExchange, admin);
             } else if (action.equals("levels")) {
                 levelCRUD.showLvl(httpExchange,admin);
+            } else if (action.equals("class")) {
+                classCRUD.showClass(httpExchange,actionData.get(action), admin);
             } else {
                 index(httpExchange, admin);
             }

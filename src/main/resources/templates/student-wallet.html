@@ -15,17 +15,12 @@
                 <th>Level</th>
             </tr>
         </thead>
+        <tr>
+            <td>{{ wallet.totalCoolcoinsEarn }}</td>
+            <td>{{ wallet.balance }}</td>
+            <td>{{ wallet.level.name }}</td>
+        </tr>
 
-        {% for wallet in wallets %}
-            {% if ( person == wallet.person ) %}
-
-                <tr>
-                    <td>{{ wallet.totalCoolcoinsEarn }}</td>
-                    <td>{{ wallet.balance }}</td>
-                    <td>{{ wallet.level.name }}</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
     </table>
 </div>
 
@@ -36,7 +31,7 @@
             <caption class="label" align="top">My artifacts</caption>
             <tr>
                 <th>Name</th>
-                <th>Status</th>
+                <th>Description</th>
                 <th>When Purchased</th>
             </tr>
           </thead>
@@ -44,8 +39,8 @@
 
             <tr>
                 <td>{{ artifact.artifact.name }}</td>
-                <td>{{ artifact. }}</td>
-                <td>{{ artifact.purchaseDate }}</td>
+                <td>{{ artifact.artifact.description }}</td>
+                <td>{{ artifact.parseDate() }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -57,7 +52,7 @@
                 <caption class="label" align="top">My quests</caption>
                 <tr>
                     <th>Name</th>
-                    <th>Status</th>
+                    <th>Description</th>
                     <th>When Achieved</th>
                 </tr>
             </thead>
@@ -65,8 +60,8 @@
             {% for bill in bills %}
             <tr>
                 <td>{{ bill.quest.name }}</td>
-                <td>{{ bill.status }}</td>
-                <td>{{ bill.achieveDate }}</td>
+                <td>{{ bill.quest.description }}</td>
+                <td>{{ bill.parseDate() }}</td>
             </tr>
             {% endfor %}
         </table>
