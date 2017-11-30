@@ -2,17 +2,16 @@
 
 {% block content %}
 
-<h3 class="label">Create Exp Level</h3>
-
 <div class="center-content">
     <form method="POST" class="login">
+        <h3 class="label">Create Exp Level</h3>
         Level name:
         <input type="text" name="className" required>
         Treshold:
         <input type="number" name="treshold" min="0" required>
         Description:
         <textarea name="description"></textarea>
-        <input type="submit" value="save">
+        <input type="submit" class="button" value="save">
     </form>
 </div>
 
