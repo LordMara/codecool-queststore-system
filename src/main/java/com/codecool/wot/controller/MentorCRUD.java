@@ -2,9 +2,7 @@ package com.codecool.wot.controller;
 
 import com.codecool.wot.dao.ClassDAO;
 import com.codecool.wot.dao.PersonDAO;
-import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Admin;
-import com.codecool.wot.model.Mentor;
+import com.codecool.wot.model.*;
 import com.sun.net.httpserver.HttpExchange;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -127,6 +125,9 @@ public class MentorCRUD {
         String email;
         String login;
         String password;
+        String classId;
+
+        Mentor mentor = null;
 
         String[] pairs = formData.split("&");
 
@@ -136,27 +137,43 @@ public class MentorCRUD {
             email = new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8");
             login = new URLDecoder().decode(pairs[3].split("=")[1], "UTF-8");
             password = new URLDecoder().decode(pairs[4].split("=")[1], "UTF-8");
+            classId = new URLDecoder().decode(pairs[6].split("=")[1], "UTF-8");
+
+            mentor = new Mentor(name, surname, email, login, password);
+
+            SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
+            schoolClass.assignPerson(mentor);
 
 
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
         }
-        return new Mentor(name, surname, email, login, password);
+
+        return mentor;
     }
 
-    private Account editFromForm(String formData, String id) {
+    private Mentor editFromForm(String formData, String id) {
         System.out.println(formData);
 
-        Account mentor = PersonDAO.getInstance().getPerson(Integer.valueOf(id));
+        String classId;
+
+        Mentor mentor = (Mentor) PersonDAO.getInstance().getPerson(Integer.valueOf(id));
+
         String[] pairs = formData.split("&");
 
         try {
+
             mentor.setName(new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8"));
             mentor.setSurname(new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8"));
             mentor.setEmail(new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8"));
             mentor.setLogin(new URLDecoder().decode(pairs[3].split("=")[1], "UTF-8"));
             mentor.setPassword(new URLDecoder().decode(pairs[4].split("=")[1], "UTF-8"));
+
+            classId = new URLDecoder().decode(pairs[6].split("=")[1], "UTF-8");
+
+            SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
+            schoolClass.assignPerson(mentor);
+
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             return null;
         }

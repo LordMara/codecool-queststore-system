@@ -36,6 +36,7 @@ public class QuestCRUD {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-create-quest.html");
         JtwigModel model = JtwigModel.newModel();
         String response = template.render(model);
+        model.with("mentor", mentor);
 
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
