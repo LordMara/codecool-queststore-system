@@ -1,38 +1,36 @@
 package com.codecool.wot.model;
 
-public class Student extends Account{
+import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.dao.WalletDAO;
+import com.codecool.wot.interfaces.Codecooler;
 
-
-     private Integer classId;
-//     private Integer teamId;
+public class Student extends Account implements Codecooler {
+    private SchoolClass schoolClass;
 
     public Student(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
     }
 
     public Student( String name, String surname, String email, String login, String password,Integer ID, Integer classId) {
-
         super(name, surname, email, login, password, ID);
-        this.classId = classId;
-//        this.teamId = teamId;
-
+        if (!classId.equals(0)) {
+            this.schoolClass = ClassDAO.getInstance().getClass(classId);
+            this.schoolClass.assignPerson(this);
+        }
     }
 
-    public Integer getClassId() {
-        return this.classId;
+    @Override
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
+    @Override
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
-//
-//    public Integer getTeamId() {
-//        return teamId;
-//    }
-//
-//    public void setTeamId(Integer teamId) {
-//        this.teamId = teamId;
-//    }
 
+    @Override
+    public void setSchoolClass() {
+        this.schoolClass = null;
+    }
 }

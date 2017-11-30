@@ -1,0 +1,29 @@
+{% extends "mentor.html" %}
+
+{% block title %}Show artifacts{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h3 class="label">Artifacts</h3>
+</div>
+<div class="center-content">
+    <table>
+        <thead>
+            <caption class="label" align="top">Artifacts</caption>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        {% for artifact in artifacts %}
+        <tr>
+            <td>{{ artifact.name }}</td>
+            <td>{{ artifact.description }}</td>
+            <td>{{ artifact.price }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

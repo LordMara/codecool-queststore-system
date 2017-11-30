@@ -1,54 +1,41 @@
 package com.codecool.wot;
 
-import com.codecool.wot.model.*;
-import com.codecool.wot.view.*;
-import com.codecool.wot.controller.*;
+import com.codecool.wot.dao.*;
+
+import com.codecool.wot.web.*;
+import com.sun.net.httpserver.HttpServer;
+import java.net.InetSocketAddress;
 
 class Application {
+    public static void main(String[] args) throws Exception {
+        // migrate database at server start
+        DatabaseMigration.migrateDatabase();
+        preloadData();
+        // create a server on port 8000
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
-    public static void main(String[] args) {
+        // set routes
+        server.createContext("/", new LoginHandler());
+        server.createContext("/static", new Static());
+        server.createContext("/admin", new AdminHandler());
+        server.createContext("/mentor", new MentorHandler());
+        server.createContext("/student", new StudentHandler());
+        server.createContext("/logout", new LogoutHandler());
+        server.setExecutor(null); // creates a default executor
 
-        Application app = new Application();
-        app.start();
+        // start listening
+        server.start();
     }
 
-    private void start() {
-
-        CentralController controller = new CentralController();
-
-        controller.startController();
+    private static void preloadData() {
+        PersonDAO.getInstance();
+        CookieDAO.getInstance();
+        ClassDAO.getInstance();
+        ArtifactDAO.getInstance();
+        QuestDAO.getInstance();
+        LevelDAO.getInstance();
+        BillDAO.getInstance();
+        PersonalArtifactDAO.getInstance();
+        WalletDAO.getInstance();
     }
-
 }
-
-//        final String MENTOR_CONTROLLER = "1";
-//        final String ADMIN_CONTROLLER = "2";
-//        final String EXIT = "0";
-//
-//        String choose = "";
-//        String[] menu = {"Mentor ", "Admin"};
-//        AdministratorController admin = new AdministratorController(controller);
-//        MentorController mentor = new MentorController(controller);
-//        View view = new View();
-//
-//        while (! choose.equals("0")){
-//
-//            view.showMenu("Menu",menu, "Bye bye");
-//            choose = view.getStringInput("");
-//
-//            switch (choose){
-//
-//                case MENTOR_CONTROLLER :
-//                    mentor.startController();
-//                    break;
-//
-//                case ADMIN_CONTROLLER :
-//                    admin.startController();
-//                    break;
-//
-//                case EXIT :
-//                    break;
-//            }
-//        }
-//    }
-
