@@ -39,8 +39,8 @@
 
             <tr>
                 <td>{{ artifact.artifact.name }}</td>
-                <td>{{ artifact.description }}</td>
-                <td>{{ artifact.purchaseDate }}</td>
+                <td>{{ artifact.artifact.description }}</td>
+                <td>{{ artifact.parseDate() }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -61,7 +61,7 @@
             <tr>
                 <td>{{ bill.quest.name }}</td>
                 <td>{{ bill.quest.description }}</td>
-                <td>{{ bill.achieveDate }}</td>
+                <td>{{ bill.parseDate() }}</td>
             </tr>
             {% endfor %}
         </table>
