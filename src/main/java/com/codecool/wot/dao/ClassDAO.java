@@ -112,6 +112,7 @@ public class ClassDAO {
             SchoolClass schoolClass = codecooler.getSchoolClass();
             removePersonFromClassInDatabase(schoolClass, person);
             schoolClass.removePerson(person);
+            codecooler.setSchoolClass();
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
