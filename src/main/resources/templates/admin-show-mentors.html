@@ -14,6 +14,7 @@
                         <th>Firstname</th>
                         <th>Lastname</th>
                         <th>Email</th>
+                        <th>Class</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -23,6 +24,7 @@
                         <td>{{ person.name }}</td>
                         <td>{{ person.surname }}</td>
                         <td>{{ person.email }}</td>
+                        <td>{{person.schoolClass.name}}</td>
                         <td><a href="/admin/{{admin.id}}/editMentor/{{person.id}}">Edit</a></td>
                         <td><a href="/admin/{{admin.id}}/removeMentor/{{person.id}}">Delete</a></td>
                     </tr>
