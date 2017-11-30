@@ -4,10 +4,7 @@ import com.codecool.wot.dao.BillDAO;
 import com.codecool.wot.dao.ClassDAO;
 import com.codecool.wot.dao.PersonDAO;
 import com.codecool.wot.dao.QuestDAO;
-import com.codecool.wot.model.Account;
-import com.codecool.wot.model.Bill;
-import com.codecool.wot.model.Mentor;
-import com.codecool.wot.model.Student;
+import com.codecool.wot.model.*;
 import com.sun.net.httpserver.HttpExchange;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -15,6 +12,7 @@ import org.jtwig.JtwigTemplate;
 import java.io.*;
 import java.net.URLDecoder;
 import java.text.ParseException;
+import java.util.stream.Stream;
 
 public class StudentCRUD {
 
@@ -47,7 +45,7 @@ public class StudentCRUD {
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
@@ -102,6 +100,11 @@ public class StudentCRUD {
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
             newBills(formData,Integer.valueOf(id));
+
+            String uriPath = String.format("/mentor/%s/studentWallet/%s",mentor.getId().toString(), id);
+
+            httpExchange.getResponseHeaders().set("Location", uriPath);
+            httpExchange.sendResponseHeaders(302,-1);
         }
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-show-student.html");
@@ -136,8 +139,13 @@ public class StudentCRUD {
         String email;
         String login;
         String password;
+        String classId;
+
+        Student student = null;
 
         String[] pairs = formData.split("&");
+
+        Stream.of(pairs).forEach(System.out::println);
 
         try {
             name = new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8");
@@ -145,13 +153,17 @@ public class StudentCRUD {
             email = new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8");
             login = new URLDecoder().decode(pairs[3].split("=")[1], "UTF-8");
             password = new URLDecoder().decode(pairs[4].split("=")[1], "UTF-8");
+            classId = new URLDecoder().decode(pairs[6].split("=")[1], "UTF-8");
 
-
+            student = new Student(name, surname, email, login, password);
+            SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
+            schoolClass.assignPerson(student);
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
         }
-        return new Student(name, surname, email, login, password);
+
+
+        return student;
     }
 
     private void newBills(String formData, Integer personId) {
