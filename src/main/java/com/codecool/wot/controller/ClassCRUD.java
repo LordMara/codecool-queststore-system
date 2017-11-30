@@ -39,6 +39,7 @@ public class ClassCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-create-class.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("admin", admin);
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
