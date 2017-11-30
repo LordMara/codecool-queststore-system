@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block title %}Mentor{% endblock %}
+
+{% block header %}
+    <nav class="nav">
+        <div>
+            <ol>
+                <li><a href="/mentor/{{mentor.id}}">Home</a></li>
+                <li><a href="mentor-student-nav">Student</a>
+                <ul>
+                    <li><a href="/mentor/{{mentor.id}}/addStudent">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/students">Show all</a></li>
+                </ul>
+            </li>
+                <li><a href="/mentor/{{mentor.id}}">Artifact</a>
+                <ul>
+                    <li><a href="/mentor/{{mentor.id}}/addArtifact">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/artifacts">Show all</a></li>
+                </ul>
+            </li>
+                <li><a href="/mentor/{{mentor.id}}">Quest</a>
+                <ul>
+                    <li><a href="/mentor/{{mentor.id}}/addQuest">Create</a></li>
+                    <li><a href="/mentor/{{mentor.id}}/quests">Show all</a></li>
+                </ul>
+            </li>
+                <li><a href="/logout">Logout</a></li>
+            </ol>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+<h3 class="center-content welcome" > Welcome {{mentor.name}} </h3>
+{% endblock %}

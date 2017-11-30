@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+
+{% block title %}Admin{% endblock %}
+
+{% block header %}
+    <nav class="nav">
+        <ol>
+            <li><a href="/admin/{{admin.id}}">Home</a></li>
+            <li><a href="/admin/{{admin.id}}">Mentor</a>
+                <ul>
+                    <li><a href="/admin/{{admin.id}}/addMentor">Create</a></li>
+                    <li><a href="/admin/{{admin.id}}/mentors">Show all</a></li>
+                </ul></li>
+            <li><a href="/admin/{{admin.id}}">Class</a>
+                <ul>
+                    <li><a href="/admin/{{admin.id}}/addClass">Create</a></li>
+                   {% for class in classes %}
+                    <li><a href="/admin/{{admin.id}}/class/{{class.id}}"}}> {{class.name}} </a></li>
+                    {% endfor %}
+                </ul></li>
+            <li><a href="/admin/{{admin.id}}">Exp level</a>
+                <ul>
+                    <li><a href="/admin/{{admin.id}}/addLevel">Create</a></li>
+                    <li><a href="/admin/{{admin.id}}/levels">Show all</a></li>
+                </ul></li>
+            <li><a href="/logout">Logout</a></li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <h3 class="center-content welcome"> Welcome {{admin.name}} </h3>
+{% endblock %}
+

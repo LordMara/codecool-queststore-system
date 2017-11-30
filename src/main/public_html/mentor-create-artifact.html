@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Quest Creator</title>
+        <link rel="stylesheet" href="layouts/main.css">
+        <script src="https://www.w3schools.com/lib/w3.js"></script> 
+    </head>
+
+    <body>
+
+        <header>
+            <div class="nav"><img src="assets/logo-white.png"></div>
+            <div w3-include-html="navigation_tools/mentor_main_nav.html"></div>
+        </header>
+
+        <div class="main-box">
+            
+            <div class="center-content">
+                <h3 class="label">Create Artifact</h3>
+            </div>
+            <div class="center-content">
+                <form class="login">
+                    Artifact name:
+                    <input type="text" name="questName" required>
+                    Artifact category:
+                    <select class="styled-select">
+                        <option value="Remote">Remote</option>
+                        <option value="FunWithMentors">Fun with mentors</option>
+                    </select>
+                    Artifact price:
+                    <input type="number" name="artifactPrice" min="0" required>
+                    <textarea name="questDescryption">Descryption</textarea>
+                    <input type="submit" name="submit" value="save">
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div w3-include-html="footer.html"></div>
+        </footer>
+        <script>w3.includeHTML();</script>
+    </body>
+</html>

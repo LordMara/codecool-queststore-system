@@ -1,0 +1,71 @@
+{% extends "student.html" %}
+
+{% block title %} Wallet {% endblock %}
+
+{% block content %}
+
+<div class="center-content">
+
+    <table class="wallet">
+        <thead>
+            <caption class="label" align="top">Wallet</caption>
+            <tr>
+                <th>Total</th>
+                <th>Balance</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>{{ wallet.totalCoolcoinsEarn }}</td>
+            <td>{{ wallet.balance }}</td>
+            <td>{{ wallet.level.name }}</td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="two-columns">
+    <div class="center-content side-table">
+        <table>
+            <thead>
+            <caption class="label" align="top">My artifacts</caption>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>When Purchased</th>
+            </tr>
+          </thead>
+            {% for artifact in artifacts %}
+
+            <tr>
+                <td>{{ artifact.artifact.name }}</td>
+                <td>{{ artifact.artifact.description }}</td>
+                <td>{{ artifact.parseDate() }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="center-content side-table">
+        <table>
+            <thead>
+                <caption class="label" align="top">My quests</caption>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>When Achieved</th>
+                </tr>
+            </thead>
+
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.quest.name }}</td>
+                <td>{{ bill.quest.description }}</td>
+                <td>{{ bill.parseDate() }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

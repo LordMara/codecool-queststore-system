@@ -1,8 +1,11 @@
 package com.codecool.wot.model;
 
-public class Mentor extends Account{
+import com.codecool.wot.dao.ClassDAO;
+import com.codecool.wot.interfaces.Codecooler;
 
-    private Integer classId;
+public class Mentor extends Account implements Codecooler {
+
+    private SchoolClass schoolClass;
 
     public Mentor(String name, String surname, String email, String login, String password) {
         super(name, surname, email, login, password);
@@ -10,14 +13,25 @@ public class Mentor extends Account{
 
     public Mentor(String name, String surname, String email, String login, String password, Integer ID, Integer classId) {
         super(name, surname, email, login, password, ID);
-        this.classId = classId;
+        if (!classId.equals(0)) {
+            this.schoolClass = ClassDAO.getInstance().getClass(classId);
+            this.schoolClass.assignPerson(this);
+        }
+
     }
 
-    public Integer getClassId() {
-        return classId;
+    @Override
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
     }
 
-    public void setClassId(Integer classId) {
-        this.classId = classId;
+    @Override
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
+
+    @Override
+    public void setSchoolClass() {
+        this.schoolClass = null;
     }
 }

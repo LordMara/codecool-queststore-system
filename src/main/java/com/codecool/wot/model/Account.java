@@ -1,26 +1,24 @@
 package com.codecool.wot.model;
 
-public abstract class Account{
-
-    private static Integer lastID = 0;
+public abstract class Account {
+    protected static Integer lastId = 0;
     protected String name;
     protected String surname;
     protected String email;
-    protected String phone = null;
     protected String login;
     protected String password;
-    protected Integer ID;
+    protected Integer id;
 
-    public Account(String name, String surname, String email, String login, String password, Integer ID) {
+    public Account(String name, String surname, String email, String login, String password, Integer id) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.login = login;
         this.password = password;
-        this.ID = ID;
+        this.id = id;
 
-        if(lastID < ID) {
-            lastID = ID;
+        if(lastId < id) {
+            lastId = id;
         }
     }
 
@@ -30,7 +28,7 @@ public abstract class Account{
         this.email = email;
         this.login = login;
         this.password = password;
-        this.ID = ++lastID;
+        this.id = ++lastId;
     }
 
 
@@ -64,14 +62,6 @@ public abstract class Account{
         this.login = login;
     }
 
-    public String getPhone(){
-        return this.phone;
-    }
-
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-
     public String getPassword(){ return this.password; }
 
     public void setPassword(String password){
@@ -79,16 +69,12 @@ public abstract class Account{
     }
 
     public Integer getId(){
-        return this.ID;
-    }
-
-    public SchoolClass getSchoolClass(){
-        return null;
+        return this.id;
     }
 
     public String toString() {
         return String.format("ID=%d, name=%s, surname=%s, email=%s, login=%s, password=%s",
-                ID, name, surname, email, login, password);
+                id, name, surname, email, login, password);
     }
 
 }

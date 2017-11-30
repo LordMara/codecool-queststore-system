@@ -1,0 +1,53 @@
+{% extends "admin.html" %}
+
+{% block title %}Class {{class.name}} {% endblock %}
+
+{% block content %}
+<div class="center-content label">{{class.name}}</div>
+<div class="two-columns">
+    <div class="center-content side-table">
+        <table>
+            <thead>
+            <caption class="label" align="top">Mentors</caption>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            {% for mentor in mentors %}
+            <tr>
+                <td>{{ mentor.name }}</td>
+                <td>{{ mentor.surname }}</td>
+                <td>{{ mentor.email }}</td>
+                <td><a href="/admin/{{admin.id}}/editMentor/{{mentor.id}}">Edit</a></td>
+                <td><a href="/admin/{{admin.id}}/removeMentor/{{mentor.id}}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="center-content">
+        <table>
+            <thead>
+            <caption class="label" align="top">Students</caption>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.surname }}</td>
+                <td>{{ student.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

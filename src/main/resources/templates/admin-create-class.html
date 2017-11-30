@@ -1,0 +1,17 @@
+{% extends "admin.html" %}
+
+{% block title %}Create mentor{% endblock %}
+
+{% block content %}
+<h3 class="label">Create Class</h3>
+
+<div class="center-content">
+    <form class="login" method="post">
+        <fieldset>
+            Class name:
+            <input type="text" name="className" required>
+        </fieldset>
+        <input type="submit" name="newClass" value="save">
+    </form>
+</div>
+{% endblock %}

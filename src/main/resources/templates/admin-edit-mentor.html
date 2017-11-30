@@ -1,0 +1,31 @@
+{% extends "admin.html" %}
+
+{% block title %}Edit mentor{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h3 class="label">Edit Mentor: {{ mentor.id }}</h3>
+</div>
+<div class="center-content">
+    <form class="login" method="POST">
+        Mentor's name:
+        <input type="text" name="mentorName" value="{{mentor.name}}" required>
+        Mentor's surname:
+        <input type="text" name="mentorSurname" value="{{mentor.surname}}" required>
+        Mentor's email:
+        <input type="email" name="mentorEmail" value="{{mentor.email}}" required>
+        Mentor's login:
+        <input type="text" name="mentorLogin" value="{{mentor.login}}" required>
+        Mentor's password:
+        <input type="password" name="mentorPassword" value="{{mentor.password}}" required>
+        Confirm password:
+        <input type="password" name="mentorPassword" value="{{mentor.password}}" required>
+        <select name="class">
+            {% for class in classes %}
+            <option name="{{class.id}}" value="{{class.id}}">{{class.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="newMentor" value="save">
+    </form>
+</div>
+{% endblock %}

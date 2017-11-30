@@ -1,0 +1,26 @@
+{% extends "mentor.html" %}
+
+{% block title %}Edit student{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h3 class="label">Edit Student: {{ student.id }}</h3>
+</div>
+<div class="center-content">
+    <form class="login" method="POST">
+        Student's name:
+        <input type="text" name="mentorName" value="{{student.name}}" required>
+        Student's surname:
+        <input type="text" name="mentorSurname" value="{{student.surname}}" required>
+        Student's email:
+        <input type="email" name="mentorEmail" value="{{student.email}}" required>
+        Student's login:
+        <input type="text" name="mentorLogin" value="{{student.login}}" required>
+        Student's password:
+        <input type="password" name="mentorPassword" value="{{student.password}}" required>
+        Confirm password:
+        <input type="password" name="mentorPassword" value="{{student.password}}" required>
+        <input type="submit" name="newMentor" value="save">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/main.css">
+    <title>{% block title %}{% endblock %}</title>
+
+</head>
+<body>
+<header class="container">
+    <div class="nav"><img src="/static/logo-white.png"></div>
+    <div class="primary-header">
+        {% block header %} {% endblock %}
+    </div>
+</header>
+    <div class="main-box">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; CodeCool QuestStore </p>
+        {%block footer %}
+        <br>
+        {% endblock %}
+    </footer>
+
+</body>
+</html>
