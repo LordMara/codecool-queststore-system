@@ -1,8 +1,11 @@
 package com.codecool.wot.controller;
 
+import com.codecool.wot.dao.BillDAO;
 import com.codecool.wot.dao.ClassDAO;
 import com.codecool.wot.dao.PersonDAO;
+import com.codecool.wot.dao.QuestDAO;
 import com.codecool.wot.model.Account;
+import com.codecool.wot.model.Bill;
 import com.codecool.wot.model.Mentor;
 import com.codecool.wot.model.Student;
 import com.sun.net.httpserver.HttpExchange;
@@ -11,6 +14,7 @@ import org.jtwig.JtwigTemplate;
 
 import java.io.*;
 import java.net.URLDecoder;
+import java.text.ParseException;
 
 public class StudentCRUD {
 
@@ -87,6 +91,30 @@ public class StudentCRUD {
         httpExchange.sendResponseHeaders(302,-1);
     }
 
+    public void showStudent(HttpExchange httpExchange, String id, Mentor mentor) throws IOException {
+
+        String method = httpExchange.getRequestMethod();
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+            newBills(formData,Integer.valueOf(id));
+        }
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-show-student.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("quests", QuestDAO.getInstance().read());
+        model.with("mentor", mentor);
+        model.with("student", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
+        String response = template.render(model);
+
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
     public void showStudents(HttpExchange httpExchange, Mentor mentor) throws IOException {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-show-students.html");
         JtwigModel model = JtwigModel.newModel();
@@ -124,8 +152,24 @@ public class StudentCRUD {
         return new Student(name, surname, email, login, password);
     }
 
+    private void newBills(String formData, Integer personId) {
+        String[] pairs = formData.split("&");
+
+        try {
+            for (int i = 0; i < pairs.length - 1; i++) {
+                String strQuestId = new URLDecoder().decode(pairs[i].split("=")[0], "UTF-8");
+                Integer questId = Integer.valueOf(strQuestId);
+
+                BillDAO.getInstance().add(new Bill(personId, questId));
+            }
+
+        } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private Account editFromForm(String formData, String id) {
-        System.out.println(formData);
+
 
         Account student = PersonDAO.getInstance().getPerson(Integer.valueOf(id));
         String[] pairs = formData.split("&");

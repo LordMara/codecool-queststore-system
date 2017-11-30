@@ -26,7 +26,6 @@ public class StoreCRUD {
         model.with("student", student);
         model.with("quests", QuestDAO.getInstance().read());
         String response = template.render(model);
-        System.out.println(response);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();

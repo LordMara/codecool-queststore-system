@@ -31,7 +31,6 @@ public class MentorHandler implements HttpHandler {
                 mentor = (Mentor)PersonDAO.getInstance().getPerson(userId);
             }
 
-            System.out.println(parseURIToGetId(uri.getPath()));
             if (mentor != null && Integer.toString(userId).equals(parseURIToGetId(uri.getPath()))) {
                 sendResponse(httpExchange, mentor);
             } else {
@@ -56,6 +55,8 @@ public class MentorHandler implements HttpHandler {
                 studentCRUD.addStudent(httpExchange, mentor);
             } else if (action.equals("students")) {
                 studentCRUD.showStudents(httpExchange, mentor);
+            } else if (action.equals("student")) {
+                studentCRUD.showStudent(httpExchange, actionData.get(action), mentor);
             } else if (action.equals("editStudent")) {
                 studentCRUD.editStudent(httpExchange, actionData.get(action), mentor);
             } else if (action.equals("removeStudent")) {
