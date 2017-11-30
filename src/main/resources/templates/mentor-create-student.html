@@ -3,11 +3,10 @@
 {% block title %}Create student{% endblock %}
 
 {% block content %}
-<div class="center-content">
-    <h3 class="label">Create Student</h3>
-</div>
+
 <div class="center-content">
     <form method="POST" class="login">
+        <div class="label">Create Student</div>
         Student's name:
         <input type="text" name="studentName" required>
         Student's surname:
@@ -20,7 +19,12 @@
         <input type="password" name="studentPassword" required>
         Confirm password:
         <input type="password" name="studentPassword" required>
-        <input type="submit" name="" value="save">
+        <select name="class">
+            {% for class in classes %}
+            <option name="{{class.id}}" value="{{class.id}}">{{class.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" class="button" name="" value="save">
     </form>
 </div>
 {% endblock %}

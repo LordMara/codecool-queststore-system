@@ -3,11 +3,10 @@
 {% block title %}Create artifact{% endblock %}
 
 {% block content %}
-<div class="center-content">
-    <h3 class="label">Create Artifact</h3>
-</div>
+
 <div class="center-content">
     <form class="login" method="post">
+        <h3 class="label">Create Artifact</h3>
         Artifact's name:
         <input type="text" name="artifactName" required>
         Artifact's description:
@@ -15,7 +14,7 @@
         Artifact's price:
         <input type="number" name="artifactPrice" min="0" required>
 
-        <input type="submit" name="newArtifact" value="save">
+        <input type="submit" class="button" name="newArtifact" value="save">
     </form>
 </div>
 {% endblock %}

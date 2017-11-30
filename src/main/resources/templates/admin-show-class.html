@@ -1,9 +1,9 @@
 {% extends "admin.html" %}
 
-{% block title %}Class {{class.name}} {% endblock %}
+{% block title %}Class {{thisClass.name}} {% endblock %}
 
 {% block content %}
-<div class="center-content label">{{class.name}}</div>
+<div class="center-content label">{{thisClass.name}}</div>
 <div class="two-columns">
     <div class="center-content side-table">
         <table>
@@ -29,7 +29,7 @@
         </table>
     </div>
 
-    <div class="center-content">
+    <div class="center-content side-table">
         <table>
             <thead>
             <caption class="label" align="top">Students</caption>
