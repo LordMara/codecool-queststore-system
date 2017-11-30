@@ -20,6 +20,11 @@
             <input type="password" name="mentorPassword" required>
             Confirm password:
             <input type="password" name="mentorPassword" required>
+            <select name="class">
+                {% for class in classes %}
+                <option name="class" value="{{class.id}}">{{class.name}}</option>
+                {% endfor %}
+            </select>
             <input type="submit" name="newMentor" value="save">
         </form>
     </div>

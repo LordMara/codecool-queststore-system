@@ -48,6 +48,24 @@ public class StoreCRUD {
             os.close();
     }
 
+    public void mentorWallet(HttpExchange httpExchange, String studentId, Mentor mentor) throws IOException {
+        Account student = PersonDAO.getInstance().getPerson(Integer.valueOf(studentId));
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-wallet.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
+        model.with("student", student);
+        model.with("artifacts", PersonalArtifactDAO.getInstance().getPersonalArtifacts(student));
+        model.with("wallet", WalletDAO.getInstance().getWallet(student));
+        model.with("bills", BillDAO.getInstance().getBills(student));
+        String response = template.render(model);
+
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+
     public void buyArfifact(HttpExchange httpExchange, String id, Student student) throws ParseException, IOException {
         Wallet wallet =  WalletDAO.getInstance().getWallet(student);
         Artifact artifact = ArtifactDAO.getInstance().getArtifact(Integer.valueOf(id));
