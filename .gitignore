@@ -44,6 +44,3 @@ out/
 # Databse
 *.db
 
-src/main/java/com/codecool/wot/Application.java
-src/main/java/com/codecool/wot/web/PseudoHandler.java
-.gitignore
