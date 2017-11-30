@@ -110,7 +110,7 @@ public class MentorCRUD {
         JtwigModel model = JtwigModel.newModel();
         model.with("persons", PersonDAO.getInstance().getMentors());
         model.with("admin", admin);
-        model.with("classes", ClassDAO.getInstance());
+        model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.getBytes().length);
