@@ -37,6 +37,7 @@ public class LevelCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-create-lvl.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("admin", admin);
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 

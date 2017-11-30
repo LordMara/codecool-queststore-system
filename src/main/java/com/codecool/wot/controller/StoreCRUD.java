@@ -36,6 +36,7 @@ public class StoreCRUD {
         public void wallet(HttpExchange httpExchange, Student student) throws IOException {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/student-wallet.html");
             JtwigModel model = JtwigModel.newModel();
+            model.with("student", student);
             model.with("artifacts", PersonalArtifactDAO.getInstance().getPersonalArtifacts(student));
             model.with("wallet", WalletDAO.getInstance().getWallet(student));
             model.with("bills", BillDAO.getInstance().getBills(student));

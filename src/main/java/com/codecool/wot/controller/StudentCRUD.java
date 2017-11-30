@@ -43,6 +43,7 @@ public class StudentCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-create-student.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
@@ -70,6 +71,7 @@ public class StudentCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-edit-student.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
         model.with("student", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);

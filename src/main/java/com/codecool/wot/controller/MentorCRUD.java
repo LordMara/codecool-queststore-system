@@ -55,6 +55,7 @@ public class MentorCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-create-mentor.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("admin", admin);
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
 
@@ -82,6 +83,7 @@ public class MentorCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-edit-mentor.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("admin", admin);
         model.with("mentor", PersonDAO.getInstance().getPerson(Integer.valueOf(id)));
         model.with("classes", ClassDAO.getInstance().read());
         String response = template.render(model);
@@ -140,7 +142,6 @@ public class MentorCRUD {
             e.printStackTrace();
             return null;
         }
-        System.out.println("przed konstruktorem");
         return new Mentor(name, surname, email, login, password);
     }
 

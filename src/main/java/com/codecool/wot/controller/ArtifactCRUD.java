@@ -37,6 +37,7 @@ public class ArtifactCRUD {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/mentor-create-artifact.html");
         JtwigModel model = JtwigModel.newModel();
+        model.with("mentor", mentor);
         String response = template.render(model);
 
         httpExchange.sendResponseHeaders(200, response.length());
