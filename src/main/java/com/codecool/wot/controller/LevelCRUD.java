@@ -29,7 +29,7 @@ public class LevelCRUD {
             String formData = br.readLine();
             LevelDAO.getInstance().add(parseFormData(formData));
 
-            String uriPath = String.format("/admin/%s",admin.getId().toString());
+            String uriPath = String.format("/admin/%s/levels",admin.getId().toString());
 
             httpExchange.getResponseHeaders().set("Location", uriPath);
             httpExchange.sendResponseHeaders(302,-1);
@@ -55,7 +55,7 @@ public class LevelCRUD {
         model.with("levels", LevelDAO.getInstance().read());
         String response = template.render(model);
 
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();    }
