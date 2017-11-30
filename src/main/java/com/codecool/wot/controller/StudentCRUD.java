@@ -159,8 +159,9 @@ public class StudentCRUD {
             for (int i = 0; i < pairs.length - 1; i++) {
                 String strQuestId = new URLDecoder().decode(pairs[i].split("=")[0], "UTF-8");
                 Integer questId = Integer.valueOf(strQuestId);
-
-                BillDAO.getInstance().add(new Bill(personId, questId));
+                Bill bill = new Bill(personId, questId);
+                bill.setStatus();
+                BillDAO.getInstance().add(bill);
             }
 
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException | ParseException e) {
