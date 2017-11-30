@@ -127,7 +127,6 @@ public class MentorCRUD {
         String password;
 
         String[] pairs = formData.split("&");
-        Stream.of(pairs).forEach(System.out::println);
 
         try {
             name = new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8");
