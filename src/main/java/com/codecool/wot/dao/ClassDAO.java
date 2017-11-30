@@ -96,8 +96,6 @@ public class ClassDAO {
 
     public void addPerson(SchoolClass schoolClass, Account person) {
         try {
-            Codecooler codecooler = (Codecooler) person;
-            codecooler.setSchoolClass(schoolClass);
             addPersonToClassInDatabase(schoolClass, person);
             schoolClass.assignPerson(person);
         } catch (SQLException e) {
@@ -112,7 +110,6 @@ public class ClassDAO {
             SchoolClass schoolClass = codecooler.getSchoolClass();
             removePersonFromClassInDatabase(schoolClass, person);
             schoolClass.removePerson(person);
-            codecooler.setSchoolClass();
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
