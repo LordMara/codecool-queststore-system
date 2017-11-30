@@ -4,10 +4,8 @@
 
 {% block content %}
 <div class="center-content">
-    <h3 class="label">Edit Mentor: {{ mentor.id }}</h3>
-</div>
-<div class="center-content">
     <form class="login" method="POST">
+        <h3 class="label">Edit Mentor: {{ mentor.id }}</h3>
         Mentor's name:
         <input type="text" name="mentorName" value="{{mentor.name}}" required>
         Mentor's surname:
@@ -25,7 +23,7 @@
             <option name="{{class.id}}" value="{{class.id}}">{{class.name}}</option>
             {% endfor %}
         </select>
-        <input type="submit" name="newMentor" value="save">
+        <input type="submit" class="button" name="newMentor" value="save">
     </form>
 </div>
 {% endblock %}

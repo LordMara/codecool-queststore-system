@@ -3,15 +3,15 @@
 {% block title %}Create mentor{% endblock %}
 
 {% block content %}
-<h3 class="label">Create Class</h3>
 
 <div class="center-content">
     <form class="login" method="post">
+        <h3 class="label">Create Class</h3>
         <fieldset>
             Class name:
             <input type="text" name="className" required>
         </fieldset>
-        <input type="submit" name="newClass" value="save">
+        <input type="submit" class="button" name="newClass" value="save">
     </form>
 </div>
 {% endblock %}

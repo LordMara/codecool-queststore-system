@@ -3,11 +3,10 @@
 {% block title %}Create mentor{% endblock %}
 
 {% block content %}
-    <div class="center-content">
-        <h3 class="label">Create Mentor</h3>
-    </div>
+
     <div class="center-content">
         <form class="login" method="POST">
+            <div class="label" align="top">Create Mentor</div>
             Mentor's name:
             <input type="text" name="mentorName" required>
             Mentor's surname:
@@ -25,7 +24,7 @@
                 <option name="class" value="{{class.id}}">{{class.name}}</option>
                 {% endfor %}
             </select>
-            <input type="submit" name="newMentor" value="save">
+            <input class="button" type="submit" name="newMentor" value="save">
         </form>
     </div>
 {% endblock %}
