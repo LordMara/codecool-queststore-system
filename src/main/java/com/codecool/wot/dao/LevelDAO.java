@@ -16,7 +16,7 @@ public class LevelDAO {
 
     private LevelDAO() {
         this.levels = new LinkedList<>();
-        loadPersonsFromDatabase();
+        loadLevelsFromDatabase();
     }
 
     public static LevelDAO getInstance() {
@@ -29,6 +29,7 @@ public class LevelDAO {
 
     public void add(Level level) {
         try {
+            System.out.println("w DAO");
             addLevelToDatabase(level);
             this.levels.add(level);
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class LevelDAO {
 
     public void remove(Level level) {
         try {
-            // call of method to null value in users Wallets
+            WalletDAO.getInstance().setAllLevelsToNull(level);
             deleteLevelFromDatabase(level);
             this.levels.remove(level);
         } catch (SQLException e) {
@@ -77,13 +78,13 @@ public class LevelDAO {
         return level;
     }
 
-    private void loadPersonsFromDatabase() {
+    private void loadLevelsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
              ResultSet result = ps.executeQuery()) {
 
             while (result.next()) {
-                Integer id = result.getInt("personId");
+                Integer id = result.getInt("levelId");
                 String name = result.getString("name");
                 String description = result.getString("description");
                 Double coolcoinValue = result.getDouble("coolcoins_value");
@@ -103,6 +104,7 @@ public class LevelDAO {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+            System.out.println("level powinien być w bazie");
         }
     }
 

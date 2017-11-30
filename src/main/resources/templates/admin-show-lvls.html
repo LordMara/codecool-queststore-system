@@ -1,0 +1,27 @@
+{% extends "admin.html" %}
+
+{% block content %}
+
+<h3 class="label">Exp Levels</h3>
+
+<div class="center-content">
+    <table>
+        <thead>
+            <caption class="label" align="top">Exp Levels</caption>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        {% for level in levels %}
+        <tr>
+            <td>{{ level.name }}</td>
+            <td>{{ level.description }}</td>
+            <td>{{ level.coolcoinValue }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

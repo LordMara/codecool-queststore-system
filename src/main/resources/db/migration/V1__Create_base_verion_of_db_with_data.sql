@@ -4,10 +4,10 @@ CREATE TABLE IF NOT EXISTS `bills` (
 	`questId`	int,
 	`achieve_date`	text,
 	`billId`	INTEGER PRIMARY KEY AUTOINCREMENT,
-	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`),
-	FOREIGN KEY(`questId`) REFERENCES `quests`(`questId`)
+	FOREIGN KEY(`questId`) REFERENCES `quests`(`questId`),
+	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`)
 );
-INSERT INTO `bills` VALUES (1,'unpaid',1,'22.11.2017',1);
+INSERT INTO `bills` VALUES (2,'unpaid',1,'22.11.2017',1);
 CREATE TABLE IF NOT EXISTS `cookies` (
 	`userId`	INTEGER,
 	`session_id`	TEXT,
@@ -43,13 +43,6 @@ INSERT INTO `persons_classes` VALUES (1,1),
  (3,2),
  (4,1),
  (5,2);
-CREATE TABLE IF NOT EXISTS `persons_artifacts` (
-	`personId`	int,
-	`artifactId`	int,
-	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`),
-	FOREIGN KEY(`artifactId`) REFERENCES `artifacts`(`artifactId`)
-);
-INSERT INTO `persons_artifacts` VALUES (2,1);
 CREATE TABLE IF NOT EXISTS `persons` (
 	`personId`	INTEGER PRIMARY KEY AUTOINCREMENT,
 	`name`	text,
@@ -96,23 +89,22 @@ INSERT INTO `levels` VALUES (1,'noob','student who knows nothing',0.0),
  (3,'no-noob','student who knows',1000.0);
 CREATE TABLE IF NOT EXISTS `wallets` (
 	`personId`	int,
-	`total_cc_earn`	int,
+	`total_cc_earn`	REAL,
 	`ballance`	real,
 	`levelId`	int,
+	FOREIGN KEY(`levelId`) REFERENCES `levels`(`levelId`),
+	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`)
+);
+INSERT INTO `wallets` VALUES (2,100.0,50.0,1),
+ (3,0.0,0.0,1),
+ (4,0.0,0.0,1);
+CREATE TABLE IF NOT EXISTS `persons_artifacts` (
+	`personal_artifacts_id`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`personId`	int,
+	`artifactId`	int,
+	`status`	TEXT,
+	`purchase_date`	TEXT,
 	FOREIGN KEY(`personId`) REFERENCES `persons`(`personId`),
-	FOREIGN KEY(`levelId`) REFERENCES `levels`(`levelId`)
+	FOREIGN KEY(`artifactId`) REFERENCES `artifacts`(`artifactId`)
 );
-INSERT INTO `wallets` VALUES (2,100,50.0,1);
-CREATE TABLE IF NOT EXISTS `schema_version` (
-	`installed_rank`	INT NOT NULL,
-	`version`	VARCHAR ( 50 ),
-	`description`	VARCHAR ( 200 ) NOT NULL,
-	`type`	VARCHAR ( 20 ) NOT NULL,
-	`script`	VARCHAR ( 1000 ) NOT NULL,
-	`checksum`	INT,
-	`installed_by`	VARCHAR ( 100 ) NOT NULL,
-	`installed_on`	TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f','now')),
-	`execution_time`	INT NOT NULL,
-	`success`	BOOLEAN NOT NULL,
-	PRIMARY KEY(`installed_rank`)
-);
+INSERT INTO `persons_artifacts` VALUES (1,2,1,'used','27.10.2017 23:39:59');

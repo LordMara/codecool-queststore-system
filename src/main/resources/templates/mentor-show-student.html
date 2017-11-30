@@ -1,0 +1,36 @@
+{% extends "mentor.html" %}
+
+{% block title %} {{ student.name }} {% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h3 class="label">{{ student.name }} {{ student.surname }}</h3>
+</div>
+
+
+<div class="center-content">
+    <form method="POST">
+        <table>
+            <thead>
+            <caption class="label" align="top">Quests</caption>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Mark as done</th>
+            </tr>
+            </thead>
+
+            {% for quest in quests %}
+            <tr>
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.description }}</td>
+                <td><input type="checkbox" name="{{quest.id}}"></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" name="save" value="save">
+    </form>
+
+</div>
+
+{% endblock %}

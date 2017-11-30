@@ -1,7 +1,7 @@
 package com.codecool.wot.model;
 
+import com.codecool.wot.dao.ArtifactDAO;
 import com.codecool.wot.dao.PersonDAO;
-import com.codecool.wot.dao.QuestDAO;
 import com.codecool.wot.dao.WalletDAO;
 
 import java.text.DateFormat;
@@ -9,27 +9,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Bill {
-    private final DateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
+public class PersonalArtifact {
+    private final DateFormat FORMATTER = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private static Integer lastId = 1;
     private Integer id;
     private Account person;
-    private Quest quest;
+    private Artifact artifact;
     private Boolean status;
-    private Date achieveDate;
+    private Date purchaseDate;
 
-    public Bill(Integer personId, Integer questId) throws ParseException {
+    public PersonalArtifact(Integer personId, Integer artifactId) throws ParseException {
         this.id = ++lastId;
         this.person = PersonDAO.getInstance().getPerson(personId);
-        this.quest = QuestDAO.getInstance().getQuest(questId);
+        this.artifact = ArtifactDAO.getInstance().getArtifact(artifactId);
         this.status = false;
-        this.achieveDate = new Date();
+        this.purchaseDate  = new Date();
+        updateWallet();
     }
 
-    public Bill(Integer id, Integer personId, Integer questId, String statusString, String stringDate) throws ParseException {
+    public PersonalArtifact(Integer id, Integer personId, Integer artifactId, String statusString, String stringDate) throws ParseException {
         this.id = id;
         this.person = PersonDAO.getInstance().getPerson(personId);
-        this.quest = QuestDAO.getInstance().getQuest(questId);
+        this.artifact = ArtifactDAO.getInstance().getArtifact(artifactId);
         parseDate(stringDate);
         parseStatus(statusString);
 
@@ -54,18 +55,13 @@ public class Bill {
         this.person = person;
     }
 
-    public Quest getQuest() {
-        return quest;
+    public Artifact getArtifact() {
+        return artifact;
     }
 
-    public void setQuest() {
-        this.quest = null;
+    public void setArtifact(Artifact artifact) {
+        this.artifact = artifact;
     }
-
-    public void setQuest(Quest quest) {
-        this.quest = quest;
-    }
-
 
     public Boolean getStatus() {
         return status;
@@ -74,32 +70,34 @@ public class Bill {
     public void setStatus() {
         if (this.status.equals(false)) {
             this.status = true;
-            updateWallet();
         }
     }
 
-    public Date getAchieveDate() {
-        return achieveDate;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
-    public void setAchieveDate(Date achieveDate) {
-        this.achieveDate = achieveDate;
+    public Date getPurchaseDate() {
+        return purchaseDate;
     }
 
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
 
     public String parseDate() {
-        return this.FORMATTER.format(this.achieveDate);
+        return this.FORMATTER.format(this.purchaseDate);
     }
 
     private void parseDate(String stringDate) throws ParseException {
         Date date = this.FORMATTER.parse(stringDate);
-        this.achieveDate = date;
+        this.purchaseDate = date;
     }
 
     private void parseStatus(String statusString) {
-        if (statusString.equals("unpaid")) {
+        if (statusString.equals("unused")) {
             this.status = false;
-        } else if (statusString.equals("paid")) {
+        } else if (statusString.equals("used")) {
             this.status = true;
         }
     }
@@ -107,15 +105,15 @@ public class Bill {
     public String parseStatus() {
         String statusString = null;
         if (this.status.equals(false)) {
-            statusString = "unpaid";
+            statusString = "unused";
         } else if (this.status.equals(true)) {
-            statusString = "paid";
+            statusString = "used";
         }
         return statusString;
     }
 
     private void updateWallet() {
         Wallet wallet = WalletDAO.getInstance().getWallet(this.person);
-        wallet.increaseMoney(this.quest.getPrice());
+        wallet.decreaseMoney(this.artifact.getPrice());
     }
 }

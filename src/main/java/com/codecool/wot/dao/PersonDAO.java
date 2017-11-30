@@ -28,6 +28,9 @@ public class PersonDAO {
         try {
             addPersonToDatabase(person);
             this.persons.add(person);
+            if (person instanceof Student) {
+                WalletDAO.getInstance().add(new Wallet(person.getId()));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
@@ -45,7 +48,9 @@ public class PersonDAO {
 
     public void remove(Account person) {
         try {
-            removeFromApplication(person);
+            if (person instanceof Student || person instanceof Mentor) {
+                removeFromApplication(person);
+            }
             deletePersonFromDatabase(person);
             this.persons.remove(person);
         } catch (SQLException e) {
@@ -82,6 +87,26 @@ public class PersonDAO {
             }
         }
         return person;
+    }
+
+    public List<Account> getStudents() {
+        List<Account> foundPersons = new LinkedList<>();
+        for (Account candidate : this.persons) {
+            if (candidate instanceof Student) {
+                foundPersons.add(candidate);
+            }
+        }
+        return foundPersons;
+    }
+
+    public List<Account> getMentors() {
+        List<Account> foundPersons = new LinkedList<>();
+        for (Account candidate : this.persons) {
+            if (candidate instanceof Mentor) {
+                foundPersons.add(candidate);
+            }
+        }
+        return foundPersons;
     }
 
     private void loadPersonsFromDatabase() {
@@ -150,8 +175,8 @@ public class PersonDAO {
 
     private PreparedStatement createAddPreparedStatement(Connection con, Account person) throws SQLException {
         String role = "";
-        String query = "INSERT INTO persons (name, surname, email,  phone, login, password, role)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO persons (name, surname, email, login, password, role)" +
+                " VALUES (?, ?, ?, ?, ?, ?);";
 
         if (person instanceof Mentor) {
             role = "mentor";
@@ -164,26 +189,24 @@ public class PersonDAO {
         ps.setString(1, person.getName());
         ps.setString(2, person.getSurname());
         ps.setString(3, person.getEmail());
-        ps.setString(4, person.getPhone());
-        ps.setString(5, person.getLogin());
-        ps.setString(6, person.getPassword());
-        ps.setString(7, role);
+        ps.setString(4, person.getLogin());
+        ps.setString(5, person.getPassword());
+        ps.setString(6, role);
 
         return ps;
     }
 
     private PreparedStatement createUpdatePreparedStatement(Connection con, Account person) throws SQLException {
-        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  phone = ?, login = ?, password = ?" +
+        String query = "UPDATE persons SET name = ?, surname = ?, email = ?,  login = ?, password = ?" +
                 " WHERE personId = ?;";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setString(1, person.getName());
         ps.setString(2, person.getSurname());
         ps.setString(3, person.getEmail());
-        ps.setString(4, person.getPhone());
-        ps.setString(5, person.getLogin());
-        ps.setString(6, person.getPassword());
-        ps.setInt(7, person.getId());
+        ps.setString(4, person.getLogin());
+        ps.setString(5, person.getPassword());
+        ps.setInt(6, person.getId());
 
         return ps;
     }
@@ -198,8 +221,19 @@ public class PersonDAO {
     }
 
     private void removeFromApplication(Account person) {
-        ClassDAO.getInstance().removePerson(person);
-        BillDAO.getInstance().removeAllBills(person);
-        // call WalletDAO to remove wallet with this Account
+        if (ClassDAO.getInstance().getClass(person) != null) {
+            ClassDAO.getInstance().removePerson(person);
+        }
+        if (person instanceof Student) {
+            BillDAO.getInstance().removeAllBills(person);
+            PersonalArtifactDAO.getInstance().removeAllPersonalArtifacts(person);
+            removePersonWallet(person);
+        }
+
+    }
+
+    private void removePersonWallet(Account person) {
+        Wallet wallet = WalletDAO.getInstance().getWallet(person);
+        WalletDAO.getInstance().remove(wallet);
     }
 }

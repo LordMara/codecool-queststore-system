@@ -91,6 +91,16 @@ public class BillDAO {
         return bill;
     }
 
+    public List<Bill> getBills(Account person) {
+        List<Bill> personalBillsList = new LinkedList<>();
+        for (Bill candidate : this.bills) {
+            if (candidate.getPerson().equals(person)) {
+                personalBillsList.add(candidate);
+            }
+        }
+        return personalBillsList;
+    }
+
     private void loadBillsFromDatabase() {
         try (Connection con = DatabaseConnection.getConnection();
              PreparedStatement ps = createSelectPreparedStatement(con);
@@ -100,7 +110,7 @@ public class BillDAO {
                 Integer personId = result.getInt("personId");
                 String status = result.getString("status");
                 Integer questId = result.getInt("questId");
-                String achieveDate = result.getString("achieveDate");
+                String achieveDate = result.getString("achieve_date");
                 Integer billId = result.getInt("billId");
 
                 this.bills.add(new Bill(billId, personId, questId, status, achieveDate));
@@ -187,15 +197,14 @@ public class BillDAO {
     }
 
     private PreparedStatement createAddPreparedStatement(Connection con, Bill bill) throws SQLException {
-        String query = "INSERT INTO bills (personId, status, questId,  achieve_date, billId)" +
-                " VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO bills (personId, status, questId,  achieve_date)" +
+                " VALUES (?, ?, ?, ?);";
         PreparedStatement ps = con.prepareStatement(query);
 
         ps.setInt(1, bill.getPerson().getId());
         ps.setString(2, bill.parseStatus());
         ps.setInt(3, bill.getQuest().getId());
         ps.setString(4, bill.parseDate());
-        ps.setInt(5, bill.getId());
 
         return ps;
     }

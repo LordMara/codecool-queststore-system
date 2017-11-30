@@ -6,9 +6,9 @@
     <nav class="nav">
         <div>
             <ol>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Wallet</a></li>
-                <li><a href="#">Store</a></li>
+                <li><a href="/student/{{student.id}}">Home</a></li>
+                <li><a href="/student/{{student.id}}/wallet">Wallet</a></li>
+                <li><a href="/student/{{student.id}}/store">Store</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ol>
         </div>
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-<h3 class="welcome center-content"> Welcome {{name}} !! </h3>
+<h3 class="center-content welcome"> Welcome {{student.name}} </h3>
 {% endblock %}
 
 
