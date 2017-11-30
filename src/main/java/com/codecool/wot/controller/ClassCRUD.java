@@ -53,7 +53,6 @@ public class ClassCRUD {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("/templates/admin-show-class.html");
         JtwigModel model = JtwigModel.newModel();
         model.with("classes", ClassDAO.getInstance().read());
-        model.with("thisClass", ClassDAO.getInstance().getClass(Integer.valueOf(classId)));
         model.with("admin", admin);
         model.with("students", ClassDAO.getInstance().getStudents(Integer.valueOf(classId)));
         model.with("mentors", ClassDAO.getInstance().getMentos(Integer.valueOf(classId)));
