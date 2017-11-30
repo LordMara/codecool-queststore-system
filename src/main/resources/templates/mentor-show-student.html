@@ -19,17 +19,11 @@
                 <th>Level</th>
             </tr>
             </thead>
-
-            {% for wallet in wallets %}
-            {% if ( person == wallet.person ) %}
-
             <tr>
                 <td>{{ wallet.totalCoolcoinsEarn }}</td>
                 <td>{{ wallet.balance }}</td>
                 <td>{{ wallet.level.name }}</td>
             </tr>
-            {% endif %}
-            {% endfor %}
         </table>
     </div>
 
@@ -39,19 +33,16 @@
             <caption class="label" align="top">Quests</caption>
             <tr>
                 <th>Name</th>
-                <th>Status</th>
-                <th>When achieved</th>
-                <th>Pay</th>
+                <th>Description</th>
+                <th>Mark done</th>
             </tr>
             </thead>
 
-            {% for bill in bills %}
+            {% for quest in quests %}
             <tr>
-                <td>{{ bill.quest.name }}</td>
-                <td>{{ bill.status }}</td>
-                <td>{{ bill.achieveDate }}</td>
-                <td><input type="checkbox"></td>
-
+                <td>{{ quest.name }}</td>
+                <td>{{ quest.descryption }}</td>
+                <td><a href="/mentor/{{mentor.id}}/markQuestDone/{{quest.id}}/{{student.id}}"></a></td>
             </tr>
             {% endfor %}
         </table>

@@ -29,6 +29,7 @@ public class LevelDAO {
 
     public void add(Level level) {
         try {
+            System.out.println("w DAO");
             addLevelToDatabase(level);
             this.levels.add(level);
         } catch (SQLException e) {
@@ -103,6 +104,7 @@ public class LevelDAO {
             con.setAutoCommit(false);
             ps.executeUpdate();
             con.commit();
+            System.out.println("level powinien być w bazie");
         }
     }
 
