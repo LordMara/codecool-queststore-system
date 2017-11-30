@@ -171,6 +171,8 @@ public class MentorCRUD {
 
             classId = new URLDecoder().decode(pairs[6].split("=")[1], "UTF-8");
 
+            ClassDAO.getInstance().getClass(mentor).removePerson(mentor);
+
             SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
             schoolClass.assignPerson(mentor);
 
