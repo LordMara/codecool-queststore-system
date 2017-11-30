@@ -313,9 +313,25 @@ th {
     color: cornflowerblue;
 }
 
-.label2 {
+.store-label {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 20px 20px 20px 10vw;
     font-variant: small-caps;
-    color: red;
+    color: #2d3343;
+    background-color: rgba(0, 71, 171, 0.6);
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+
+    font-family: sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.above-store {
+    width: 100vw;
+    height: 10vh;
 }
 
 .button {
