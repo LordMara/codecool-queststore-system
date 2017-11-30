@@ -21,6 +21,7 @@ class Application {
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
         server.createContext("/logout", new LogoutHandler());
+        server.createContext("/student-wallet", new PseudoHandler());
         server.setExecutor(null); // creates a default executor
 
         // start listening

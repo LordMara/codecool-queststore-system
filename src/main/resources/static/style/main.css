@@ -284,6 +284,10 @@ td > ul > li, td > ul > li > a, td > a, td {
     
 }
 
+td > a {
+    font-weight: 600;
+}
+
 th {
     padding: 10px;
     color: cornflowerblue;
@@ -298,6 +302,7 @@ th {
 }
 
 .wallet {
+    width: auto;
     height: auto;
 }
 
