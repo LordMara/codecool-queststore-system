@@ -4,10 +4,8 @@
 
 {% block content %}
 <div class="center-content">
-    <h3 class="label">Edit Student: {{ student.id }}</h3>
-</div>
-<div class="center-content">
     <form class="login" method="POST">
+        <h3 class="label">Edit Student: {{ student.id }}</h3>
         Student's name:
         <input type="text" name="mentorName" value="{{student.name}}" required>
         Student's surname:
@@ -20,7 +18,7 @@
         <input type="password" name="mentorPassword" value="{{student.password}}" required>
         Confirm password:
         <input type="password" name="mentorPassword" value="{{student.password}}" required>
-        <input type="submit" name="newMentor" value="save">
+        <input type="submit" class="button" name="newMentor" value="save">
     </form>
 </div>
 {% endblock %}

@@ -127,10 +127,11 @@ footer a{
     justify-content: center;
     align-items: center;
     align-content: space-around;
-    padding: 50px;
+    padding: 30px;
     background-color: rgba(0, 71, 171, 0.6);
     border-radius: 15px;
     color: aliceblue;
+    line-height: 130%;
 }
 
 .login fieldset{
@@ -284,6 +285,10 @@ td > ul > li, td > ul > li > a, td > a, td {
     
 }
 
+td > a {
+    font-weight: 600;
+}
+
 th {
     padding: 10px;
     color: cornflowerblue;
@@ -304,11 +309,10 @@ th {
 /*===================================================================*/
 
 .welcome {
-    font-size: 60px;
+    font-size: 40px;
     font-variant: small-caps;
-    order: 1;
     padding: 20px;
-    background-color: #2d3343;
+    background-color: rgba(45,51,67,50);
     border-radius: 3px;
     color: cornflowerblue;
 }
@@ -341,6 +345,6 @@ th {
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 16px;
 }
