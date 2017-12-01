@@ -157,7 +157,7 @@ public class StudentCRUD {
 
             student = new Student(name, surname, email, login, password);
             SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
-            schoolClass.assignPerson(student);
+            ClassDAO.getInstance().addPerson(schoolClass, student);
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }

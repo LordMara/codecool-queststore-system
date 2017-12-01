@@ -70,21 +70,22 @@ public class StoreCRUD {
         Wallet wallet =  WalletDAO.getInstance().getWallet(student);
         Artifact artifact = ArtifactDAO.getInstance().getArtifact(Integer.valueOf(id));
 
-        if(wallet.getBalance() < artifact.getPrice()) {
-            sendBalanceError(httpExchange, student);
+        if(wallet.getBalance() >= artifact.getPrice()) {
+
+            PersonalArtifactDAO.getInstance().add(new PersonalArtifact(student.getId(), artifact.getId()));
+
+            String uriPath = String.format("/student/%s/wallet", student.getId().toString());
+
+            httpExchange.getResponseHeaders().set("Location", uriPath);
+            httpExchange.sendResponseHeaders(302, -1);
         }
 
-        PersonalArtifactDAO.getInstance().add(new PersonalArtifact(student.getId(), artifact.getId()));
-
-        String uriPath = String.format("/student/%s/wallet", student.getId().toString());
-
-        httpExchange.getResponseHeaders().set("Location", uriPath);
-        httpExchange.sendResponseHeaders(302,-1);
+        sendBalanceError(httpExchange, student);
 
     }
 
     private void sendBalanceError(HttpExchange httpExchange, Student student) throws IOException {
-        String uriPath = String.format("/student/%s/shop", student.getId().toString());
+        String uriPath = String.format("/student/%s/wallet", student.getId().toString());
 
         httpExchange.getResponseHeaders().set("Location", uriPath);
         httpExchange.sendResponseHeaders(302,-1);
