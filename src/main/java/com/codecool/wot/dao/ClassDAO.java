@@ -96,8 +96,10 @@ public class ClassDAO {
 
     public void addPerson(SchoolClass schoolClass, Account person) {
         try {
+            Codecooler codecooler = (Codecooler) person;
             addPersonToClassInDatabase(schoolClass, person);
             schoolClass.assignPerson(person);
+            codecooler.setSchoolClass(schoolClass);
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);

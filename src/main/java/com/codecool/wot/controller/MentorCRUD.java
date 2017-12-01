@@ -142,7 +142,8 @@ public class MentorCRUD {
             mentor = new Mentor(name, surname, email, login, password);
 
             SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
-            schoolClass.assignPerson(mentor);
+            ClassDAO.getInstance().addPerson(schoolClass, mentor);
+
 
 
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
@@ -162,7 +163,6 @@ public class MentorCRUD {
         String[] pairs = formData.split("&");
 
         try {
-
             mentor.setName(new URLDecoder().decode(pairs[0].split("=")[1], "UTF-8"));
             mentor.setSurname(new URLDecoder().decode(pairs[1].split("=")[1], "UTF-8"));
             mentor.setEmail(new URLDecoder().decode(pairs[2].split("=")[1], "UTF-8"));
@@ -174,7 +174,7 @@ public class MentorCRUD {
             ClassDAO.getInstance().getClass(mentor).removePerson(mentor);
 
             SchoolClass schoolClass =  ClassDAO.getInstance().getClass(Integer.valueOf(classId));
-            schoolClass.assignPerson(mentor);
+            ClassDAO.getInstance().addPerson(schoolClass, mentor);
 
         } catch (ArrayIndexOutOfBoundsException | UnsupportedEncodingException e) {
             return null;
