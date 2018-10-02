@@ -18,4 +18,4 @@ Project touches such technologies as:
 
 
 ![Alt text](sprint.jpg?raw=true "Sprints")  
-*sprint info*
+*Sprints overview*
